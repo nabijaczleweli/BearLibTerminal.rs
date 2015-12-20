@@ -1,5 +1,5 @@
 [package]
-name = "BearLibTerminal"
+name = "bear-lib-terminal"
 description = "BearLibTerminal FFI for Rust"
 repository = "https://github.com/nabijaczleweli/BearLibTerminal.rs"
 readme = "README.md"
@@ -8,3 +8,6 @@ license = "MIT"
 version = "0.1.0"
 authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
            "Cat Plus Plus <piotrlegnica@piotrl.pl>"]
+
+[dependencies]
+libc = "0.2.4"

@@ -4,7 +4,7 @@
 		{
 			"working_dir": "$project_path",
 			"shell_cmd": "cargo test --color always",
-			"name": "Build chattium-oxide-client",
+			"name": "Build BearLibTerminal.rs",
 
 			"target": "ansi_color_build",
 			"syntax": "Packages/ANSIescape/ANSI.tmLanguage"
