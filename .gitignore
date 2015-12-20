@@ -1,0 +1,9 @@
+*
+!.gitignore
+!.travis.yml
+!LICENSE
+!README.md
+!Cargo.toml
+!*.sublime-project
+!src
+!src/**

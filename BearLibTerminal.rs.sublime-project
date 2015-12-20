@@ -1,0 +1,32 @@
+{
+	"build_systems":
+	[
+		{
+			"working_dir": "$project_path",
+			"shell_cmd": "cargo test --color always",
+			"name": "Build chattium-oxide-client",
+
+			"target": "ansi_color_build",
+			"syntax": "Packages/ANSIescape/ANSI.tmLanguage"
+		}
+	],
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"name": "Source",
+			"path": "src"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Build scripts",
+			"path": ".",
+			"file_include_patterns": ["Cargo.*"],
+			"folder_exclude_patterns": ["*"]
+		}
+	],
+	"settings":
+	{
+		"tab_size": 2
+	}
+}
