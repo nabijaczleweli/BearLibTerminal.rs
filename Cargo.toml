@@ -1,0 +1,10 @@
+[package]
+name = "BearLibTerminal"
+description = "BearLibTerminal FFI for Rust"
+repository = "https://github.com/nabijaczleweli/BearLibTerminal.rs"
+readme = "README.md"
+keywords = ["BearLibTerminal", "FFI"]
+license = "MIT"
+version = "0.1.0"
+authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
+           "Cat Plus Plus <piotrlegnica@piotrl.pl>"]
