@@ -3,3 +3,22 @@ rust:
   - stable
   - beta
   - nightly
+
+cache:
+  apt: true
+
+addons:
+  apt:
+    packages:
+      - libxmu-dev
+    sources:
+      - r-packages-precise
+
+install:
+  - git clone https://github.com/nabijaczleweli/BearLibTerminal ~/BearLibTerminal && cd ~/BearLibTerminal/Build
+  - cmake -G"Unix Makefiles" .. && make BearLibTerminal
+  - mkdir ~/lib/ && cp ../Output/Linux64/libBearLibTerminal.so ~/lib/ && cd $TRAVIS_BUILD_DIR
+
+script:
+  - LD_PRELOAD=~/lib/libBearLibTerminal.so LD_LIBRARY_PATH="~/lib:$LD_LIBRARY_PATH" LIBRARY_PATH=~/lib cargo build --verbose
+  - LD_PRELOAD=~/lib/libBearLibTerminal.so LD_LIBRARY_PATH="~/lib:$LD_LIBRARY_PATH" LIBRARY_PATH=~/lib cargo test --verbose
