@@ -6,6 +6,7 @@ use colors::Color;
 use self::ffi::ColorT;
 pub use self::input::{Event, KeyCode};
 
+
 pub fn open(title: &str, width: i32, height: i32) {
 	let config = format!("
 		window: title='{}', size={}x{};
@@ -16,6 +17,10 @@ pub fn open(title: &str, width: i32, height: i32) {
 
 	ffi::open();
 	ffi::set(&config);
+}
+
+pub fn close() {
+	ffi::close()
 }
 
 pub fn print(point: Point, value: &str) {

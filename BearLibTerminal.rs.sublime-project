@@ -19,6 +19,11 @@
 		},
 		{
 			"follow_symlinks": true,
+			"name": "Examples",
+			"path": "examples"
+		},
+		{
+			"follow_symlinks": true,
 			"name": "Build scripts",
 			"path": ".",
 			"file_include_patterns": ["Cargo.*"],
