@@ -9,7 +9,7 @@ impl Point {
 		assert!(x >= 0);
 		assert!(y >= 0);
 
-		Point { x: x, y: y }
+		Point{x: x, y: y}
 	}
 }
 
@@ -24,7 +24,7 @@ impl Size {
 		assert!(width >= 0);
 		assert!(height >= 0);
 
-		Size { width: width, height: height }
+		Size{width: width, height: height}
 	}
 }
 

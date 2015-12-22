@@ -235,27 +235,27 @@ fn to_key_event(code: i32) -> Option<Event> {
 }
 
 fn get_mouse_move() -> Event {
-	Event::MouseMove {
+	Event::MouseMove{
 		x: ffi::state(ffi::TK_MOUSE_X),
 		y: ffi::state(ffi::TK_MOUSE_Y),
 	}
 }
 
 fn get_mouse_scroll() -> Event {
-	Event::MouseScroll {
+	Event::MouseScroll{
 		delta: ffi::state(ffi::TK_MOUSE_WHEEL),
 	}
 }
 
 fn get_key(released: bool, key: KeyCode, ctrl: bool, shift: bool) -> Event {
 	if released {
-		Event::KeyReleased {
+		Event::KeyReleased{
 			key: key,
 			ctrl: ctrl,
 			shift: shift,
 		}
 	} else {
-		Event::KeyPressed {
+		Event::KeyPressed{
 			key: key,
 			ctrl: ctrl,
 			shift: shift,

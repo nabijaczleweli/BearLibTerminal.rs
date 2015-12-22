@@ -102,8 +102,8 @@ pub enum KeyCode {
 pub enum Event {
 	Close,
 	Resize,
-	MouseMove { x: i32, y: i32 },
-	MouseScroll { delta: i32 },
-	KeyPressed { key: KeyCode, ctrl: bool, shift: bool },
-	KeyReleased { key: KeyCode, ctrl: bool, shift: bool },
+	MouseMove{x: i32, y: i32},
+	MouseScroll{delta: i32},
+	KeyPressed{key: KeyCode, ctrl: bool, shift: bool},
+	KeyReleased{key: KeyCode, ctrl: bool, shift: bool},
 }
