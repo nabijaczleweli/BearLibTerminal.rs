@@ -1,6 +1,7 @@
 mod ffi;
 mod input;
 
+use std::char;
 use geometry::{Rect, Point};
 use colors::Color;
 use self::ffi::ColorT;
@@ -42,8 +43,48 @@ pub fn refresh() {
 pub fn clear(area: Option<Rect>) {
 	match area {
 		Some(rect) => ffi::clear_area(rect.top_left.x, rect.top_left.y, rect.bottom_right.x, rect.bottom_right.y),
-		None => ffi::clear(),
+		None       => ffi::clear(),
 	}
+}
+
+pub fn crop(x: i32, y: i32, width: i32, height: i32) {
+	ffi::crop(x, y, width, height);
+}
+
+pub fn layer(index: i32) {
+	ffi::layer(index);
+}
+
+pub fn composition(enable: bool) {
+	ffi::composition(enable);
+}
+
+pub fn pick(x: i32, y: i32, index: i32) -> char {
+	char::from_u32(ffi::pick(x, y, index) as u32).unwrap()
+}
+
+pub fn pick_color(x: i32, y: i32, index: i32) -> Color {
+	from_color_t(ffi::pick_color(x, y, index))
+}
+
+pub fn pick_bgcolor(x: i32, y: i32) -> Color {
+	from_color_t(ffi::pick_bkcolor(x, y))
+}
+
+pub fn delay(period: i32) {
+	ffi::delay(period)
+}
+
+pub fn has_input() -> bool {
+	ffi::has_input()
+}
+
+pub fn measure(value: &str) -> i32 {
+	ffi::measure(value)
+}
+
+pub fn put_ext(pos: Point, offset: Point, cell: char, corners: &Vec<Color>) {
+	ffi::put_ext(pos.x, pos.y, offset.x, offset.y, cell as i32, &corners.iter().cloned().map(to_color_t).collect::<Vec<_>>()[..]);
 }
 
 pub fn read_event() -> Option<Event> {
@@ -90,11 +131,11 @@ pub fn set_colors(fg: Color, bg: Color) {
 }
 
 pub fn with_colors<F: Fn()>(fg: Color, bg: Color, callback: F) {
-	with_foreground(fg, || {
-		with_background(bg, || {
-			callback();
-		});
-	});
+	with_foreground(fg, ||
+		with_background(bg, ||
+			callback()
+		)
+	);
 }
 
 fn from_color_t(color: ColorT) -> Color {
