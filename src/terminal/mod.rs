@@ -8,7 +8,12 @@ use self::ffi::ColorT;
 pub use self::input::{Event, KeyCode};
 
 
-pub fn open(title: &str, width: i32, height: i32) {
+/// Creates the terminal window of the specified size with the specified title, without showing it.
+/// To show the window use the [`refresh()`](fn.refresh.html) function.
+///
+/// Equivalent to the [`terminal_open()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#open) with a subsequent call to
+/// the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with some defaults (**NOTE**: this will change).
+pub fn open(title: &str, width: u32, height: u32) {
 	let config = format!("
 		window: title='{}', size={}x{};
 		input: precise-mouse=false, filter=[keyboard, system];
@@ -20,26 +25,58 @@ pub fn open(title: &str, width: i32, height: i32) {
 	ffi::set(&config);
 }
 
+/// Closes the terminal window, causing all subsequent functions from the module (apart from [`open()`](fn.open.html)) to fail
+///
+/// Equivalent to the [`terminal_close()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#close).
 pub fn close() {
-	ffi::close()
+	ffi::close();
 }
 
+/// Prints the specified string to the specified location, formatting it along the way.
+///
+/// For formatting spec see the docs for the [`terminal_print()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#print).
 pub fn print(point: Point, value: &str) {
 	let _ = ffi::print(point.x, point.y, value);
 }
 
+/// Equivalent to [`print()`](fn.print.html) with a `Point` constructed from the first two arguments.
 pub fn print_xy(x: i32, y: i32, value: &str) {
 	print(Point::new(x, y), value);
 }
 
+/// Prints the specified character to the specified location.
+///
+/// Equivalent to the [`terminal_put()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put).
 pub fn put(point: Point, cell: char) {
 	ffi::put(point.x, point.y, cell as i32);
 }
 
-pub fn refresh() {
-	ffi::refresh()
+/// Equivalent to [`put()`](fn.put.html) with a `Point` constructed from the first two arguments.
+pub fn put_xy(x: i32, y: i32, cell: char) {
+	ffi::put(x, y, cell as i32);
 }
 
+/// Prints the specified character to the specified pixel-offsetted location, gradient-colouring it from the corners.
+///
+/// For details see the docs for the [`terminal_put_ext()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put_ext).
+pub fn put_ext(pos: Point, offset: Point, cell: char, corners: &Vec<Color>) {
+	ffi::put_ext(pos.x, pos.y, offset.x, offset.y, cell as i32, &corners.iter().cloned().map(to_color_t).collect::<Vec<_>>()[..]);
+}
+
+/// Flushes all changes made to the screen; also shows the window after the [`open()`](fn.open.html) call
+///
+/// Equivalent to the [`terminal_refresh()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#refresh).
+pub fn refresh() {
+	ffi::refresh();
+}
+
+/// Clears the screen (either partailly or fully)
+///
+/// If `area` is `None`, clears the entire screen, all layers
+/// (identically to the [`terminal_clear()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#clear).
+///
+/// Otherwise clears specified area on the current layer, as would the
+/// [`terminal_clear_area()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#clear_area).
 pub fn clear(area: Option<Rect>) {
 	match area {
 		Some(rect) => ffi::clear_area(rect.top_left.x, rect.top_left.y, rect.bottom_right.x, rect.bottom_right.y),
@@ -51,62 +88,116 @@ pub fn crop(x: i32, y: i32, width: i32, height: i32) {
 	ffi::crop(x, y, width, height);
 }
 
+/// Selects the current layer.
+///
+/// The layer `index` must be between 0 and 255.
+/// For more information consult the documentation for the [`terminal_layer()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#layer).
 pub fn layer(index: i32) {
 	ffi::layer(index);
 }
 
+/// Enable or disable composition, (dis)allowing for "stacking" tiles on top of each other in the same cell.
+///
+/// For details and other uses consult the documentation for the
+/// [`terminal_composition()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#composition).
 pub fn composition(enable: bool) {
 	ffi::composition(enable);
 }
 
-pub fn pick(x: i32, y: i32, index: i32) -> char {
-	char::from_u32(ffi::pick(x, y, index) as u32).unwrap()
+/// Get the character in the specified coordinates on the specified layer.
+///
+/// Returns 0 if the cell is empty on the specified layer.
+///
+/// Consult the documentation for the [`terminal_pick()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick) for more data.
+pub fn pick(point: Point, index: i32) -> char {
+	char::from_u32(ffi::pick(point.x, point.y, index) as u32).unwrap()
 }
 
-pub fn pick_color(x: i32, y: i32, index: i32) -> Color {
-	from_color_t(ffi::pick_color(x, y, index))
+/// Get the color of the character in the specified coordinates on the specified layer.
+///
+/// Consult the documentation for the [`terminal_pick_color()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_color),
+/// despite its laconicity.
+pub fn pick_color(point: Point, index: i32) -> Color {
+	from_color_t(ffi::pick_color(point.x, point.y, index))
 }
 
-pub fn pick_bgcolor(x: i32, y: i32) -> Color {
-	from_color_t(ffi::pick_bkcolor(x, y))
+/// Get the background color in the specified coordinates.
+///
+/// Consult the documentation for the [`terminal_pick_bkcolor()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_bkcolor)
+/// for the same amount of information.
+pub fn pick_bgcolor(point: Point) -> Color {
+	from_color_t(ffi::pick_bkcolor(point.x, point.y))
 }
 
+/// Sleep for the specified amount of milliseconds.
+///
+/// See the [`terminal_delay()` C API function's documentation](http://foo.wyrd.name/en:bearlibterminal:reference#delay).
 pub fn delay(period: i32) {
 	ffi::delay(period)
 }
 
+/// Check, whether the next [`read_event()`](fn.read_event.html) call will return `Some`.
+///
+/// Consult the [documentation for the `terminal_has_input()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#has_input).
 pub fn has_input() -> bool {
 	ffi::has_input()
 }
 
+/// Calculate the argument's width/height without printing it.
+///
+/// Whether the function returns the width or the height depends on the presence of the `bbox` tag in the string.
+///
+/// Refer to the [docs for the `terminal_measure()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#measure), note,
+/// that the return type therein is incorrect.
 pub fn measure(value: &str) -> i32 {
 	ffi::measure(value)
 }
 
-pub fn put_ext(pos: Point, offset: Point, cell: char, corners: &Vec<Color>) {
-	ffi::put_ext(pos.x, pos.y, offset.x, offset.y, cell as i32, &corners.iter().cloned().map(to_color_t).collect::<Vec<_>>()[..]);
-}
-
+/// Returns the next event in the queue if it's available, otherwise returns `None`.
+///
+/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.
+///
+/// This is equivalent to the behaviour mentioned in the
+/// [docs for the `terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read), but not the function's behaviour itself.
 pub fn read_event() -> Option<Event> {
-	if !has_event() {
+	if !has_input() {
 		None
 	} else {
 		wait_event()
 	}
 }
 
+/// Returns the next event in the queue if it's available without popping it therefrom, otherwise returns `None`.
+///
+/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.
+///
+/// If one intends on popping the events, the [`read_event()`](fn.read_event.html) function is recommended.
+///
+/// If one intends on just checking if an event is ready, the [`has_input()`](fn.has_input.html) function is recommended.
+///
+/// This is equivalent to the [`terminal_peek()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#peek).
+pub fn peek_event() -> Option<Event> {
+	match ffi::peek() {
+		0 => None,
+		event => to_event(event),
+	}
+}
+
+/// Returns the next event, blocks until one's available.
+///
+/// This is equivalent to the [`terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read).
 pub fn wait_event() -> Option<Event> {
 	to_event(ffi::read())
 }
 
-pub fn has_event() -> bool {
-	ffi::peek() != 0
-}
-
+/// Sets the current foreground color, which will affect all the output functions called later.
+///
+/// This is equivalent to the [`terminal_color()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#color).
 pub fn set_foreground(color: Color) {
 	ffi::color(to_color_t(color));
 }
 
+/// Sets the foreground color before calling the function and resets it afterwards.
 pub fn with_foreground<F: Fn()>(color: Color, callback: F) {
 	let current = ffi::state_color(ffi::TK_COLOR);
 	set_foreground(color);
@@ -114,10 +205,14 @@ pub fn with_foreground<F: Fn()>(color: Color, callback: F) {
 	ffi::color(current);
 }
 
+/// Sets the current background color, which will affect all the output functions called later.
+///
+/// This is equivalent to the [`terminal_bkcolor()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#bkcolor).
 pub fn set_background(color: Color) {
 	ffi::bkcolor(to_color_t(color));
 }
 
+/// Sets the background color before calling the function and resets it afterwards.
 pub fn with_background<F: Fn()>(color: Color, callback: F) {
 	let current = ffi::state_color(ffi::TK_BKCOLOR);
 	set_background(color);
@@ -125,11 +220,15 @@ pub fn with_background<F: Fn()>(color: Color, callback: F) {
 	ffi::bkcolor(current);
 }
 
+/// Sets the current foreground and background color, which will affect all the output functions called later.
+///
+/// This is equivalent to calling [`set_background()`](fn.set_background.html) and [`set_foreground()`](fn.set_foreground.html) in succession.
 pub fn set_colors(fg: Color, bg: Color) {
 	set_foreground(fg);
 	set_background(bg);
 }
 
+/// Sets the foreground and background color before calling the function and resets them afterwards.
 pub fn with_colors<F: Fn()>(fg: Color, bg: Color, callback: F) {
 	with_foreground(fg, ||
 		with_background(bg, ||
@@ -259,11 +358,14 @@ fn to_keycode(code: i32) -> Option<KeyCode> {
 }
 
 fn to_event(code: i32) -> Option<Event> {
+	println!("Event: {}", code);
 	match code {
 		ffi::TK_CLOSE        => Some(Event::Close),
 		ffi::TK_RESIZED      => Some(Event::Resize),
 		ffi::TK_MOUSE_MOVE   => Some(get_mouse_move()),
 		ffi::TK_MOUSE_SCROLL => Some(get_mouse_scroll()),
+		ffi::TK_SHIFT        => Some(Event::Shift),
+		ffi::TK_CONTROL      => Some(Event::Control),
 		_                    => to_key_event(code),
 	}
 }

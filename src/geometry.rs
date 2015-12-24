@@ -1,3 +1,4 @@
+/// Represents a single on-screen point/coordinate pair
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Point {
 	pub x: i32,
@@ -5,6 +6,7 @@ pub struct Point {
 }
 
 impl Point {
+	/// Creates a new point on the specified non-negative coordinates
 	pub fn new(x: i32, y: i32) -> Self {
 		assert!(x >= 0);
 		assert!(y >= 0);
@@ -13,6 +15,7 @@ impl Point {
 	}
 }
 
+/// A 2D size representation
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Size {
 	pub width: i32,
@@ -20,6 +23,7 @@ pub struct Size {
 }
 
 impl Size {
+	/// Creates a new non-negative size
 	pub fn new(width: i32, height: i32) -> Self {
 		assert!(width >= 0);
 		assert!(height >= 0);
@@ -28,6 +32,7 @@ impl Size {
 	}
 }
 
+/// A rectangle, described by its four corners and a size
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Rect {
 	pub top_left: Point,

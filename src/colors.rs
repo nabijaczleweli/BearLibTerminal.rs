@@ -1,3 +1,4 @@
+/// An RGBA colour
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Color {
 	pub red: u8,
@@ -7,9 +8,10 @@ pub struct Color {
 }
 
 impl Color {
+	/// Equivalent to [`from_rgba()`](fn.from_rgba.html) with full opacity
 	pub fn from_rgb(red: u8, green: u8, blue: u8) -> Self {
 		Color{
-			red: red, green: green, blue: blue, alpha: 255
+			red: red, green: green, blue: blue, alpha: 0xFF
 		}
 	}
 
