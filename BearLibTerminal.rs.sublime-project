@@ -8,6 +8,14 @@
 
 			"target": "ansi_color_build",
 			"syntax": "Packages/ANSIescape/ANSI.tmLanguage"
+		},
+		{
+			"working_dir": "$project_path",
+			"shell_cmd": "cargo doc -p bear-lib-terminal --color always",
+			"name": "Document BearLibTerminal.rs",
+
+			"target": "ansi_color_build",
+			"syntax": "Packages/ANSIescape/ANSI.tmLanguage"
 		}
 	],
 	"folders":
