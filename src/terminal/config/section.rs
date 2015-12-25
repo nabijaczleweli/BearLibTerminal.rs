@@ -12,7 +12,7 @@ pub struct Terminal {
 	/// Encoding used for unibyte strings. This is better left at default, as Rust uses UTF-8 for everything.
 	///
 	/// Default: `"utf8"`
-	pub encoding: Option<String>, //TODO: use an enum/validated struct?
+	pub encoding: Option<String>,  //TODO: use an enum/validated struct?
 }
 
 impl Terminal {
@@ -38,6 +38,8 @@ impl ConfigPart for Terminal {
 
 
 /// The `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
+///
+/// `None` values will not override current ones.
 ///
 /// See [`terminal::configure()`](../fn.configure.html).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -69,19 +71,47 @@ pub struct Window {
 }
 
 impl Window {
-	/// Construct a new `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
-	///
-	/// `None` values will not override current ones.
-	pub fn new<T: AsRef<Path>>(size: Option<Size>, cellsize: Option<Cellsize>, title: Option<String>, icon: Option<T>, resizeable: Option<bool>,
-	                           fullscreen: Option<bool>) -> Window {
+	/// Construct a `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
+	/// with everything being equal to `None`.
+	pub fn empty() -> Window {
 		Window{
-			size: size,
-			cellsize: cellsize,
-			title: title,
-			icon: icon.map(|s| s.as_ref().to_str().unwrap().to_string()),
-			resizeable: resizeable,
-			fullscreen: fullscreen,
+			size: None,
+			cellsize: None,
+			title: None,
+			icon: None,
+			resizeable: None,
+			fullscreen: None,
 		}
+	}
+
+	pub fn size(mut self, size: Size) -> Window {
+		self.size = Some(size);
+		self
+	}
+
+	pub fn cellsize(mut self, cellsize: Cellsize) -> Window {
+		self.cellsize = Some(cellsize);
+		self
+	}
+
+	pub fn title(mut self, title: String) -> Window {
+		self.title = Some(title);
+		self
+	}
+
+	pub fn icon<T: AsRef<Path>>(mut self, icon: T) -> Window {
+		self.icon = Some(icon.as_ref().to_str().unwrap().to_string());
+		self
+	}
+
+	pub fn resizeable(mut self, resizeable: bool) -> Window {
+		self.resizeable = Some(resizeable);
+		self
+	}
+
+	pub fn fullscreen(mut self, fullscreen: bool) -> Window {
+		self.fullscreen = Some(fullscreen);
+		self
 	}
 }
 
@@ -128,6 +158,8 @@ impl ConfigPart for Window {
 
 /// The `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
+/// `None` values will not override current ones.
+///
 /// See [`terminal::configure()`](../fn.configure.html).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Input {
@@ -150,16 +182,35 @@ pub struct Input {
 }
 
 impl Input {
-	/// Construct a new `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
-	///
-	/// `None` values will not override current ones.
-	pub fn new(precise_mouse: Option<bool>, mouse_cursor: Option<bool>, cursor_symbol: Option<char>, cursor_blink_rate: Option<i32>) -> Input {
+	/// Construct an `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
+	/// with all elements equal to `None`.
+	pub fn empty() -> Input {
 		Input{
-			precise_mouse: precise_mouse,
-			mouse_cursor: mouse_cursor,
-			cursor_symbol: cursor_symbol,
-			cursor_blink_rate: cursor_blink_rate,
+			precise_mouse: None,
+			mouse_cursor: None,
+			cursor_symbol: None,
+			cursor_blink_rate: None,
 		}
+	}
+
+	pub fn precise_mouse(mut self, precise_mouse: bool) -> Input {
+		self.precise_mouse = Some(precise_mouse);
+		self
+	}
+
+	pub fn mouse_cursor(mut self, mouse_cursor: bool) -> Input {
+		self.mouse_cursor = Some(mouse_cursor);
+		self
+	}
+
+	pub fn cursor_symbol(mut self, cursor_symbol: char) -> Input {
+		self.cursor_symbol = Some(cursor_symbol);
+		self
+	}
+
+	pub fn cursor_blink_rate(mut self, cursor_blink_rate: i32) -> Input {
+		self.cursor_blink_rate = Some(cursor_blink_rate);
+		self
 	}
 }
 
@@ -193,6 +244,8 @@ impl ConfigPart for Input {
 
 /// The `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
+/// `None` values will not override current ones.
+///
 /// See [`terminal::configure()`](../fn.configure.html).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Output {
@@ -208,13 +261,21 @@ pub struct Output {
 
 impl Output {
 	/// Construct a new `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
-	///
-	/// `None` values will not override current ones.
-	pub fn new(postformatting: Option<bool>, vsync: Option<bool>) -> Output {
+	pub fn clean() -> Output {
 		Output{
-			postformatting: postformatting,
-			vsync: vsync,
+			postformatting: None,
+			vsync: None,
 		}
+	}
+
+	pub fn postformatting(mut self, postformatting: bool) -> Output {
+		self.postformatting = Some(postformatting);
+		self
+	}
+
+	pub fn vsync(mut self, vsync: bool) -> Output {
+		self.vsync = Some(vsync);
+		self
 	}
 }
 
@@ -240,6 +301,8 @@ impl ConfigPart for Output {
 
 /// The `log` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
+/// `None` values will not override current ones.
+///
 /// See [`terminal::configure()`](../fn.configure.html).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Log {
@@ -258,15 +321,29 @@ pub struct Log {
 }
 
 impl Log {
-	/// Construct a new `log` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
-	///
-	/// `None` values will not override current ones.
-	pub fn new(file: Option<String>, level: Option<LogLevel>, mode: Option<LogMode>) -> Log {
+	/// Construct an `log` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
+	/// with everything set to `None`
+	pub fn empty() -> Log {
 		Log{
-			file: file,
-			level: level,
-			mode: mode,
+			file: None,
+			level: None,
+			mode: None,
 		}
+	}
+
+	pub fn file(mut self, file: String) -> Log {
+		self.file = Some(file);
+		self
+	}
+
+	pub fn level(mut self, level: LogLevel) -> Log {
+		self.level = Some(level);
+		self
+	}
+
+	pub fn mode(mut self, mode: LogMode) -> Log {
+		self.mode = Some(mode);
+		self
 	}
 }
 
@@ -326,6 +403,7 @@ impl fmt::Display for LogLevel {
 		})
 	}
 }
+
 
 /// Log writing mode.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
