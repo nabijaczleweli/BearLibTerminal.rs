@@ -1,3 +1,6 @@
+use std::fmt;
+
+
 /// Represents a single on-screen point/coordinate pair
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Point {
@@ -15,6 +18,7 @@ impl Point {
 	}
 }
 
+
 /// A 2D size representation
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Size {
@@ -31,6 +35,13 @@ impl Size {
 		Size{width: width, height: height}
 	}
 }
+
+impl fmt::Display for Size {
+	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+		write!(formatter, "{}x{}", self.width, self.height)
+	}
+}
+
 
 /// A rectangle, described by its four corners and a size
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]

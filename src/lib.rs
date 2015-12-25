@@ -17,7 +17,7 @@
 
 extern crate libc;
 
-pub mod colors;
+mod colors;
 pub mod geometry;
 pub mod terminal;
 

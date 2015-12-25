@@ -1,5 +1,7 @@
+use std::fmt;
 use std::path::Path;
 use geometry::Size;
+use terminal::config::{ConfigPart, escape_config_string};
 
 
 /// The `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
@@ -24,6 +26,16 @@ impl Terminal {
 		}
 	}
 }
+
+impl ConfigPart for Terminal {
+	fn to_config_str(&self) -> String {
+		match self.encoding {
+			Some(ref encoding) => format!("terminal.encoding={};", escape_config_string(&encoding)),
+			None               => "".to_string(),
+		}
+	}
+}
+
 
 /// The `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
@@ -73,6 +85,46 @@ impl Window {
 	}
 }
 
+impl ConfigPart for Window {
+	fn to_config_str(&self) -> String {
+		if self.size.is_some() || self.cellsize.is_some() || self.title.is_some() || self.icon.is_some() || self.resizeable.is_some() ||
+		   self.fullscreen.is_some() {
+			format!("window: {}, {}, {}, {}, {}, {};",
+				match self.size {
+					Some(ref size) => format!("size={}", size),
+					None           => "".to_string(),
+				},
+				match self.cellsize {
+					Some(ref cellsize) =>
+						match cellsize {
+							&Cellsize::Sized(size) => format!("cellsize={}", size),
+							&Cellsize::Auto        => "cellsize=auto".to_string(),
+						},
+					None               => "".to_string(),
+				},
+				match self.title {
+					Some(ref title) => format!("title={}", escape_config_string(&title)),
+					None            => "".to_string(),
+				},
+				match self.icon {
+					Some(ref icon) => format!("icon={}", escape_config_string(&icon)),
+					None           => "".to_string(),
+				},
+				match self.resizeable {
+					Some(ref resizeable) => format!("resizeable={}", resizeable),
+					None                 => "".to_string(),
+				},
+				match self.fullscreen {
+					Some(ref fullscreen) => format!("fullscreen={}", fullscreen),
+					None                 => "".to_string(),
+				},
+			)
+		} else {
+			"".to_string()
+		}
+	}
+}
+
 
 /// The `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
@@ -111,6 +163,33 @@ impl Input {
 	}
 }
 
+impl ConfigPart for Input {
+	fn to_config_str(&self) -> String {
+		if self.precise_mouse.is_some() || self.mouse_cursor.is_some() || self.cursor_symbol.is_some() || self.cursor_blink_rate.is_some() {
+			format!("input: {}, {}, {}, {};",
+				match self.precise_mouse {
+					Some(ref precise_mouse) => format!("precise-mouse={}", precise_mouse),
+					None                    => "".to_string(),
+				},
+				match self.mouse_cursor {
+					Some(ref mouse_cursor) => format!("mouse-cursor={}", mouse_cursor),
+					None                   => "".to_string(),
+				},
+				match self.cursor_symbol {
+					Some(ref cursor_symbol) => format!("cursor-symbol=0x{:x}", *cursor_symbol as i8),
+					None                    => "".to_string(),
+				},
+				match self.cursor_blink_rate {
+					Some(ref cursor_blink_rate) => format!("cursor-blink-rate={}", cursor_blink_rate),
+					None                        => "".to_string(),
+				},
+			)
+		} else {
+			"".to_string()
+		}
+	}
+}
+
 
 /// The `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
@@ -135,6 +214,25 @@ impl Output {
 		Output{
 			postformatting: postformatting,
 			vsync: vsync,
+		}
+	}
+}
+
+impl ConfigPart for Output {
+	fn to_config_str(&self) -> String {
+		if self.postformatting.is_some() || self.vsync.is_some() {
+			format!("output: {}, {};",
+				match self.postformatting {
+					Some(ref postformatting) => format!("postformatting={}", postformatting),
+					None                     => "".to_string(),
+				},
+				match self.vsync {
+					Some(ref vsync) => format!("vsync={}", vsync),
+					None            => "".to_string(),
+				},
+			)
+		} else {
+			"".to_string()
 		}
 	}
 }
@@ -172,6 +270,29 @@ impl Log {
 	}
 }
 
+impl ConfigPart for Log {
+	fn to_config_str(&self) -> String {
+		if self.file.is_some() || self.level.is_some() || self.mode.is_some() {
+			format!("log: {}, {}, {};",
+				match self.file {
+					Some(ref file) => format!("file={}", escape_config_string(&file)),
+					None           => "".to_string(),
+				},
+				match self.level {
+					Some(ref level) => format!("level={}", level),
+					None            => "".to_string(),
+				},
+				match self.mode {
+					Some(ref mode) => format!("mode={}", mode),
+					None            => "".to_string(),
+				},
+			)
+		} else {
+			"".to_string()
+		}
+	}
+}
+
 
 /// Possible cell size, `Auto` will make the size be selected based on the font.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -192,6 +313,20 @@ pub enum LogLevel {
 	Trace,
 }
 
+impl fmt::Display for LogLevel {
+	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+		formatter.write_str(match self {
+			&LogLevel::None    => "none",
+			&LogLevel::Fatal   => "fatal",
+			&LogLevel::Error   => "error",
+			&LogLevel::Warning => "warning",
+			&LogLevel::Info    => "info",
+			&LogLevel::Debug   => "debug",
+			&LogLevel::Trace   => "trace",
+		})
+	}
+}
+
 /// Log writing mode.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum LogMode {
@@ -199,4 +334,13 @@ pub enum LogMode {
 	Truncate,
 	/// Continue writing at the end.
 	Append,
+}
+
+impl fmt::Display for LogMode {
+	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+		formatter.write_str(match self {
+			&LogMode::Truncate => "truncate",
+			&LogMode::Append   => "append",
+		})
+	}
 }
