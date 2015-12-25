@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Input` struct in crate `bear_lib_terminal`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Input">
+
+    <title>bear_lib_terminal::terminal::config::Input - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../../index.html'>bear_lib_terminal</a>::<wbr><a href='../index.html'>terminal</a>::<wbr><a href='index.html'>config</a></p><script>window.sidebarCurrent = {name: 'Input', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>bear_lib_terminal</a>::<wbr><a href='../index.html'>terminal</a>::<wbr><a href='index.html'>config</a>::<wbr><a class='struct' href=''>Input</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-1006' class='srclink' href='../../../src/bear_lib_terminal/terminal/config/section.rs.html#165-182' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Input {
+    pub precise_mouse: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;,
+    pub mouse_cursor: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;,
+    pub cursor_symbol: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>&gt;,
+    pub cursor_blink_rate: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>&gt;,
+}</pre><div class='docblock'><p>The <code>input</code> <a href="http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration">configuration</a> section repr.</p>
+
+<p><code>None</code> values will not override current ones.</p>
+
+<p>See <a href="../fn.configure.html"><code>terminal::configure()</code></a>.</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr class='stab '>
+                                  <td id='structfield.precise_mouse'><code>precise_mouse</code></td><td><div class='docblock'><p>Whether to generate a mouse-move event when a mouse moves from one pixel to another as opposed to from one cell to another.</p>
+
+<p>Default: <code>false</code></p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.mouse_cursor'><code>mouse_cursor</code></td><td><div class='docblock'><p>Whether to show the cursor.</p>
+
+<p>Default: <code>true</code></p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.cursor_symbol'><code>cursor_symbol</code></td><td><div class='docblock'><p>The cursor symbol to blink in the read string function.</p>
+
+<p>Default: <code>&#39;_&#39;</code> a.k.a. <code>0x5F</code></p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.cursor_blink_rate'><code>cursor_blink_rate</code></td><td><div class='docblock'><p>Amount of time in milliseconds to blink the cursor symbol for.</p>
+
+<p>Default: <code>500</code></p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h3><div class='impl-items'><h4 id='method.empty' class='method'><code>fn <a href='#method.empty' class='fnname'>empty</a>() -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h4>
+<div class='docblock'><p>Construct an <code>input</code> <a href="http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration">configuration</a> section override segment
+with all elements equal to <code>None</code>.</p>
+</div><h4 id='method.precise_mouse' class='method'><code>fn <a href='#method.precise_mouse' class='fnname'>precise_mouse</a>(self, precise_mouse: <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h4>
+<h4 id='method.mouse_cursor' class='method'><code>fn <a href='#method.mouse_cursor' class='fnname'>mouse_cursor</a>(self, mouse_cursor: <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h4>
+<h4 id='method.cursor_symbol' class='method'><code>fn <a href='#method.cursor_symbol' class='fnname'>cursor_symbol</a>(self, cursor_symbol: <a href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h4>
+<h4 id='method.cursor_blink_rate' class='method'><code>fn <a href='#method.cursor_blink_rate' class='fnname'>cursor_blink_rate</a>(self, cursor_blink_rate: <a href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h3><div class='impl-items'><h4 id='method.to_config_str' class='method'><code>fn <a href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html#method.to_config_str' class='fnname'>to_config_str</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h3><div class='impl-items'><h4 id='method.hash' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash' class='fnname'>hash</a>&lt;__H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a>&gt;(&amp;self, __arg_0: &amp;mut __H)</code></h4>
+<h4 id='method.hash_slice' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a>) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a>) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h3><div class='impl-items'></div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></h4>
+<h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "bear_lib_terminal";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    
+    <script async src="../../../search-index.js"></script>
+</body>
+</html>

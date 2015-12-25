@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Window` struct in crate `bear_lib_terminal`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Window">
+
+    <title>bear_lib_terminal::terminal::config::Window - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../../index.html'>bear_lib_terminal</a>::<wbr><a href='../index.html'>terminal</a>::<wbr><a href='index.html'>config</a></p><script>window.sidebarCurrent = {name: 'Window', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>bear_lib_terminal</a>::<wbr><a href='../index.html'>terminal</a>::<wbr><a href='index.html'>config</a>::<wbr><a class='struct' href=''>Window</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-873' class='srclink' href='../../../src/bear_lib_terminal/terminal/config/section.rs.html#46-71' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Window {
+    pub size: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../../bear_lib_terminal/geometry/struct.Size.html' title='bear_lib_terminal::geometry::Size'>Size</a>&gt;,
+    pub cellsize: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.Cellsize.html' title='bear_lib_terminal::terminal::config::Cellsize'>Cellsize</a>&gt;,
+    pub title: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub icon: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub resizeable: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;,
+    pub fullscreen: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;,
+}</pre><div class='docblock'><p>The <code>window</code> <a href="http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration">configuration</a> section repr.</p>
+
+<p><code>None</code> values will not override current ones.</p>
+
+<p>See <a href="../fn.configure.html"><code>terminal::configure()</code></a>.</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr class='stab '>
+                                  <td id='structfield.size'><code>size</code></td><td><div class='docblock'><p>Window size in cells.</p>
+
+<p>Default: <code>80x25</code></p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.cellsize'><code>cellsize</code></td><td><div class='docblock'><p>Size of all cells, in pixels.</p>
+
+<p>Default: <a href="enum.Cellsize.html#variant.Auto"><code>Cellsize::Auto</code></a></p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.title'><code>title</code></td><td><div class='docblock'><p>The terminal window&#39;s title.</p>
+
+<p>Default: <code>&quot;BearLibTerminal&quot;</code></p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.icon'><code>icon</code></td><td><div class='docblock'><p>The path of the icon used for the terminal window.</p>
+
+<p>Default: none</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.resizeable'><code>resizeable</code></td><td><div class='docblock'><p>Whether the terminal window should be resizeable.</p>
+
+<p>Default: <code>false</code></p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.fullscreen'><code>fullscreen</code></td><td><div class='docblock'><p>Whether to enforce fullscreen mode.</p>
+
+<p>Default: <code>false</code></p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h3><div class='impl-items'><h4 id='method.empty' class='method'><code>fn <a href='#method.empty' class='fnname'>empty</a>() -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h4>
+<div class='docblock'><p>Construct a <code>window</code> <a href="http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration">configuration</a> section override segment
+with everything being equal to <code>None</code>.</p>
+</div><h4 id='method.size' class='method'><code>fn <a href='#method.size' class='fnname'>size</a>(self, size: <a class='struct' href='../../../bear_lib_terminal/geometry/struct.Size.html' title='bear_lib_terminal::geometry::Size'>Size</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h4>
+<h4 id='method.cellsize' class='method'><code>fn <a href='#method.cellsize' class='fnname'>cellsize</a>(self, cellsize: <a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.Cellsize.html' title='bear_lib_terminal::terminal::config::Cellsize'>Cellsize</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h4>
+<h4 id='method.title' class='method'><code>fn <a href='#method.title' class='fnname'>title</a>(self, title: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h4>
+<h4 id='method.icon' class='method'><code>fn <a href='#method.icon' class='fnname'>icon</a>&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(self, icon: T) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h4>
+<h4 id='method.resizeable' class='method'><code>fn <a href='#method.resizeable' class='fnname'>resizeable</a>(self, resizeable: <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h4>
+<h4 id='method.fullscreen' class='method'><code>fn <a href='#method.fullscreen' class='fnname'>fullscreen</a>(self, fullscreen: <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h3><div class='impl-items'><h4 id='method.to_config_str' class='method'><code>fn <a href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html#method.to_config_str' class='fnname'>to_config_str</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h3><div class='impl-items'><h4 id='method.hash' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash' class='fnname'>hash</a>&lt;__H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a>&gt;(&amp;self, __arg_0: &amp;mut __H)</code></h4>
+<h4 id='method.hash_slice' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a>) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a>) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h3><div class='impl-items'></div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></h4>
+<h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "bear_lib_terminal";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    
+    <script async src="../../../search-index.js"></script>
+</body>
+</html>
