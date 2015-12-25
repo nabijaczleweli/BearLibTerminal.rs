@@ -1,5 +1,6 @@
 mod ffi;
 mod input;
+pub mod config;
 
 use std::char;
 use geometry::{Rect, Point};
