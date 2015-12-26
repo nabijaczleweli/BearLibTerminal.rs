@@ -5,6 +5,7 @@
 !README.md
 !Cargo.toml
 !*.sublime-project
+!gh_rsa.enc
 !src
 !src/**
 !examples

@@ -14,6 +14,9 @@ addons:
     sources:
       - r-packages-precise
 
+before_install:
+  - openssl aes-256-cbc -K $encrypted_2620d498bbb7_key -iv $encrypted_2620d498bbb7_iv -in gh_rsa.enc -out gh_rsa -d
+
 install:
   - git clone https://github.com/nabijaczleweli/BearLibTerminal ~/BearLibTerminal && cd ~/BearLibTerminal/Build
   - cmake -G"Unix Makefiles" .. && make BearLibTerminal
@@ -22,3 +25,16 @@ install:
 script:
   - LD_PRELOAD=~/lib/libBearLibTerminal.so LD_LIBRARY_PATH="~/lib:$LD_LIBRARY_PATH" LIBRARY_PATH=~/lib cargo build --verbose
   - LD_PRELOAD=~/lib/libBearLibTerminal.so LD_LIBRARY_PATH="~/lib:$LD_LIBRARY_PATH" LIBRARY_PATH=~/lib cargo test --verbose
+
+after_script:
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then echo "Update docs for commits $TRAVIS_COMMIT_RANGE" > $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then echo >> $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then git log $TRAVIS_COMMIT_RANGE --pretty=oneline >> $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then mkdir -p ~/.ssh && cp gh_rsa ~/.ssh/id_rsa && chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then git clone -b doc git@github.com:nabijaczleweli/BearLibTerminal.rs.git $TRAVIS_BUILD_DIR-doc; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then ln -s $TRAVIS_BUILD_DIR-doc target/doc; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then LIBRARY_PATH=~/lib cargo doc; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then cd $TRAVIS_BUILD_DIR-doc; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then git config --global user.email "nabijaczleweli@gmail.com" && git config --global user.name "Nabijaczleweli Autouploader Bot" && git config --global push.default simple; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then git add * && git commit -F $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG; fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then git push && cd $TRAVIS_BUILD_DIR; fi
