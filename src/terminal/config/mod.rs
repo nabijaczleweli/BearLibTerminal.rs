@@ -1,6 +1,8 @@
 mod section;
+mod input_filter;
 
 pub use self::section::*;
+pub use self::input_filter::*;
 
 
 pub trait ConfigPart {
