@@ -15,28 +15,6 @@ pub struct Terminal {
 	pub encoding: Option<String>,  //TODO: use an enum/validated struct?
 }
 
-impl Terminal {
-	/// Construct a new `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override
-	/// segment
-	///
-	/// `None` values will not override current ones.
-	pub fn new(encoding: Option<String>) -> Terminal {
-		Terminal{
-			encoding: encoding,
-		}
-	}
-}
-
-impl ConfigPart for Terminal {
-	fn to_config_str(&self) -> String {
-		match self.encoding {
-			Some(ref encoding) => format!("terminal.encoding={};", escape_config_string(&encoding)),
-			None               => "".to_string(),
-		}
-	}
-}
-
-
 /// The `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
 /// `None` values will not override current ones.
@@ -70,92 +48,6 @@ pub struct Window {
 	pub fullscreen: Option<bool>,
 }
 
-impl Window {
-	/// Construct a `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
-	/// with everything being equal to `None`.
-	pub fn empty() -> Window {
-		Window{
-			size: None,
-			cellsize: None,
-			title: None,
-			icon: None,
-			resizeable: None,
-			fullscreen: None,
-		}
-	}
-
-	pub fn size(mut self, size: Size) -> Window {
-		self.size = Some(size);
-		self
-	}
-
-	pub fn cellsize(mut self, cellsize: Cellsize) -> Window {
-		self.cellsize = Some(cellsize);
-		self
-	}
-
-	pub fn title(mut self, title: String) -> Window {
-		self.title = Some(title);
-		self
-	}
-
-	pub fn icon<T: AsRef<Path>>(mut self, icon: T) -> Window {
-		self.icon = Some(icon.as_ref().to_str().unwrap().to_string());
-		self
-	}
-
-	pub fn resizeable(mut self, resizeable: bool) -> Window {
-		self.resizeable = Some(resizeable);
-		self
-	}
-
-	pub fn fullscreen(mut self, fullscreen: bool) -> Window {
-		self.fullscreen = Some(fullscreen);
-		self
-	}
-}
-
-impl ConfigPart for Window {
-	fn to_config_str(&self) -> String {
-		if self.size.is_some() || self.cellsize.is_some() || self.title.is_some() || self.icon.is_some() || self.resizeable.is_some() ||
-		   self.fullscreen.is_some() {
-			format!("window: {}, {}, {}, {}, {}, {};",
-				match self.size {
-					Some(ref size) => format!("size={}", size),
-					None           => "".to_string(),
-				},
-				match self.cellsize {
-					Some(ref cellsize) =>
-						match cellsize {
-							&Cellsize::Sized(size) => format!("cellsize={}", size),
-							&Cellsize::Auto        => "cellsize=auto".to_string(),
-						},
-					None               => "".to_string(),
-				},
-				match self.title {
-					Some(ref title) => format!("title={}", escape_config_string(&title)),
-					None            => "".to_string(),
-				},
-				match self.icon {
-					Some(ref icon) => format!("icon={}", escape_config_string(&icon)),
-					None           => "".to_string(),
-				},
-				match self.resizeable {
-					Some(ref resizeable) => format!("resizeable={}", resizeable),
-					None                 => "".to_string(),
-				},
-				match self.fullscreen {
-					Some(ref fullscreen) => format!("fullscreen={}", fullscreen),
-					None                 => "".to_string(),
-				},
-			)
-		} else {
-			"".to_string()
-		}
-	}
-}
-
-
 /// The `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
 /// `None` values will not override current ones.
@@ -181,67 +73,6 @@ pub struct Input {
 	pub cursor_blink_rate: Option<i32>,
 }
 
-impl Input {
-	/// Construct an `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
-	/// with all elements equal to `None`.
-	pub fn empty() -> Input {
-		Input{
-			precise_mouse: None,
-			mouse_cursor: None,
-			cursor_symbol: None,
-			cursor_blink_rate: None,
-		}
-	}
-
-	pub fn precise_mouse(mut self, precise_mouse: bool) -> Input {
-		self.precise_mouse = Some(precise_mouse);
-		self
-	}
-
-	pub fn mouse_cursor(mut self, mouse_cursor: bool) -> Input {
-		self.mouse_cursor = Some(mouse_cursor);
-		self
-	}
-
-	pub fn cursor_symbol(mut self, cursor_symbol: char) -> Input {
-		self.cursor_symbol = Some(cursor_symbol);
-		self
-	}
-
-	pub fn cursor_blink_rate(mut self, cursor_blink_rate: i32) -> Input {
-		self.cursor_blink_rate = Some(cursor_blink_rate);
-		self
-	}
-}
-
-impl ConfigPart for Input {
-	fn to_config_str(&self) -> String {
-		if self.precise_mouse.is_some() || self.mouse_cursor.is_some() || self.cursor_symbol.is_some() || self.cursor_blink_rate.is_some() {
-			format!("input: {}, {}, {}, {};",
-				match self.precise_mouse {
-					Some(ref precise_mouse) => format!("precise-mouse={}", precise_mouse),
-					None                    => "".to_string(),
-				},
-				match self.mouse_cursor {
-					Some(ref mouse_cursor) => format!("mouse-cursor={}", mouse_cursor),
-					None                   => "".to_string(),
-				},
-				match self.cursor_symbol {
-					Some(ref cursor_symbol) => format!("cursor-symbol=0x{:x}", *cursor_symbol as i8),
-					None                    => "".to_string(),
-				},
-				match self.cursor_blink_rate {
-					Some(ref cursor_blink_rate) => format!("cursor-blink-rate={}", cursor_blink_rate),
-					None                        => "".to_string(),
-				},
-			)
-		} else {
-			"".to_string()
-		}
-	}
-}
-
-
 /// The `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
 /// `None` values will not override current ones.
@@ -257,46 +88,6 @@ pub struct Output {
 	///
 	/// Default: `true`
 	pub vsync: Option<bool>,
-}
-
-impl Output {
-	/// Construct an `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
-	/// with all values equalling `None`
-	pub fn clean() -> Output {
-		Output{
-			postformatting: None,
-			vsync: None,
-		}
-	}
-
-	pub fn postformatting(mut self, postformatting: bool) -> Output {
-		self.postformatting = Some(postformatting);
-		self
-	}
-
-	pub fn vsync(mut self, vsync: bool) -> Output {
-		self.vsync = Some(vsync);
-		self
-	}
-}
-
-impl ConfigPart for Output {
-	fn to_config_str(&self) -> String {
-		if self.postformatting.is_some() || self.vsync.is_some() {
-			format!("output: {}, {};",
-				match self.postformatting {
-					Some(ref postformatting) => format!("postformatting={}", postformatting),
-					None                     => "".to_string(),
-				},
-				match self.vsync {
-					Some(ref vsync) => format!("vsync={}", vsync),
-					None            => "".to_string(),
-				},
-			)
-		} else {
-			"".to_string()
-		}
-	}
 }
 
 
@@ -321,56 +112,6 @@ pub struct Log {
 	pub mode: Option<LogMode>,
 }
 
-impl Log {
-	/// Construct an `log` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
-	/// with everything set to `None`
-	pub fn empty() -> Log {
-		Log{
-			file: None,
-			level: None,
-			mode: None,
-		}
-	}
-
-	pub fn file(mut self, file: String) -> Log {
-		self.file = Some(file);
-		self
-	}
-
-	pub fn level(mut self, level: LogLevel) -> Log {
-		self.level = Some(level);
-		self
-	}
-
-	pub fn mode(mut self, mode: LogMode) -> Log {
-		self.mode = Some(mode);
-		self
-	}
-}
-
-impl ConfigPart for Log {
-	fn to_config_str(&self) -> String {
-		if self.file.is_some() || self.level.is_some() || self.mode.is_some() {
-			format!("log: {}, {}, {};",
-				match self.file {
-					Some(ref file) => format!("file={}", escape_config_string(&file)),
-					None           => "".to_string(),
-				},
-				match self.level {
-					Some(ref level) => format!("level={}", level),
-					None            => "".to_string(),
-				},
-				match self.mode {
-					Some(ref mode) => format!("mode={}", mode),
-					None            => "".to_string(),
-				},
-			)
-		} else {
-			"".to_string()
-		}
-	}
-}
-
 
 /// Possible cell size, `Auto` will make the size be selected based on the font.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -391,21 +132,6 @@ pub enum LogLevel {
 	Trace,
 }
 
-impl fmt::Display for LogLevel {
-	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-		formatter.write_str(match self {
-			&LogLevel::None    => "none",
-			&LogLevel::Fatal   => "fatal",
-			&LogLevel::Error   => "error",
-			&LogLevel::Warning => "warning",
-			&LogLevel::Info    => "info",
-			&LogLevel::Debug   => "debug",
-			&LogLevel::Trace   => "trace",
-		})
-	}
-}
-
-
 /// Log writing mode.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum LogMode {
@@ -414,16 +140,6 @@ pub enum LogMode {
 	/// Continue writing at the end.
 	Append,
 }
-
-impl fmt::Display for LogMode {
-	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-		formatter.write_str(match self {
-			&LogMode::Truncate => "truncate",
-			&LogMode::Append   => "append",
-		})
-	}
-}
-
 
 /// One input filter element.
 ///
@@ -435,23 +151,6 @@ pub enum InputFilter {
 	Alnum{keys: String, both: bool},
 }
 
-impl ConfigPart for Vec<InputFilter> {
-	fn to_config_str(&self) -> String {
-		escape_config_string(&format!("[{}]", {
-			let mut elems = "".to_string();
-			for filter in self {
-				elems = format!("{}{}", elems, match filter {
-					&InputFilter::Event{ref name,  both} => format!("{}{}", name,  if both {"+"} else {""}),
-					&InputFilter::Group{ref group, both} => format!("{}{}", group, if both {"+"} else {""}),
-					&InputFilter::Alnum{ref keys,  both} => format!("{}{}", keys,  if both {"+"} else {""}),
-				});
-			}
-			elems
-		}))
-	}
-}
-
-
 /// From [here](http://foo.wyrd.name/en:bearlibterminal:reference:input#inputfilter).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum InputFilterGroup {
@@ -462,19 +161,6 @@ pub enum InputFilterGroup {
 	/// Close + Resized
 	System,
 }
-
-impl fmt::Display for InputFilterGroup {
-	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-		formatter.write_str(match self {
-			&InputFilterGroup::Arrow    => "arrow",
-			&InputFilterGroup::Keypad   => "keypad",
-			&InputFilterGroup::Keyboard => "keyboard",
-			&InputFilterGroup::Mouse    => "mouse",
-			&InputFilterGroup::System   => "system",
-		})
-	}
-}
-
 
 // As enumerated [here](foo.wyrd.name/en:bearlibterminal:reference:input#event_and_state_constants)
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -599,6 +285,316 @@ pub enum InputFilterEvent {
 	Fullscreen,
 	Close,
 	Resized,
+}
+
+
+impl Terminal {
+	/// Construct a new `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override
+	/// segment
+	///
+	/// `None` values will not override current ones.
+	pub fn new(encoding: Option<String>) -> Terminal {
+		Terminal{
+			encoding: encoding,
+		}
+	}
+}
+
+impl Window {
+	/// Construct a `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
+	/// with everything being equal to `None`.
+	pub fn empty() -> Window {
+		Window{
+			size: None,
+			cellsize: None,
+			title: None,
+			icon: None,
+			resizeable: None,
+			fullscreen: None,
+		}
+	}
+
+	pub fn size(mut self, size: Size) -> Window {
+		self.size = Some(size);
+		self
+	}
+
+	pub fn cellsize(mut self, cellsize: Cellsize) -> Window {
+		self.cellsize = Some(cellsize);
+		self
+	}
+
+	pub fn title(mut self, title: String) -> Window {
+		self.title = Some(title);
+		self
+	}
+
+	pub fn icon<T: AsRef<Path>>(mut self, icon: T) -> Window {
+		self.icon = Some(icon.as_ref().to_str().unwrap().to_string());
+		self
+	}
+
+	pub fn resizeable(mut self, resizeable: bool) -> Window {
+		self.resizeable = Some(resizeable);
+		self
+	}
+
+	pub fn fullscreen(mut self, fullscreen: bool) -> Window {
+		self.fullscreen = Some(fullscreen);
+		self
+	}
+}
+
+impl Input {
+	/// Construct an `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
+	/// with all elements equal to `None`.
+	pub fn empty() -> Input {
+		Input{
+			precise_mouse: None,
+			mouse_cursor: None,
+			cursor_symbol: None,
+			cursor_blink_rate: None,
+		}
+	}
+
+	pub fn precise_mouse(mut self, precise_mouse: bool) -> Input {
+		self.precise_mouse = Some(precise_mouse);
+		self
+	}
+
+	pub fn mouse_cursor(mut self, mouse_cursor: bool) -> Input {
+		self.mouse_cursor = Some(mouse_cursor);
+		self
+	}
+
+	pub fn cursor_symbol(mut self, cursor_symbol: char) -> Input {
+		self.cursor_symbol = Some(cursor_symbol);
+		self
+	}
+
+	pub fn cursor_blink_rate(mut self, cursor_blink_rate: i32) -> Input {
+		self.cursor_blink_rate = Some(cursor_blink_rate);
+		self
+	}
+}
+
+impl Output {
+	/// Construct an `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
+	/// with all values equalling `None`
+	pub fn clean() -> Output {
+		Output{
+			postformatting: None,
+			vsync: None,
+		}
+	}
+
+	pub fn postformatting(mut self, postformatting: bool) -> Output {
+		self.postformatting = Some(postformatting);
+		self
+	}
+
+	pub fn vsync(mut self, vsync: bool) -> Output {
+		self.vsync = Some(vsync);
+		self
+	}
+}
+
+impl Log {
+	/// Construct an `log` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment
+	/// with everything set to `None`
+	pub fn empty() -> Log {
+		Log{
+			file: None,
+			level: None,
+			mode: None,
+		}
+	}
+
+	pub fn file(mut self, file: String) -> Log {
+		self.file = Some(file);
+		self
+	}
+
+	pub fn level(mut self, level: LogLevel) -> Log {
+		self.level = Some(level);
+		self
+	}
+
+	pub fn mode(mut self, mode: LogMode) -> Log {
+		self.mode = Some(mode);
+		self
+	}
+}
+
+
+impl ConfigPart for Terminal {
+	fn to_config_str(&self) -> String {
+		match self.encoding {
+			Some(ref encoding) => format!("terminal.encoding={};", escape_config_string(&encoding)),
+			None               => "".to_string(),
+		}
+	}
+}
+
+impl ConfigPart for Window {
+	fn to_config_str(&self) -> String {
+		if self.size.is_some() || self.cellsize.is_some() || self.title.is_some() || self.icon.is_some() || self.resizeable.is_some() ||
+		   self.fullscreen.is_some() {
+			format!("window: {}, {}, {}, {}, {}, {};",
+				match self.size {
+					Some(ref size) => format!("size={}", size),
+					None           => "".to_string(),
+				},
+				match self.cellsize {
+					Some(ref cellsize) =>
+						match cellsize {
+							&Cellsize::Sized(size) => format!("cellsize={}", size),
+							&Cellsize::Auto        => "cellsize=auto".to_string(),
+						},
+					None               => "".to_string(),
+				},
+				match self.title {
+					Some(ref title) => format!("title={}", escape_config_string(&title)),
+					None            => "".to_string(),
+				},
+				match self.icon {
+					Some(ref icon) => format!("icon={}", escape_config_string(&icon)),
+					None           => "".to_string(),
+				},
+				match self.resizeable {
+					Some(ref resizeable) => format!("resizeable={}", resizeable),
+					None                 => "".to_string(),
+				},
+				match self.fullscreen {
+					Some(ref fullscreen) => format!("fullscreen={}", fullscreen),
+					None                 => "".to_string(),
+				},
+			)
+		} else {
+			"".to_string()
+		}
+	}
+}
+
+impl ConfigPart for Input {
+	fn to_config_str(&self) -> String {
+		if self.precise_mouse.is_some() || self.mouse_cursor.is_some() || self.cursor_symbol.is_some() || self.cursor_blink_rate.is_some() {
+			format!("input: {}, {}, {}, {};",
+				match self.precise_mouse {
+					Some(ref precise_mouse) => format!("precise-mouse={}", precise_mouse),
+					None                    => "".to_string(),
+				},
+				match self.mouse_cursor {
+					Some(ref mouse_cursor) => format!("mouse-cursor={}", mouse_cursor),
+					None                   => "".to_string(),
+				},
+				match self.cursor_symbol {
+					Some(ref cursor_symbol) => format!("cursor-symbol=0x{:x}", *cursor_symbol as i8),
+					None                    => "".to_string(),
+				},
+				match self.cursor_blink_rate {
+					Some(ref cursor_blink_rate) => format!("cursor-blink-rate={}", cursor_blink_rate),
+					None                        => "".to_string(),
+				},
+			)
+		} else {
+			"".to_string()
+		}
+	}
+}
+
+impl ConfigPart for Output {
+	fn to_config_str(&self) -> String {
+		if self.postformatting.is_some() || self.vsync.is_some() {
+			format!("output: {}, {};",
+				match self.postformatting {
+					Some(ref postformatting) => format!("postformatting={}", postformatting),
+					None                     => "".to_string(),
+				},
+				match self.vsync {
+					Some(ref vsync) => format!("vsync={}", vsync),
+					None            => "".to_string(),
+				},
+			)
+		} else {
+			"".to_string()
+		}
+	}
+}
+
+impl ConfigPart for Log {
+	fn to_config_str(&self) -> String {
+		if self.file.is_some() || self.level.is_some() || self.mode.is_some() {
+			format!("log: {}, {}, {};",
+				match self.file {
+					Some(ref file) => format!("file={}", escape_config_string(&file)),
+					None           => "".to_string(),
+				},
+				match self.level {
+					Some(ref level) => format!("level={}", level),
+					None            => "".to_string(),
+				},
+				match self.mode {
+					Some(ref mode) => format!("mode={}", mode),
+					None            => "".to_string(),
+				},
+			)
+		} else {
+			"".to_string()
+		}
+	}
+}
+
+impl ConfigPart for Vec<InputFilter> {
+	fn to_config_str(&self) -> String {
+		escape_config_string(&format!("[{}]", {
+			let mut elems = "".to_string();
+			for filter in self {
+				elems = format!("{}{}", elems, match filter {
+					&InputFilter::Event{ref name,  both} => format!("{}{}", name,  if both {"+"} else {""}),
+					&InputFilter::Group{ref group, both} => format!("{}{}", group, if both {"+"} else {""}),
+					&InputFilter::Alnum{ref keys,  both} => format!("{}{}", keys,  if both {"+"} else {""}),
+				});
+			}
+			elems
+		}))
+	}
+}
+
+
+impl fmt::Display for LogLevel {
+	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+		formatter.write_str(match self {
+			&LogLevel::None    => "none",
+			&LogLevel::Fatal   => "fatal",
+			&LogLevel::Error   => "error",
+			&LogLevel::Warning => "warning",
+			&LogLevel::Info    => "info",
+			&LogLevel::Debug   => "debug",
+			&LogLevel::Trace   => "trace",
+		})
+	}
+}
+
+impl fmt::Display for LogMode {
+	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+		formatter.write_str(match self {
+			&LogMode::Truncate => "truncate",
+			&LogMode::Append   => "append",
+		})
+	}
+}
+
+impl fmt::Display for InputFilterGroup {
+	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+		formatter.write_str(match self {
+			&InputFilterGroup::Arrow    => "arrow",
+			&InputFilterGroup::Keypad   => "keypad",
+			&InputFilterGroup::Keyboard => "keyboard",
+			&InputFilterGroup::Mouse    => "mouse",
+			&InputFilterGroup::System   => "system",
+		})
+	}
 }
 
 impl fmt::Display for InputFilterEvent {
