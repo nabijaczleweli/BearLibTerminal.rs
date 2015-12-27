@@ -154,12 +154,14 @@ impl ConfigPart for Vec<InputFilter> {
 		escape_config_string(&format!("[{}]", {
 			let mut elems = "".to_string();
 			for filter in self {
-				elems = format!("{}{}", elems, match filter {
+				elems = format!("{}{}, ", elems, match filter {
 					&InputFilter::Event{ref name,  both} => format!("{}{}", name,  if both {"+"} else {""}),
 					&InputFilter::Group{ref group, both} => format!("{}{}", group, if both {"+"} else {""}),
 					&InputFilter::Alnum{ref keys,  both} => format!("{}{}", keys,  if both {"+"} else {""}),
 				});
 			}
+			elems.pop();
+			elems.pop();
 			elems
 		}))
 	}
