@@ -151,19 +151,19 @@ pub enum InputFilterEvent {
 
 impl ConfigPart for Vec<InputFilter> {
 	fn to_config_str(&self) -> String {
-		escape_config_string(&format!("[{}]", {
+		format!("input.filter = [{}];", {
 			let mut elems = "".to_string();
 			for filter in self {
-				elems = format!("{}{}, ", elems, match filter {
+				elems = format!("{}{}, ", elems, escape_config_string(&match filter {
 					&InputFilter::Event{ref name,  both} => format!("{}{}", name,  if both {"+"} else {""}),
 					&InputFilter::Group{ref group, both} => format!("{}{}", group, if both {"+"} else {""}),
 					&InputFilter::Alnum{ref keys,  both} => format!("{}{}", keys,  if both {"+"} else {""}),
-				});
+				}));
 			}
 			elems.pop();
 			elems.pop();
 			elems
-		}))
+		})
 	}
 }
 
