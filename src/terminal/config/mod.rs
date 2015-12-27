@@ -1,6 +1,8 @@
 mod section;
 mod input_filter;
 
+pub mod font;
+
 pub use self::section::*;
 pub use self::input_filter::*;
 
