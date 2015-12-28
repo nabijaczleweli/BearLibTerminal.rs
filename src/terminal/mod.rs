@@ -3,9 +3,11 @@ mod input;
 pub mod config;
 
 use std::char;
-use geometry::{Rect, Point};
+use geometry::{Rect, Point, Size};
 use colors::Color;
 use self::ffi::ColorT;
+use self::config::{ConfigPart, Window, Input};
+
 pub use self::input::{Event, KeyCode};
 
 
@@ -13,17 +15,15 @@ pub use self::input::{Event, KeyCode};
 /// To show the window use the [`refresh()`](fn.refresh.html) function.
 ///
 /// Equivalent to the [`terminal_open()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#open) with a subsequent call to
-/// the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with some defaults (**NOTE**: this will change).
+/// the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the title, size and disabling precise-mouse.
 pub fn open(title: &str, width: u32, height: u32) {
-	let config = format!("
-		window: title='{}', size={}x{};
-		input: precise-mouse=false, filter=[keyboard, system];
-		log: level=debug;
-		font: DejaVuSansMono.ttf, size=14;
-	", title, width, height);
-
 	ffi::open();
-	ffi::set(&config);
+	set(Window::empty().size(Size::new(width as i32, height as i32)).title(title.to_string()));
+	set(Input::empty().precise_mouse(false));
+}
+
+pub fn set<T: ConfigPart>(cfg: T) {
+	ffi::set(&*&cfg.to_config_str());
 }
 
 /// Closes the terminal window, causing all subsequent functions from the module (apart from [`open()`](fn.open.html)) to fail
