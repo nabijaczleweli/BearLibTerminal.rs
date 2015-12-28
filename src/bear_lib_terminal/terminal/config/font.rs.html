@@ -391,8 +391,8 @@
 
 
 <span class='doccomment'>/// Construct a bitmap font override segment repr.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bitmap</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>origin</span>: <span class='ident'>Origin</span>, <span class='ident'>path</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>BitmapFont</span> {
-	<span class='ident'>BitmapFont</span>{
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bitmap</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>origin</span>: <span class='ident'>Origin</span>, <span class='ident'>path</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Bitmap</span> {
+	<span class='ident'>Bitmap</span>{
 		<span class='ident'>origin</span>: <span class='ident'>origin</span>,
 		<span class='ident'>path</span>: <span class='ident'>path</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>(),
 		<span class='ident'>size</span>: <span class='prelude-val'>None</span>,
@@ -409,8 +409,8 @@
 <span class='doccomment'>/// Construct a TrueType font override segment repr.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// If `title_size.width` is `0`, the resulting `size` prop will be `size=&lt;title_size.width&gt;` as opposed to `size=&lt;title_size&gt;`.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>true_type</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>origin</span>: <span class='ident'>Origin</span>, <span class='ident'>path</span>: <span class='ident'>T</span>, <span class='ident'>tile_size</span>: <span class='ident'>Size</span>) <span class='op'>-&gt;</span> <span class='ident'>TrueTypeFont</span> {
-	<span class='ident'>TrueTypeFont</span>{
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>true_type</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>origin</span>: <span class='ident'>Origin</span>, <span class='ident'>path</span>: <span class='ident'>T</span>, <span class='ident'>tile_size</span>: <span class='ident'>Size</span>) <span class='op'>-&gt;</span> <span class='ident'>TrueType</span> {
+	<span class='ident'>TrueType</span>{
 		<span class='ident'>origin</span>: <span class='ident'>origin</span>,
 		<span class='ident'>path</span>: <span class='ident'>path</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>(),
 		<span class='ident'>size</span>: <span class='ident'>tile_size</span>,
@@ -479,7 +479,7 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>BitmapFont</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Bitmap</span> {
 	<span class='ident'>origin</span>       : <span class='ident'>Origin</span>,
 	<span class='ident'>path</span>         : <span class='ident'>String</span>,
 	<span class='ident'>size</span>         : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Size</span><span class='op'>&gt;</span>,
@@ -497,7 +497,7 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TrueTypeFont</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TrueType</span> {
 	<span class='ident'>origin</span>        : <span class='ident'>Origin</span>,
 	<span class='ident'>path</span>          : <span class='ident'>String</span>,
 	<span class='ident'>size</span>          : <span class='ident'>Size</span>,
@@ -511,7 +511,7 @@
 
 <span class='doccomment'>/// For all functions consult the corresponding attributes in</span>
 <span class='doccomment'>/// [the official docs](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
-<span class='kw'>impl</span> <span class='ident'>BitmapFont</span> {
+<span class='kw'>impl</span> <span class='ident'>Bitmap</span> {
 	<span class='doccomment'>/// The size of a single tile in the tileset.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>)                  <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>size</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>)         ; <span class='self'>self</span>}
 	<span class='doccomment'>/// The size to resize the image to.</span>
@@ -542,7 +542,7 @@
 
 <span class='doccomment'>/// For all functions consult the corresponding attributes in</span>
 <span class='doccomment'>/// [the official docs](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
-<span class='kw'>impl</span> <span class='ident'>TrueTypeFont</span> {
+<span class='kw'>impl</span> <span class='ident'>TrueType</span> {
 	<span class='doccomment'>/// Character used for size probing.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `&#39;@&#39;`.</span>
@@ -564,7 +564,7 @@
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>BitmapFont</span> {
+<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>Bitmap</span> {
 	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
 		<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}: {}{}{}{}{}{}{}{};&quot;</span>, <span class='self'>self</span>.<span class='ident'>origin</span>, <span class='ident'>escape_config_string</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>path</span>),
 			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>resize</span> {
@@ -599,7 +599,7 @@
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>TrueTypeFont</span> {
+<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>TrueType</span> {
 	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
 		<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}: {}, size={}{}{}{}{}{};&quot;</span>, <span class='self'>self</span>.<span class='ident'>origin</span>, <span class='ident'>escape_config_string</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>path</span>),
 			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>size</span> {
