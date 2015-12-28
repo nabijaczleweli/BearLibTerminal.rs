@@ -28,8 +28,8 @@ use terminal::config::{ConfigPart, escape_config_string};
 
 
 /// Construct a bitmap font override segment repr.
-pub fn bitmap<T: AsRef<Path>>(origin: Origin, path: T) -> BitmapFont {
-	BitmapFont{
+pub fn bitmap<T: AsRef<Path>>(origin: Origin, path: T) -> Bitmap {
+	Bitmap{
 		origin: origin,
 		path: path.as_ref().to_str().unwrap().to_string(),
 		size: None,
@@ -46,8 +46,8 @@ pub fn bitmap<T: AsRef<Path>>(origin: Origin, path: T) -> BitmapFont {
 /// Construct a TrueType font override segment repr.
 ///
 /// If `title_size.width` is `0`, the resulting `size` prop will be `size=<title_size.width>` as opposed to `size=<title_size>`.
-pub fn true_type<T: AsRef<Path>>(origin: Origin, path: T, tile_size: Size) -> TrueTypeFont {
-	TrueTypeFont{
+pub fn true_type<T: AsRef<Path>>(origin: Origin, path: T, tile_size: Size) -> TrueType {
+	TrueType{
 		origin: origin,
 		path: path.as_ref().to_str().unwrap().to_string(),
 		size: tile_size,
@@ -116,7 +116,7 @@ pub enum Align {
 ///
 /// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct BitmapFont {
+pub struct Bitmap {
 	origin       : Origin,
 	path         : String,
 	size         : Option<Size>,
@@ -134,7 +134,7 @@ pub struct BitmapFont {
 ///
 /// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct TrueTypeFont {
+pub struct TrueType {
 	origin        : Origin,
 	path          : String,
 	size          : Size,
@@ -148,7 +148,7 @@ pub struct TrueTypeFont {
 
 /// For all functions consult the corresponding attributes in
 /// [the official docs](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).
-impl BitmapFont {
+impl Bitmap {
 	/// The size of a single tile in the tileset.
 	pub fn size         (mut self, size: Size)                  -> Self {self.size          = Some(size)         ; self}
 	/// The size to resize the image to.
@@ -179,7 +179,7 @@ impl BitmapFont {
 
 /// For all functions consult the corresponding attributes in
 /// [the official docs](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).
-impl TrueTypeFont {
+impl TrueType {
 	/// Character used for size probing.
 	///
 	/// Default: `'@'`.
@@ -201,7 +201,7 @@ impl TrueTypeFont {
 }
 
 
-impl ConfigPart for BitmapFont {
+impl ConfigPart for Bitmap {
 	fn to_config_str(&self) -> String {
 		format!("{}: {}{}{}{}{}{}{}{};", self.origin, escape_config_string(&self.path),
 			match self.resize {
@@ -236,7 +236,7 @@ impl ConfigPart for BitmapFont {
 	}
 }
 
-impl ConfigPart for TrueTypeFont {
+impl ConfigPart for TrueType {
 	fn to_config_str(&self) -> String {
 		format!("{}: {}, size={}{}{}{}{}{};", self.origin, escape_config_string(&self.path),
 			match self.size {
