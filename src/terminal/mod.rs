@@ -88,8 +88,11 @@ pub fn clear(area: Option<Rect>) {
 	}
 }
 
-pub fn crop(x: i32, y: i32, width: i32, height: i32) {
-	ffi::crop(x, y, width, height);
+/// Sets the current layer's crop area.
+///
+/// <sub>I don't get it either, refer the [`terminal_crop()` C API function's documentation](http://foo.wyrd.name/en:bearlibterminal:reference#crop).</sub>
+pub fn crop(rect: Rect) {
+	ffi::crop(rect.top_left.x, rect.top_left.y, rect.size.width, rect.size.height);
 }
 
 /// Selects the current layer.
