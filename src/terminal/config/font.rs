@@ -1,9 +1,33 @@
+//! Module containing font changing tools.
+//!
+//! # Examples
+//!
+//! The following from [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management):
+//!
+//! ```text
+//! font: UbuntuMono-R.ttf, size=12;
+//! 0x5E: curcumflex.png;
+//! 0xE000: tileset.png, size=16x16, spacing=2x1;
+//! ```
+//!
+//! Is equivalent to
+//!
+//! ```
+//! use bear_lib_terminal::terminal::{self, config};
+//! use bear_lib_terminal::geometry::Size;
+//! terminal::set(config::font::true_type(config::font::Origin::Root, "UbuntuMono-R.ttf", Size::new(0, 12)));
+//! terminal::set(config::font::bitmap(config::font::Origin::Offset('^'), "circumflex.png"));
+//! terminal::set(config::font::bitmap(config::font::Origin::Offset('\u{E000}'), "tileset.png").size(Size::new(16, 16)).spacing(Size::new(2, 1)));
+//! ```
+
+
 use std::fmt;
 use std::path::Path;
 use geometry::Size;
 use terminal::config::{ConfigPart, escape_config_string};
 
 
+/// Construct a bitmap font override segment repr.
 pub fn bitmap<T: AsRef<Path>>(origin: Origin, path: T) -> BitmapFont {
 	BitmapFont{
 		origin: origin,
@@ -19,6 +43,9 @@ pub fn bitmap<T: AsRef<Path>>(origin: Origin, path: T) -> BitmapFont {
 	}
 }
 
+/// Construct a TrueType font override segment repr.
+///
+/// If `title_size.width` is `0`, the resulting `size` prop will be `size=<title_size.width>` as opposed to `size=<title_size>`.
 pub fn true_type<T: AsRef<Path>>(origin: Origin, path: T, tile_size: Size) -> TrueTypeFont {
 	TrueTypeFont{
 		origin: origin,
@@ -33,19 +60,25 @@ pub fn true_type<T: AsRef<Path>>(origin: Origin, path: T, tile_size: Size) -> Tr
 }
 
 
+/// The origin for the font (the part before `:` in the config string).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum Origin {
-	Default,
+	/// `font`
+	Root,
+	/// `0xNNNN`
 	Offset(char),
 }
 
+/// Rasterization mode for TrueType fonts.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum RasterizationMode {
 	Monochrome,
 	Normal,
+	/// Forces an opaque black background.
 	Lcd,
 }
 
+/// Resizing filter for bitmaps.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum ResizeFilter {
 	Nearest,
@@ -53,6 +86,7 @@ pub enum ResizeFilter {
 	Bicubic,
 }
 
+/// How to aspect-change when resizing a bitmap.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum ResizeMode {
 	Stretch,
@@ -60,6 +94,7 @@ pub enum ResizeMode {
 	Crop,
 }
 
+/// Per-tileset tile alignment.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum Align {
 	Center,
@@ -77,6 +112,9 @@ pub enum Align {
 // }
 
 
+/// A bitmap font override segment repr, constructed with [`true_type()`](fn.true_type.html).
+///
+/// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct BitmapFont {
 	origin       : Origin,
@@ -92,6 +130,9 @@ pub struct BitmapFont {
 //	transparent  : Option<Background>,
 }
 
+/// A TrueType font override segment repr, constructed with [`true_type()`](fn.true_type.html).
+///
+/// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct TrueTypeFont {
 	origin        : Origin,
@@ -197,7 +238,11 @@ impl ConfigPart for BitmapFont {
 
 impl ConfigPart for TrueTypeFont {
 	fn to_config_str(&self) -> String {
-		format!("{}: {}, size={}{}{}{}{}{};", self.origin, escape_config_string(&self.path), self.size,
+		format!("{}: {}, size={}{}{}{}{}{};", self.origin, escape_config_string(&self.path),
+			match self.size {
+				Size{width: 0, height} => format!("{}", height),
+				size                   => format!("{}", size),
+			},
 			match self.size_reference {
 				None                     => "".to_string(),
 				Some(ref size_reference) => format!(", size-reference=0x{:X}", *size_reference as i32),
@@ -226,7 +271,7 @@ impl ConfigPart for TrueTypeFont {
 impl fmt::Display for Origin {
 	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 		match self {
-			&Origin::Default   => formatter.write_str("font"),
+			&Origin::Root      => formatter.write_str("font"),
 			&Origin::Offset(o) => formatter.write_str(&*&format!("0x{:X}", o as i32)),
 		}
 	}
