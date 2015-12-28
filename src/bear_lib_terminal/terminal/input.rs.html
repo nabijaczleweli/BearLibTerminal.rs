@@ -151,6 +151,8 @@
 <span id="109">109</span>
 <span id="110">110</span>
 <span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
 </pre><pre class='rust '>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>KeyCode</span> {
@@ -260,8 +262,10 @@
 	<span class='ident'>MouseScroll</span>{<span class='ident'>delta</span>: <span class='ident'>i32</span>},
 	<span class='ident'>KeyPressed</span>{<span class='ident'>key</span>: <span class='ident'>KeyCode</span>, <span class='ident'>ctrl</span>: <span class='ident'>bool</span>, <span class='ident'>shift</span>: <span class='ident'>bool</span>},
 	<span class='ident'>KeyReleased</span>{<span class='ident'>key</span>: <span class='ident'>KeyCode</span>, <span class='ident'>ctrl</span>: <span class='ident'>bool</span>, <span class='ident'>shift</span>: <span class='ident'>bool</span>},
-	<span class='ident'>Shift</span>,
-	<span class='ident'>Control</span>,
+	<span class='ident'>ShiftPressed</span>,
+	<span class='ident'>ShiftReleased</span>,
+	<span class='ident'>ControlPressed</span>,
+	<span class='ident'>ControlReleased</span>,
 }
 </pre>
 </section>
