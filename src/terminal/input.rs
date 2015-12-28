@@ -106,6 +106,8 @@ pub enum Event {
 	MouseScroll{delta: i32},
 	KeyPressed{key: KeyCode, ctrl: bool, shift: bool},
 	KeyReleased{key: KeyCode, ctrl: bool, shift: bool},
-	Shift,
-	Control,
+	ShiftPressed,
+	ShiftReleased,
+	ControlPressed,
+	ControlReleased,
 }

@@ -22,6 +22,9 @@ pub fn open(title: &str, width: u32, height: u32) {
 	set(Input::empty().precise_mouse(false));
 }
 
+/// Invoke the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the argument's `config_str`.
+///
+/// For build-in [`ConfigPart`](config/trait.ConfigPart.html)s see the [`config`](config/index.html) module.
 pub fn set<T: ConfigPart>(cfg: T) {
 	ffi::set(&*&cfg.to_config_str());
 }
@@ -359,27 +362,31 @@ fn to_keycode(code: i32) -> Option<KeyCode> {
 }
 
 fn to_event(code: i32) -> Option<Event> {
-	println!("Event: {}", code);
 	match code {
 		ffi::TK_CLOSE        => Some(Event::Close),
 		ffi::TK_RESIZED      => Some(Event::Resize),
 		ffi::TK_MOUSE_MOVE   => Some(get_mouse_move()),
 		ffi::TK_MOUSE_SCROLL => Some(get_mouse_scroll()),
-		ffi::TK_SHIFT        => Some(Event::Shift),
-		ffi::TK_CONTROL      => Some(Event::Control),
 		_                    => to_key_event(code),
 	}
 }
 
 fn to_key_event(code: i32) -> Option<Event> {
-	let key = code & !ffi::TK_KEY_RELEASED;
+	let key      = code & !ffi::TK_KEY_RELEASED;
 	let released = (code & ffi::TK_KEY_RELEASED) == ffi::TK_KEY_RELEASED;
-	let ctrl = ffi::check(ffi::TK_CONTROL);
-	let shift = ffi::check(ffi::TK_SHIFT);
 
-	match to_keycode(key) {
-		Some(converted) => Some(get_key(released, converted, ctrl, shift)),
-		None            => None,
+	match key {
+		ffi::TK_SHIFT   => Some(if released {Event::ShiftReleased}   else {Event::ShiftPressed}),
+		ffi::TK_CONTROL => Some(if released {Event::ControlReleased} else {Event::ControlPressed}),
+		key             => {
+			let ctrl  = ffi::check(ffi::TK_CONTROL);
+			let shift = ffi::check(ffi::TK_SHIFT);
+
+			match to_keycode(key) {
+				Some(converted) => Some(get_key(released, converted, ctrl, shift)),
+				None            => None,
+			}
+		}
 	}
 }
 
