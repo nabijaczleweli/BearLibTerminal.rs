@@ -460,6 +460,9 @@
 <span id="418">418</span>
 <span id="419">419</span>
 <span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
 </pre><pre class='rust '>
 <span class='kw'>mod</span> <span class='ident'>ffi</span>;
 <span class='kw'>mod</span> <span class='ident'>input</span>;
@@ -551,8 +554,11 @@
 	}
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>crop</span>(<span class='ident'>x</span>: <span class='ident'>i32</span>, <span class='ident'>y</span>: <span class='ident'>i32</span>, <span class='ident'>width</span>: <span class='ident'>i32</span>, <span class='ident'>height</span>: <span class='ident'>i32</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>crop</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>width</span>, <span class='ident'>height</span>);
+<span class='doccomment'>/// Sets the current layer&#39;s crop area.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// &lt;sub&gt;I don&#39;t get it either, refer the [`terminal_crop()` C API function&#39;s documentation](http://foo.wyrd.name/en:bearlibterminal:reference#crop).&lt;/sub&gt;</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>crop</span>(<span class='ident'>rect</span>: <span class='ident'>Rect</span>) {
+	<span class='ident'>ffi</span>::<span class='ident'>crop</span>(<span class='ident'>rect</span>.<span class='ident'>top_left</span>.<span class='ident'>x</span>, <span class='ident'>rect</span>.<span class='ident'>top_left</span>.<span class='ident'>y</span>, <span class='ident'>rect</span>.<span class='ident'>size</span>.<span class='ident'>width</span>, <span class='ident'>rect</span>.<span class='ident'>size</span>.<span class='ident'>height</span>);
 }
 
 <span class='doccomment'>/// Selects the current layer.</span>
