@@ -9,7 +9,7 @@ use std::char;
 use geometry::{Rect, Point, Size};
 use colors::Color;
 use self::ffi::ColorT;
-use self::config::{ConfigPart, Window, Input};
+use self::config::{ConfigPart, Window};
 
 pub use self::input::{Event, KeyCode};
 
