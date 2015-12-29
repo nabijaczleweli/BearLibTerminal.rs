@@ -14,6 +14,15 @@ addons:
     sources:
       - r-packages-precise
 
+deploy:
+  provider: releases
+  api_key:
+    secure: "PMgPcgEQJgFwlIslKzxPOeM+NMMAhTjyjrAT8qhmJ/EhLd/btGZIC/W/6EezwIG7kj62A59fyvo+hnS9+KhaSvtgLzvqdLrbz1ozjYvfZsmQkZt3k5B0jCYTndpzSpIba+elbFfcfYHoquiQQqqZj+mxeMCS7yg11NxTRu5e6TMsD9HqoVxWNrFSi9cxwslDAFNmTaUK31Ap5TAad6s2piM1CprRCvnoRFF5EmkBqbg7JYJmuh4fLu+WMVuDoFuARakki/tX59S8EWY2UA+a0BrvU+wMjsYjBrgpFs5HUowNpEKlKTGgS6u0X0y38aZZrU2FX93NdepDx7GogmH1Eeb9kdf0n5tWV5agXfQb+4U3350pwEOb3WLmWFY4U4/WtwvnrODFVx9UqfYc2o4THOgGaTc9+sccdqbbz6jPWXTXqqUjMVA8p8dNGsCkhA1Bh22oyfaI4CH80qvXtfl7JIKMvS9jd/QeoWOLpA3rKyHU9sjUFzXOIHZ9EOyqVMVj1PNmPxJuSgLnuSUmSKZw51zjbXQH3WplvrqSMvgiD9sMB2XpEIAmLLBKrb5+XcjNtN3LgtZmihBwsfD4mLnKf3m2OY5Y3+USOzIJUimtaxhCJ9k2zUSxbmg5rvsTjGgFH/wA2/La/KR97w7RlZs+mpxHxacjIkMlHYBDmGRsTJI="
+  file: "~/lib/libBearLibTerminal.so"
+  skip_cleanup: true
+  on:
+    tags: true
+
 before_install:
   - openssl aes-256-cbc -K $encrypted_2620d498bbb7_key -iv $encrypted_2620d498bbb7_iv -in gh_rsa.enc -out gh_rsa -d
 
