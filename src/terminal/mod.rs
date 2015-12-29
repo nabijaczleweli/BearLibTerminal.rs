@@ -1,3 +1,6 @@
+//! Rusticized interface for the FFI.
+
+
 mod ffi;
 mod input;
 pub mod config;
@@ -15,18 +18,19 @@ pub use self::input::{Event, KeyCode};
 /// To show the window use the [`refresh()`](fn.refresh.html) function.
 ///
 /// Equivalent to the [`terminal_open()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#open) with a subsequent call to
-/// the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the title, size and disabling precise-mouse.
+/// the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the title.
 pub fn open(title: &str, width: u32, height: u32) {
 	ffi::open();
 	set(Window::empty().size(Size::new(width as i32, height as i32)).title(title.to_string()));
-	set(Input::empty().precise_mouse(false));
 }
 
 /// Invoke the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the argument's `config_str`.
 ///
+/// Returns `false` iff the config string is malformed.
+///
 /// For build-in [`ConfigPart`](config/trait.ConfigPart.html)s see the [`config`](config/index.html) module.
-pub fn set<T: ConfigPart>(cfg: T) {
-	ffi::set(&*&cfg.to_config_str());
+pub fn set<T: ConfigPart>(cfg: T) -> bool {
+	ffi::set(&*&cfg.to_config_str())
 }
 
 /// Closes the terminal window, causing all subsequent functions from the module (apart from [`open()`](fn.open.html)) to fail

@@ -21,5 +21,4 @@ mod colors;
 pub mod geometry;
 pub mod terminal;
 
-
 pub use colors::Color;

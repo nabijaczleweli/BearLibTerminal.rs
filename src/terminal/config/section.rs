@@ -6,88 +6,49 @@ use terminal::config::{ConfigPart, escape_config_string};
 
 /// The `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
-/// See [`terminal::configure()`](../fn.configure.html).
+/// See [`terminal::set()`](../fn.set.html).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Terminal {
-	/// Encoding used for unibyte strings. This is better left at default, as Rust uses UTF-8 for everything.
-	///
-	/// Default: `"utf8"`
-	pub encoding: Option<String>,  //TODO: use an enum/validated struct?
+	encoding: Option<String>,  //TODO: use an enum/validated struct?
 }
 
 /// The `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
 /// `None` values will not override current ones.
 ///
-/// See [`terminal::configure()`](../fn.configure.html).
+/// See [`terminal::set()`](../fn.set.html).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Window {
-	/// Window size in cells.
-	///
-	/// Default: `80x25`
-	pub size: Option<Size>,
-	/// Size of all cells, in pixels.
-	///
-	/// Default: [`Cellsize::Auto`](enum.Cellsize.html#variant.Auto)
-	pub cellsize: Option<Cellsize>,
-	/// The terminal window's title.
-	///
-	/// Default: `"BearLibTerminal"`
-	pub title: Option<String>,
-	/// The path of the icon used for the terminal window.
-	///
-	/// Default: none
-	pub icon: Option<String>,
-	/// Whether the terminal window should be resizeable.
-	///
-	/// Default: `false`
-	pub resizeable: Option<bool>,
-	/// Whether to enforce fullscreen mode.
-	///
-	/// Default: `false`
-	pub fullscreen: Option<bool>,
+	size: Option<Size>,
+	cellsize: Option<Cellsize>,
+	title: Option<String>,
+	icon: Option<String>,
+	resizeable: Option<bool>,
+	fullscreen: Option<bool>,
 }
 
 /// The `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
 /// `None` values will not override current ones.
 ///
-/// See [`terminal::configure()`](../fn.configure.html).
+/// See [`terminal::set()`](../fn.set.html).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Input {
-	/// Whether to generate a mouse-move event when a mouse moves from one pixel to another as opposed to from one cell to another.
-	///
-	/// Default: `false`
-	pub precise_mouse: Option<bool>,
-	/// Whether to show the cursor.
-	///
-	/// Default: `true`
-	pub mouse_cursor: Option<bool>,
-	/// The cursor symbol to blink in the read string function.
-	///
-	/// Default: `'_'` a.k.a. `0x5F`
-	pub cursor_symbol: Option<char>,
-	/// Amount of time in milliseconds to blink the cursor symbol for.
-	///
-	/// Default: `500`
-	pub cursor_blink_rate: Option<i32>,
+	precise_mouse: Option<bool>,
+	mouse_cursor: Option<bool>,
+	cursor_symbol: Option<char>,
+	cursor_blink_rate: Option<i32>,
 }
 
 /// The `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.
 ///
 /// `None` values will not override current ones.
 ///
-/// See [`terminal::configure()`](../fn.configure.html).
+/// See [`terminal::set()`](../fn.set.html).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Output {
-	/// Whether to process special tags in the [`print()`](../fn.print.html) function.
-	///
-	/// Default: `true`
-	pub postformatting: Option<bool>,
-	/// Toggle OpenGL VSync.
-	///
-	/// Default: `true`
-	pub vsync: Option<bool>,
+	postformatting: Option<bool>,
+	vsync: Option<bool>,
 }
 
 
@@ -95,21 +56,12 @@ pub struct Output {
 ///
 /// `None` values will not override current ones.
 ///
-/// See [`terminal::configure()`](../fn.configure.html).
+/// See [`terminal::set()`](../fn.set.html).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Log {
-	/// The file to write the log to. Note, that, IME, it didn't work.
-	///
-	/// Default: `"bearlibterminal.log"`
-	pub file: Option<String>,
-	/// The minimal log level to print at.
-	///
-	/// Default: [`LogLevel::Error`](enum.LogLevel.html#variant.Error)
-	pub level: Option<LogLevel>,
-	/// How to write to the log file if one laready exists.
-	///
-	/// Default: [`LogMode::Truncate`](enum.LogMode.html#variant.Truncate)
-	pub mode: Option<LogMode>,
+	file: Option<String>,
+	level: Option<LogLevel>,
+	mode: Option<LogMode>,
 }
 
 
@@ -144,12 +96,12 @@ pub enum LogMode {
 
 impl Terminal {
 	/// Construct a new `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override
-	/// segment
+	/// segment with a specified used for unibyte strings, which is better left at default, as Rust uses UTF-8 for everything.
 	///
-	/// `None` values will not override current ones.
-	pub fn new(encoding: Option<String>) -> Terminal {
+	/// Default: `"utf8"`.
+	pub fn new(encoding: String) -> Terminal {
 		Terminal{
-			encoding: encoding,
+			encoding: Some(encoding),
 		}
 	}
 }
@@ -168,35 +120,35 @@ impl Window {
 		}
 	}
 
-	pub fn size(mut self, size: Size) -> Window {
-		self.size = Some(size);
-		self
-	}
+	/// Window size in cells.
+	///
+	/// Default: `80x25`.
+	pub fn size                (mut self, size: Size)         -> Self {self.size       = Some(size)                                       ; self}
 
-	pub fn cellsize(mut self, cellsize: Cellsize) -> Window {
-		self.cellsize = Some(cellsize);
-		self
-	}
+	/// Size of all cells, in pixels.
+	///
+	/// Default: [`Cellsize::Auto`](enum.Cellsize.html#variant.Auto).
+	pub fn cellsize            (mut self, cellsize: Cellsize) -> Self {self.cellsize   = Some(cellsize)                                   ; self}
 
-	pub fn title(mut self, title: String) -> Window {
-		self.title = Some(title);
-		self
-	}
+	/// The terminal window's title.
+	///
+	/// Default: `"BearLibTerminal"`.
+	pub fn title               (mut self, title: String)      -> Self {self.title      = Some(title)                                      ; self}
 
-	pub fn icon<T: AsRef<Path>>(mut self, icon: T) -> Window {
-		self.icon = Some(icon.as_ref().to_str().unwrap().to_string());
-		self
-	}
+	/// The path of the icon used for the terminal window.
+	///
+	/// Default: none.
+	pub fn icon<T: AsRef<Path>>(mut self, icon: T)            -> Self {self.icon       = Some(icon.as_ref().to_str().unwrap().to_string()); self}
 
-	pub fn resizeable(mut self, resizeable: bool) -> Window {
-		self.resizeable = Some(resizeable);
-		self
-	}
+	/// Whether the terminal window should be resizeable.
+	///
+	/// Default: `false`.
+	pub fn resizeable          (mut self, resizeable: bool)   -> Self {self.resizeable = Some(resizeable)                                 ; self}
 
-	pub fn fullscreen(mut self, fullscreen: bool) -> Window {
-		self.fullscreen = Some(fullscreen);
-		self
-	}
+	/// Whether to enforce fullscreen mode.
+	///
+	/// Default: `false`.
+	pub fn fullscreen          (mut self, fullscreen: bool)   -> Self {self.fullscreen = Some(fullscreen)                                 ; self}
 }
 
 impl Input {
@@ -211,25 +163,25 @@ impl Input {
 		}
 	}
 
-	pub fn precise_mouse(mut self, precise_mouse: bool) -> Input {
-		self.precise_mouse = Some(precise_mouse);
-		self
-	}
+	/// Whether to generate a mouse-move event when a mouse moves from one pixel to another as opposed to from one cell to another.
+	///
+	/// Default: `false`.
+	pub fn precise_mouse    (mut self, precise_mouse: bool)    -> Self {self.precise_mouse     = Some(precise_mouse)    ; self}
 
-	pub fn mouse_cursor(mut self, mouse_cursor: bool) -> Input {
-		self.mouse_cursor = Some(mouse_cursor);
-		self
-	}
+	/// Whether to show the cursor.
+	///
+	/// Default: `true`.
+	pub fn mouse_cursor     (mut self, mouse_cursor: bool)     -> Self {self.mouse_cursor      = Some(mouse_cursor)     ; self}
 
-	pub fn cursor_symbol(mut self, cursor_symbol: char) -> Input {
-		self.cursor_symbol = Some(cursor_symbol);
-		self
-	}
+	/// The cursor symbol to blink in the read string function.
+	///
+	/// Default: `'_'` a.k.a. `0x5F`.
+	pub fn cursor_symbol    (mut self, cursor_symbol: char)    -> Self {self.cursor_symbol     = Some(cursor_symbol)    ; self}
 
-	pub fn cursor_blink_rate(mut self, cursor_blink_rate: i32) -> Input {
-		self.cursor_blink_rate = Some(cursor_blink_rate);
-		self
-	}
+	/// Amount of time in milliseconds to blink the cursor symbol for.
+	///
+	/// Default: `500`.
+	pub fn cursor_blink_rate(mut self, cursor_blink_rate: i32) -> Self {self.cursor_blink_rate = Some(cursor_blink_rate); self}
 }
 
 impl Output {
@@ -242,15 +194,15 @@ impl Output {
 		}
 	}
 
-	pub fn postformatting(mut self, postformatting: bool) -> Output {
-		self.postformatting = Some(postformatting);
-		self
-	}
+	/// Whether to process special tags in the [`print()`](../fn.print.html) function.
+	///
+	/// Default: `true`.
+	pub fn postformatting(mut self, postformatting: bool) -> Self {self.postformatting = Some(postformatting); self}
 
-	pub fn vsync(mut self, vsync: bool) -> Output {
-		self.vsync = Some(vsync);
-		self
-	}
+	/// Toggle OpenGL VSync.
+	///
+	/// Default: `true`.
+	pub fn vsync         (mut self, vsync: bool)          -> Self {self.vsync          = Some(vsync);          self}
 }
 
 impl Log {
@@ -264,20 +216,20 @@ impl Log {
 		}
 	}
 
-	pub fn file(mut self, file: String) -> Log {
-		self.file = Some(file);
-		self
-	}
+	/// The file to write the log to. Note, that, IME, it didn't work.
+	///
+	/// Default: `"bearlibterminal.log"`
+	pub fn file (mut self, file: String)    -> Log {self.file  = Some(file) ; self}
 
-	pub fn level(mut self, level: LogLevel) -> Log {
-		self.level = Some(level);
-		self
-	}
+	/// The minimal log level to print at.
+	///
+	/// Default: [`LogLevel::Error`](enum.LogLevel.html#variant.Error)
+	pub fn level(mut self, level: LogLevel) -> Log {self.level = Some(level); self}
 
-	pub fn mode(mut self, mode: LogMode) -> Log {
-		self.mode = Some(mode);
-		self
-	}
+	/// How to write to the log file if one laready exists.
+	///
+	/// Default: [`LogMode::Truncate`](enum.LogMode.html#variant.Truncate)
+	pub fn mode (mut self, mode: LogMode)   -> Log {self.mode  = Some(mode) ; self}
 }
 
 

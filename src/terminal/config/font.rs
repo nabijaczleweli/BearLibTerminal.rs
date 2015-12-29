@@ -1,7 +1,6 @@
 //! Module containing font changing tools.
 //!
 //! # Examples
-//!
 //! The following from [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management):
 //!
 //! ```text
@@ -13,11 +12,16 @@
 //! Is equivalent to
 //!
 //! ```
-//! use bear_lib_terminal::terminal::{self, config};
+//! use bear_lib_terminal::terminal;
+//! use bear_lib_terminal::terminal::config::font;
 //! use bear_lib_terminal::geometry::Size;
-//! terminal::set(config::font::true_type(config::font::Origin::Root, "UbuntuMono-R.ttf", Size::new(0, 12)));
-//! terminal::set(config::font::bitmap(config::font::Origin::Offset('^'), "circumflex.png"));
-//! terminal::set(config::font::bitmap(config::font::Origin::Offset('\u{E000}'), "tileset.png").size(Size::new(16, 16)).spacing(Size::new(2, 1)));
+//! # assert!({let result =
+//! terminal::set(font::true_type(font::Origin::Root, "UbuntuMono-R.ttf", Size::new(0, 12)));
+//! # result}); assert!({let result =
+//! terminal::set(font::bitmap(font::Origin::Offset('^'), "circumflex.png"));
+//! # result}); assert!({let result =
+//! terminal::set(font::bitmap(font::Origin::Offset('\u{E000}'), "tileset.png").size(Size::new(16, 16)).spacing(Size::new(2, 1)));
+//! # result});
 //! ```
 
 

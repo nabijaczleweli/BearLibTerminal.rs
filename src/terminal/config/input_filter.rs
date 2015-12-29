@@ -12,7 +12,7 @@ pub enum InputFilter {
 	Alnum{keys: String, both: bool},
 }
 
-/// From [here](http://foo.wyrd.name/en:bearlibterminal:reference:input#inputfilter).
+/// Filter event group, from [here](http://foo.wyrd.name/en:bearlibterminal:reference:input#inputfilter).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum InputFilterGroup {
 	Arrow,
@@ -23,7 +23,7 @@ pub enum InputFilterGroup {
 	System,
 }
 
-// As enumerated [here](foo.wyrd.name/en:bearlibterminal:reference:input#event_and_state_constants)
+/// As enumerated [here](foo.wyrd.name/en:bearlibterminal:reference:input#event_and_state_constants)
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum InputFilterEvent {
 	A,
