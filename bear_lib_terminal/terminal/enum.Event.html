@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-706' class='srclink' href='../../src/bear_lib_terminal/terminal/input.rs.html#102-113' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-706' class='srclink' href='../../src/bear_lib_terminal/terminal/input.rs.html#144-194' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Event {
     Close,
     Resize,
@@ -70,16 +70,43 @@
     ShiftReleased,
     ControlPressed,
     ControlReleased,
-}</pre><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Close'><code>Close</code></td><td></td></tr><tr><td id='variant.Resize'><code>Resize</code></td><td></td></tr><tr><td id='variant.MouseMove'><code>MouseMove</code></td><td><h3 class='fields'>Fields</h3>
+}</pre><div class='docblock'><p>A single input event.</p>
+</div><h2 class='variants'>Variants</h2>
+<table><tr><td id='variant.Close'><code>Close</code></td><td><div class='docblock'><p>Terminal window closed.</p>
+</div></td></tr><tr><td id='variant.Resize'><code>Resize</code></td><td><div class='docblock'><p>Terminal window resized.</p>
+</div></td></tr><tr><td id='variant.MouseMove'><code>MouseMove</code></td><td><div class='docblock'><p>Mouse moved.</p>
 
-                                              <table><tr><td id='variant.MouseMove.field.x'><code>x</code></td><td></td></tr><tr><td id='variant.MouseMove.field.y'><code>y</code></td><td></td></tr></table></td></tr><tr><td id='variant.MouseScroll'><code>MouseScroll</code></td><td><h3 class='fields'>Fields</h3>
+<p>If <a href="config/struct.Input.html#structfield.precise_mouse"><code>precise-mouse</code></a> is off, generated each time mouse moves from cell to cell, otherwise,
+when it moves from pixel to pixel.</p>
+</div><h3 class='fields'>Fields</h3>
 
-                                              <table><tr><td id='variant.MouseScroll.field.delta'><code>delta</code></td><td></td></tr></table></td></tr><tr><td id='variant.KeyPressed'><code>KeyPressed</code></td><td><h3 class='fields'>Fields</h3>
+                                              <table><tr><td id='variant.MouseMove.field.x'><code>x</code></td><td><div class='docblock'><p><code>0</code>-based cell index from the left to which the mouse cursor moved.</p>
+</div></td></tr><tr><td id='variant.MouseMove.field.y'><code>y</code></td><td><div class='docblock'><p><code>0</code>-based cell index from the top to which the mouse cursor moved.</p>
+</div></td></tr></table></td></tr><tr><td id='variant.MouseScroll'><code>MouseScroll</code></td><td><div class='docblock'><p>Mouse wheel moved.</p>
+</div><h3 class='fields'>Fields</h3>
 
-                                              <table><tr><td id='variant.KeyPressed.field.key'><code>key</code></td><td></td></tr><tr><td id='variant.KeyPressed.field.ctrl'><code>ctrl</code></td><td></td></tr><tr><td id='variant.KeyPressed.field.shift'><code>shift</code></td><td></td></tr></table></td></tr><tr><td id='variant.KeyReleased'><code>KeyReleased</code></td><td><h3 class='fields'>Fields</h3>
+                                              <table><tr><td id='variant.MouseScroll.field.delta'><code>delta</code></td><td><div class='docblock'><p>Amount of steps the wheel rotated.</p>
 
-                                              <table><tr><td id='variant.KeyReleased.field.key'><code>key</code></td><td></td></tr><tr><td id='variant.KeyReleased.field.ctrl'><code>ctrl</code></td><td></td></tr><tr><td id='variant.KeyReleased.field.shift'><code>shift</code></td><td></td></tr></table></td></tr><tr><td id='variant.ShiftPressed'><code>ShiftPressed</code></td><td></td></tr><tr><td id='variant.ShiftReleased'><code>ShiftReleased</code></td><td></td></tr><tr><td id='variant.ControlPressed'><code>ControlPressed</code></td><td></td></tr><tr><td id='variant.ControlReleased'><code>ControlReleased</code></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../bear_lib_terminal/terminal/enum.Event.html' title='bear_lib_terminal::terminal::Event'>Event</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../bear_lib_terminal/terminal/enum.Event.html' title='bear_lib_terminal::terminal::Event'>Event</a>) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<p>Positive when scrolled &quot;down&quot;/&quot;backwards&quot;.</p>
+
+<p>Negative when scrolled &quot;up&quot;/&quot;forwards&quot;/&quot;away&quot;.</p>
+</div></td></tr></table></td></tr><tr><td id='variant.KeyPressed'><code>KeyPressed</code></td><td><div class='docblock'><p>A keyboard or mouse button pressed (might repeat, if set in OS).</p>
+</div><h3 class='fields'>Fields</h3>
+
+                                              <table><tr><td id='variant.KeyPressed.field.key'><code>key</code></td><td><div class='docblock'><p>The key pressed.</p>
+</div></td></tr><tr><td id='variant.KeyPressed.field.ctrl'><code>ctrl</code></td><td><div class='docblock'><p>Whether the Control key is pressed.</p>
+</div></td></tr><tr><td id='variant.KeyPressed.field.shift'><code>shift</code></td><td><div class='docblock'><p>Whether the Shift key is pressed.</p>
+</div></td></tr></table></td></tr><tr><td id='variant.KeyReleased'><code>KeyReleased</code></td><td><div class='docblock'><p>A keyboard or mouse button released.</p>
+</div><h3 class='fields'>Fields</h3>
+
+                                              <table><tr><td id='variant.KeyReleased.field.key'><code>key</code></td><td><div class='docblock'><p>The key released.</p>
+</div></td></tr><tr><td id='variant.KeyReleased.field.ctrl'><code>ctrl</code></td><td><div class='docblock'><p>Whether the Control key is pressed.</p>
+</div></td></tr><tr><td id='variant.KeyReleased.field.shift'><code>shift</code></td><td><div class='docblock'><p>Whether the Shift key is pressed.</p>
+</div></td></tr></table></td></tr><tr><td id='variant.ShiftPressed'><code>ShiftPressed</code></td><td><div class='docblock'><p>The Shift key pressed (might repeat, if set in OS).</p>
+</div></td></tr><tr><td id='variant.ShiftReleased'><code>ShiftReleased</code></td><td><div class='docblock'><p>The Shift key released.</p>
+</div></td></tr><tr><td id='variant.ControlPressed'><code>ControlPressed</code></td><td><div class='docblock'><p>The Shift key pressed (might repeat, if set in OS).</p>
+</div></td></tr><tr><td id='variant.ControlReleased'><code>ControlReleased</code></td><td><div class='docblock'><p>The Control key released.</p>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../bear_lib_terminal/terminal/enum.Event.html' title='bear_lib_terminal::terminal::Event'>Event</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../bear_lib_terminal/terminal/enum.Event.html' title='bear_lib_terminal::terminal::Event'>Event</a>) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../bear_lib_terminal/terminal/enum.Event.html' title='bear_lib_terminal::terminal::Event'>Event</a>) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> for <a class='enum' href='../../bear_lib_terminal/terminal/enum.Event.html' title='bear_lib_terminal::terminal::Event'>Event</a></code></h3><div class='impl-items'><h4 id='method.hash' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash' class='fnname'>hash</a>&lt;__H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a>&gt;(&amp;self, __arg_0: &amp;mut __H)</code></h4>
 <h4 id='method.hash_slice' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h4>

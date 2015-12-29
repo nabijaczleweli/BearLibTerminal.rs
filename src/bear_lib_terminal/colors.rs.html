@@ -63,8 +63,14 @@
 <span id="21">21</span>
 <span id="22">22</span>
 <span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
 </pre><pre class='rust '>
-<span class='doccomment'>/// An RGBA colour</span>
+<span class='doccomment'>/// An RGBA colour repr.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Color</span> {
 	<span class='kw'>pub</span> <span class='ident'>red</span>: <span class='ident'>u8</span>,
@@ -77,13 +83,19 @@
 	<span class='doccomment'>/// Equivalent to [`from_rgba()`](fn.from_rgba.html) with full opacity</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_rgb</span>(<span class='ident'>red</span>: <span class='ident'>u8</span>, <span class='ident'>green</span>: <span class='ident'>u8</span>, <span class='ident'>blue</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
 		<span class='ident'>Color</span>{
-			<span class='ident'>red</span>: <span class='ident'>red</span>, <span class='ident'>green</span>: <span class='ident'>green</span>, <span class='ident'>blue</span>: <span class='ident'>blue</span>, <span class='ident'>alpha</span>: <span class='number'>0xFF</span>
+			<span class='ident'>red</span>: <span class='ident'>red</span>,
+			<span class='ident'>green</span>: <span class='ident'>green</span>,
+			<span class='ident'>blue</span>: <span class='ident'>blue</span>,
+			<span class='ident'>alpha</span>: <span class='number'>0xFF</span>,
 		}
 	}
 
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_rgba</span>(<span class='ident'>red</span>: <span class='ident'>u8</span>, <span class='ident'>green</span>: <span class='ident'>u8</span>, <span class='ident'>blue</span>: <span class='ident'>u8</span>, <span class='ident'>alpha</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
 		<span class='ident'>Color</span>{
-			<span class='ident'>red</span>: <span class='ident'>red</span>, <span class='ident'>green</span>: <span class='ident'>green</span>, <span class='ident'>blue</span>: <span class='ident'>blue</span>, <span class='ident'>alpha</span>: <span class='ident'>alpha</span>
+			<span class='ident'>red</span>: <span class='ident'>red</span>,
+			<span class='ident'>green</span>: <span class='ident'>green</span>,
+			<span class='ident'>blue</span>: <span class='ident'>blue</span>,
+			<span class='ident'>alpha</span>: <span class='ident'>alpha</span>,
 		}
 	}
 }

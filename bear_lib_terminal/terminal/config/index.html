@@ -45,8 +45,22 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-825' class='srclink' href='../../../src/bear_lib_terminal/terminal/config/mod.rs.html#1-32' title='goto source code'>[src]</a></span></h1>
-<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+        </span><a id='src-825' class='srclink' href='../../../src/bear_lib_terminal/terminal/config/mod.rs.html#1-57' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Module containing BLT configuration options.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<p>The following from <a href="http://foo.wyrd.name/en:bearlibterminal:reference#set">the official documentation</a>:</p>
+
+<pre><code class="language-text">window: title=&#39;foobar&#39;, size=80x25; input.filter=&#39;keyboard&#39;
+</code></pre>
+
+<p>Is equivalent to</p>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>bear_lib_terminal</span>::<span class='ident'>terminal</span>::{<span class='self'>self</span>, <span class='ident'>config</span>};
+<span class='kw'>use</span> <span class='ident'>bear_lib_terminal</span>::<span class='ident'>geometry</span>::<span class='ident'>Size</span>;
+<span class='ident'>terminal</span>::<span class='ident'>set</span>(<span class='ident'>config</span>::<span class='ident'>Window</span>::<span class='ident'>empty</span>().<span class='ident'>title</span>(<span class='string'>&quot;foobar&quot;</span>.<span class='ident'>to_string</span>()).<span class='ident'>size</span>(<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='number'>80</span>, <span class='number'>25</span>)));
+<span class='ident'>terminal</span>::<span class='ident'>set</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>config</span>::<span class='ident'>InputFilter</span>::<span class='ident'>Group</span>{<span class='ident'>group</span>: <span class='ident'>config</span>::<span class='ident'>InputFilterGroup</span>::<span class='ident'>Keyboard</span>, <span class='ident'>both</span>: <span class='boolval'>false</span>}]);</pre>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                     <tr class=' module-item'>
                         <td><a class='mod' href='font/index.html'
@@ -126,7 +140,8 @@
                         <td><a class='enum' href='enum.InputFilterEvent.html'
                                title='bear_lib_terminal::terminal::config::InputFilterEvent'>InputFilterEvent</a></td>
                         <td class='docblock short'>
-                             
+                             <p>As enumerated <a href="foo.wyrd.name/en:bearlibterminal:reference:input#event_and_state_constants">here</a></p>
+
                         </td>
                     </tr>
                 
@@ -134,7 +149,7 @@
                         <td><a class='enum' href='enum.InputFilterGroup.html'
                                title='bear_lib_terminal::terminal::config::InputFilterGroup'>InputFilterGroup</a></td>
                         <td class='docblock short'>
-                             <p>From <a href="http://foo.wyrd.name/en:bearlibterminal:reference:input#inputfilter">here</a>.</p>
+                             <p>Filter event group, from <a href="http://foo.wyrd.name/en:bearlibterminal:reference:input#inputfilter">here</a>.</p>
 
                         </td>
                     </tr>
@@ -162,7 +177,8 @@
                         <td><a class='trait' href='trait.ConfigPart.html'
                                title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a></td>
                         <td class='docblock short'>
-                             
+                             <p>Trait for generating BLT configuration strings.</p>
+
                         </td>
                     </tr>
                 </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>

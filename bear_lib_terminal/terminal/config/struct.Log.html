@@ -45,36 +45,30 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1042' class='srclink' href='../../../src/bear_lib_terminal/terminal/config/section.rs.html#100-113' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1042' class='srclink' href='../../../src/bear_lib_terminal/terminal/config/section.rs.html#61-65' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Log {
-    pub file: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
-    pub level: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.LogLevel.html' title='bear_lib_terminal::terminal::config::LogLevel'>LogLevel</a>&gt;,
-    pub mode: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.LogMode.html' title='bear_lib_terminal::terminal::config::LogMode'>LogMode</a>&gt;,
+    // some fields omitted
 }</pre><div class='docblock'><p>The <code>log</code> <a href="http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration">configuration</a> section repr.</p>
 
 <p><code>None</code> values will not override current ones.</p>
 
-<p>See <a href="../fn.configure.html"><code>terminal::configure()</code></a>.</p>
-</div><h2 class='fields'>Fields</h2>
-<table><tr class='stab '>
-                                  <td id='structfield.file'><code>file</code></td><td><div class='docblock'><p>The file to write the log to. Note, that, IME, it didn&#39;t work.</p>
-
-<p>Default: <code>&quot;bearlibterminal.log&quot;</code></p>
-</div></td></tr><tr class='stab '>
-                                  <td id='structfield.level'><code>level</code></td><td><div class='docblock'><p>The minimal log level to print at.</p>
-
-<p>Default: <a href="enum.LogLevel.html#variant.Error"><code>LogLevel::Error</code></a></p>
-</div></td></tr><tr class='stab '>
-                                  <td id='structfield.mode'><code>mode</code></td><td><div class='docblock'><p>How to write to the log file if one laready exists.</p>
-
-<p>Default: <a href="enum.LogMode.html#variant.Truncate"><code>LogMode::Truncate</code></a></p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h3><div class='impl-items'><h4 id='method.empty' class='method'><code>fn <a href='#method.empty' class='fnname'>empty</a>() -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h4>
+<p>See <a href="../fn.set.html"><code>terminal::set()</code></a>.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h3><div class='impl-items'><h4 id='method.empty' class='method'><code>fn <a href='#method.empty' class='fnname'>empty</a>() -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h4>
 <div class='docblock'><p>Construct an <code>log</code> <a href="http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration">configuration</a> section override segment
 with everything set to <code>None</code></p>
 </div><h4 id='method.file' class='method'><code>fn <a href='#method.file' class='fnname'>file</a>(self, file: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h4>
-<h4 id='method.level' class='method'><code>fn <a href='#method.level' class='fnname'>level</a>(self, level: <a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.LogLevel.html' title='bear_lib_terminal::terminal::config::LogLevel'>LogLevel</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h4>
-<h4 id='method.mode' class='method'><code>fn <a href='#method.mode' class='fnname'>mode</a>(self, mode: <a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.LogMode.html' title='bear_lib_terminal::terminal::config::LogMode'>LogMode</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h3><div class='impl-items'><h4 id='method.to_config_str' class='method'><code>fn <a href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html#method.to_config_str' class='fnname'>to_config_str</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></h4>
+<div class='docblock'><p>The file to write the log to. Note, that, IME, it didn&#39;t work.</p>
+
+<p>Default: <code>&quot;bearlibterminal.log&quot;</code></p>
+</div><h4 id='method.level' class='method'><code>fn <a href='#method.level' class='fnname'>level</a>(self, level: <a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.LogLevel.html' title='bear_lib_terminal::terminal::config::LogLevel'>LogLevel</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h4>
+<div class='docblock'><p>The minimal log level to print at.</p>
+
+<p>Default: <a href="enum.LogLevel.html#variant.Error"><code>LogLevel::Error</code></a></p>
+</div><h4 id='method.mode' class='method'><code>fn <a href='#method.mode' class='fnname'>mode</a>(self, mode: <a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.LogMode.html' title='bear_lib_terminal::terminal::config::LogMode'>LogMode</a>) -&gt; <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h4>
+<div class='docblock'><p>How to write to the log file if one laready exists.</p>
+
+<p>Default: <a href="enum.LogMode.html#variant.Truncate"><code>LogMode::Truncate</code></a></p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h3><div class='impl-items'><h4 id='method.to_config_str' class='method'><code>fn <a href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html#method.to_config_str' class='fnname'>to_config_str</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></h4>
 </div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h3><div class='impl-items'><h4 id='method.hash' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash' class='fnname'>hash</a>&lt;__H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a>&gt;(&amp;self, __arg_0: &amp;mut __H)</code></h4>
 <h4 id='method.hash_slice' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a>) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>

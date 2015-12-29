@@ -72,7 +72,54 @@
 <span id="30">30</span>
 <span id="31">31</span>
 <span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
 </pre><pre class='rust '>
+<span class='doccomment'>//! Module containing BLT configuration options.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! # Examples</span>
+<span class='doccomment'>//! The following from [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference#set):</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```text</span>
+<span class='doccomment'>//! window: title=&#39;foobar&#39;, size=80x25; input.filter=&#39;keyboard&#39;</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! Is equivalent to</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//! use bear_lib_terminal::terminal::{self, config};</span>
+<span class='doccomment'>//! use bear_lib_terminal::geometry::Size;</span>
+<span class='doccomment'>//! # assert!({let result =</span>
+<span class='doccomment'>//! terminal::set(config::Window::empty().title(&quot;foobar&quot;.to_string()).size(Size::new(80, 25)));</span>
+<span class='doccomment'>//! # result}); assert!({let result =</span>
+<span class='doccomment'>//! terminal::set(vec![config::InputFilter::Group{group: config::InputFilterGroup::Keyboard, both: false}]);</span>
+<span class='doccomment'>//! # result});</span>
+<span class='doccomment'>//! ```</span>
+
+
 <span class='kw'>mod</span> <span class='ident'>section</span>;
 <span class='kw'>mod</span> <span class='ident'>input_filter</span>;
 
@@ -82,6 +129,9 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>input_filter</span>::<span class='op'>*</span>;
 
 
+<span class='doccomment'>/// Trait for generating BLT configuration strings.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Those will get fed directly to the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set).</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ConfigPart</span> {
 	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
 }

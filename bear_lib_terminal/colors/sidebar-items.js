@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Color","An RGBA colour"]]});
+initSidebarItems({"struct":[["Color","An RGBA colour repr."]]});

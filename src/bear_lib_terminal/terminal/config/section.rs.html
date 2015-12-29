@@ -416,54 +416,6 @@
 <span id="374">374</span>
 <span id="375">375</span>
 <span id="376">376</span>
-<span id="377">377</span>
-<span id="378">378</span>
-<span id="379">379</span>
-<span id="380">380</span>
-<span id="381">381</span>
-<span id="382">382</span>
-<span id="383">383</span>
-<span id="384">384</span>
-<span id="385">385</span>
-<span id="386">386</span>
-<span id="387">387</span>
-<span id="388">388</span>
-<span id="389">389</span>
-<span id="390">390</span>
-<span id="391">391</span>
-<span id="392">392</span>
-<span id="393">393</span>
-<span id="394">394</span>
-<span id="395">395</span>
-<span id="396">396</span>
-<span id="397">397</span>
-<span id="398">398</span>
-<span id="399">399</span>
-<span id="400">400</span>
-<span id="401">401</span>
-<span id="402">402</span>
-<span id="403">403</span>
-<span id="404">404</span>
-<span id="405">405</span>
-<span id="406">406</span>
-<span id="407">407</span>
-<span id="408">408</span>
-<span id="409">409</span>
-<span id="410">410</span>
-<span id="411">411</span>
-<span id="412">412</span>
-<span id="413">413</span>
-<span id="414">414</span>
-<span id="415">415</span>
-<span id="416">416</span>
-<span id="417">417</span>
-<span id="418">418</span>
-<span id="419">419</span>
-<span id="420">420</span>
-<span id="421">421</span>
-<span id="422">422</span>
-<span id="423">423</span>
-<span id="424">424</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
@@ -473,88 +425,49 @@
 
 <span class='doccomment'>/// The `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::configure()`](../fn.configure.html).</span>
+<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Terminal</span> {
-	<span class='doccomment'>/// Encoding used for unibyte strings. This is better left at default, as Rust uses UTF-8 for everything.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&quot;utf8&quot;`</span>
-	<span class='kw'>pub</span> <span class='ident'>encoding</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,  <span class='comment'>//TODO: use an enum/validated struct?</span>
+	<span class='ident'>encoding</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,  <span class='comment'>//TODO: use an enum/validated struct?</span>
 }
 
 <span class='doccomment'>/// The `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// `None` values will not override current ones.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::configure()`](../fn.configure.html).</span>
+<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Window</span> {
-	<span class='doccomment'>/// Window size in cells.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `80x25`</span>
-	<span class='kw'>pub</span> <span class='ident'>size</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Size</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// Size of all cells, in pixels.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: [`Cellsize::Auto`](enum.Cellsize.html#variant.Auto)</span>
-	<span class='kw'>pub</span> <span class='ident'>cellsize</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Cellsize</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// The terminal window&#39;s title.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&quot;BearLibTerminal&quot;`</span>
-	<span class='kw'>pub</span> <span class='ident'>title</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// The path of the icon used for the terminal window.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: none</span>
-	<span class='kw'>pub</span> <span class='ident'>icon</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// Whether the terminal window should be resizeable.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `false`</span>
-	<span class='kw'>pub</span> <span class='ident'>resizeable</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// Whether to enforce fullscreen mode.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `false`</span>
-	<span class='kw'>pub</span> <span class='ident'>fullscreen</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
+	<span class='ident'>size</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Size</span><span class='op'>&gt;</span>,
+	<span class='ident'>cellsize</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Cellsize</span><span class='op'>&gt;</span>,
+	<span class='ident'>title</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
+	<span class='ident'>icon</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
+	<span class='ident'>resizeable</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
+	<span class='ident'>fullscreen</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
 }
 
 <span class='doccomment'>/// The `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// `None` values will not override current ones.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::configure()`](../fn.configure.html).</span>
+<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Input</span> {
-	<span class='doccomment'>/// Whether to generate a mouse-move event when a mouse moves from one pixel to another as opposed to from one cell to another.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `false`</span>
-	<span class='kw'>pub</span> <span class='ident'>precise_mouse</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// Whether to show the cursor.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `true`</span>
-	<span class='kw'>pub</span> <span class='ident'>mouse_cursor</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// The cursor symbol to blink in the read string function.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&#39;_&#39;` a.k.a. `0x5F`</span>
-	<span class='kw'>pub</span> <span class='ident'>cursor_symbol</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// Amount of time in milliseconds to blink the cursor symbol for.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `500`</span>
-	<span class='kw'>pub</span> <span class='ident'>cursor_blink_rate</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>,
+	<span class='ident'>precise_mouse</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
+	<span class='ident'>mouse_cursor</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
+	<span class='ident'>cursor_symbol</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>,
+	<span class='ident'>cursor_blink_rate</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>,
 }
 
 <span class='doccomment'>/// The `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// `None` values will not override current ones.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::configure()`](../fn.configure.html).</span>
+<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Output</span> {
-	<span class='doccomment'>/// Whether to process special tags in the [`print()`](../fn.print.html) function.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `true`</span>
-	<span class='kw'>pub</span> <span class='ident'>postformatting</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// Toggle OpenGL VSync.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `true`</span>
-	<span class='kw'>pub</span> <span class='ident'>vsync</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
+	<span class='ident'>postformatting</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
+	<span class='ident'>vsync</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
 }
 
 
@@ -562,21 +475,12 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// `None` values will not override current ones.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::configure()`](../fn.configure.html).</span>
+<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Log</span> {
-	<span class='doccomment'>/// The file to write the log to. Note, that, IME, it didn&#39;t work.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&quot;bearlibterminal.log&quot;`</span>
-	<span class='kw'>pub</span> <span class='ident'>file</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// The minimal log level to print at.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: [`LogLevel::Error`](enum.LogLevel.html#variant.Error)</span>
-	<span class='kw'>pub</span> <span class='ident'>level</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>LogLevel</span><span class='op'>&gt;</span>,
-	<span class='doccomment'>/// How to write to the log file if one laready exists.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: [`LogMode::Truncate`](enum.LogMode.html#variant.Truncate)</span>
-	<span class='kw'>pub</span> <span class='ident'>mode</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>LogMode</span><span class='op'>&gt;</span>,
+	<span class='ident'>file</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
+	<span class='ident'>level</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>LogLevel</span><span class='op'>&gt;</span>,
+	<span class='ident'>mode</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>LogMode</span><span class='op'>&gt;</span>,
 }
 
 
@@ -611,12 +515,12 @@
 
 <span class='kw'>impl</span> <span class='ident'>Terminal</span> {
 	<span class='doccomment'>/// Construct a new `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override</span>
-	<span class='doccomment'>/// segment</span>
+	<span class='doccomment'>/// segment with a specified used for unibyte strings, which is better left at default, as Rust uses UTF-8 for everything.</span>
 	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// `None` values will not override current ones.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>encoding</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Terminal</span> {
+	<span class='doccomment'>/// Default: `&quot;utf8&quot;`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>encoding</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>Terminal</span> {
 		<span class='ident'>Terminal</span>{
-			<span class='ident'>encoding</span>: <span class='ident'>encoding</span>,
+			<span class='ident'>encoding</span>: <span class='prelude-val'>Some</span>(<span class='ident'>encoding</span>),
 		}
 	}
 }
@@ -635,35 +539,35 @@
 		}
 	}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>) <span class='op'>-&gt;</span> <span class='ident'>Window</span> {
-		<span class='self'>self</span>.<span class='ident'>size</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// Window size in cells.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `80x25`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>                (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>)         <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>size</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>)                                       ; <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cellsize</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cellsize</span>: <span class='ident'>Cellsize</span>) <span class='op'>-&gt;</span> <span class='ident'>Window</span> {
-		<span class='self'>self</span>.<span class='ident'>cellsize</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cellsize</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// Size of all cells, in pixels.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: [`Cellsize::Auto`](enum.Cellsize.html#variant.Auto).</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cellsize</span>            (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cellsize</span>: <span class='ident'>Cellsize</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>cellsize</span>   <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cellsize</span>)                                   ; <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>title</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>title</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>Window</span> {
-		<span class='self'>self</span>.<span class='ident'>title</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>title</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// The terminal window&#39;s title.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `&quot;BearLibTerminal&quot;`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>title</span>               (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>title</span>: <span class='ident'>String</span>)      <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>title</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>title</span>)                                      ; <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>icon</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>icon</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Window</span> {
-		<span class='self'>self</span>.<span class='ident'>icon</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>icon</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>());
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// The path of the icon used for the terminal window.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: none.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>icon</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>icon</span>: <span class='ident'>T</span>)            <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>icon</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>icon</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>()); <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resizeable</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resizeable</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Window</span> {
-		<span class='self'>self</span>.<span class='ident'>resizeable</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resizeable</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// Whether the terminal window should be resizeable.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `false`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resizeable</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resizeable</span>: <span class='ident'>bool</span>)   <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>resizeable</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resizeable</span>)                                 ; <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fullscreen</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>fullscreen</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Window</span> {
-		<span class='self'>self</span>.<span class='ident'>fullscreen</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>fullscreen</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// Whether to enforce fullscreen mode.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `false`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fullscreen</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>fullscreen</span>: <span class='ident'>bool</span>)   <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>fullscreen</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>fullscreen</span>)                                 ; <span class='self'>self</span>}
 }
 
 <span class='kw'>impl</span> <span class='ident'>Input</span> {
@@ -678,25 +582,25 @@
 		}
 	}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>precise_mouse</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>precise_mouse</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Input</span> {
-		<span class='self'>self</span>.<span class='ident'>precise_mouse</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>precise_mouse</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// Whether to generate a mouse-move event when a mouse moves from one pixel to another as opposed to from one cell to another.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `false`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>precise_mouse</span>    (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>precise_mouse</span>: <span class='ident'>bool</span>)    <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>precise_mouse</span>     <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>precise_mouse</span>)    ; <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mouse_cursor</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mouse_cursor</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Input</span> {
-		<span class='self'>self</span>.<span class='ident'>mouse_cursor</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mouse_cursor</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// Whether to show the cursor.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `true`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mouse_cursor</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mouse_cursor</span>: <span class='ident'>bool</span>)     <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>mouse_cursor</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mouse_cursor</span>)     ; <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_symbol</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_symbol</span>: <span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>Input</span> {
-		<span class='self'>self</span>.<span class='ident'>cursor_symbol</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_symbol</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// The cursor symbol to blink in the read string function.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `&#39;_&#39;` a.k.a. `0x5F`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_symbol</span>    (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_symbol</span>: <span class='ident'>char</span>)    <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>cursor_symbol</span>     <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_symbol</span>)    ; <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_blink_rate</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_blink_rate</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='ident'>Input</span> {
-		<span class='self'>self</span>.<span class='ident'>cursor_blink_rate</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_blink_rate</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// Amount of time in milliseconds to blink the cursor symbol for.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `500`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_blink_rate</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_blink_rate</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>cursor_blink_rate</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_blink_rate</span>); <span class='self'>self</span>}
 }
 
 <span class='kw'>impl</span> <span class='ident'>Output</span> {
@@ -709,15 +613,15 @@
 		}
 	}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>postformatting</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>postformatting</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Output</span> {
-		<span class='self'>self</span>.<span class='ident'>postformatting</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>postformatting</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// Whether to process special tags in the [`print()`](../fn.print.html) function.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `true`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>postformatting</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>postformatting</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>postformatting</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>postformatting</span>); <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vsync</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>vsync</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Output</span> {
-		<span class='self'>self</span>.<span class='ident'>vsync</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>vsync</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// Toggle OpenGL VSync.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `true`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vsync</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>vsync</span>: <span class='ident'>bool</span>)          <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>vsync</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>vsync</span>);          <span class='self'>self</span>}
 }
 
 <span class='kw'>impl</span> <span class='ident'>Log</span> {
@@ -731,20 +635,20 @@
 		}
 	}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>file</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>file</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>Log</span> {
-		<span class='self'>self</span>.<span class='ident'>file</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>file</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// The file to write the log to. Note, that, IME, it didn&#39;t work.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: `&quot;bearlibterminal.log&quot;`</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>file</span> (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>file</span>: <span class='ident'>String</span>)    <span class='op'>-&gt;</span> <span class='ident'>Log</span> {<span class='self'>self</span>.<span class='ident'>file</span>  <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>file</span>) ; <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>level</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>level</span>: <span class='ident'>LogLevel</span>) <span class='op'>-&gt;</span> <span class='ident'>Log</span> {
-		<span class='self'>self</span>.<span class='ident'>level</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>level</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// The minimal log level to print at.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: [`LogLevel::Error`](enum.LogLevel.html#variant.Error)</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>level</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>level</span>: <span class='ident'>LogLevel</span>) <span class='op'>-&gt;</span> <span class='ident'>Log</span> {<span class='self'>self</span>.<span class='ident'>level</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>level</span>); <span class='self'>self</span>}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mode</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mode</span>: <span class='ident'>LogMode</span>) <span class='op'>-&gt;</span> <span class='ident'>Log</span> {
-		<span class='self'>self</span>.<span class='ident'>mode</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mode</span>);
-		<span class='self'>self</span>
-	}
+	<span class='doccomment'>/// How to write to the log file if one laready exists.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Default: [`LogMode::Truncate`](enum.LogMode.html#variant.Truncate)</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mode</span> (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mode</span>: <span class='ident'>LogMode</span>)   <span class='op'>-&gt;</span> <span class='ident'>Log</span> {<span class='self'>self</span>.<span class='ident'>mode</span>  <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mode</span>) ; <span class='self'>self</span>}
 }
 
 

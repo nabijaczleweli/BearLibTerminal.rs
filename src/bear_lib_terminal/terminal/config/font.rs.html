@@ -360,11 +360,14 @@
 <span id="318">318</span>
 <span id="319">319</span>
 <span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Module containing font changing tools.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! # Examples</span>
-<span class='doccomment'>//!</span>
 <span class='doccomment'>//! The following from [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management):</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```text</span>
@@ -376,11 +379,16 @@
 <span class='doccomment'>//! Is equivalent to</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! use bear_lib_terminal::terminal::{self, config};</span>
+<span class='doccomment'>//! use bear_lib_terminal::terminal;</span>
+<span class='doccomment'>//! use bear_lib_terminal::terminal::config::font;</span>
 <span class='doccomment'>//! use bear_lib_terminal::geometry::Size;</span>
-<span class='doccomment'>//! terminal::set(config::font::true_type(config::font::Origin::Root, &quot;UbuntuMono-R.ttf&quot;, Size::new(0, 12)));</span>
-<span class='doccomment'>//! terminal::set(config::font::bitmap(config::font::Origin::Offset(&#39;^&#39;), &quot;circumflex.png&quot;));</span>
-<span class='doccomment'>//! terminal::set(config::font::bitmap(config::font::Origin::Offset(&#39;\u{E000}&#39;), &quot;tileset.png&quot;).size(Size::new(16, 16)).spacing(Size::new(2, 1)));</span>
+<span class='doccomment'>//! # assert!({let result =</span>
+<span class='doccomment'>//! terminal::set(font::true_type(font::Origin::Root, &quot;UbuntuMono-R.ttf&quot;, Size::new(0, 12)));</span>
+<span class='doccomment'>//! # result}); assert!({let result =</span>
+<span class='doccomment'>//! terminal::set(font::bitmap(font::Origin::Offset(&#39;^&#39;), &quot;circumflex.png&quot;));</span>
+<span class='doccomment'>//! # result}); assert!({let result =</span>
+<span class='doccomment'>//! terminal::set(font::bitmap(font::Origin::Offset(&#39;\u{E000}&#39;), &quot;tileset.png&quot;).size(Size::new(16, 16)).spacing(Size::new(2, 1)));</span>
+<span class='doccomment'>//! # result});</span>
 <span class='doccomment'>//! ```</span>
 
 
