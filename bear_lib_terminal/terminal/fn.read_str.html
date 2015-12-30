@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `clear` fn in crate `bear_lib_terminal`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, clear">
+    <meta name="description" content="API documentation for the Rust `read_str` fn in crate `bear_lib_terminal`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, read_str">
 
-    <title>bear_lib_terminal::terminal::clear - Rust</title>
+    <title>bear_lib_terminal::terminal::read_str - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>bear_lib_terminal</a>::<wbr><a href='index.html'>terminal</a></p><script>window.sidebarCurrent = {name: 'clear', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>bear_lib_terminal</a>::<wbr><a href='index.html'>terminal</a></p><script>window.sidebarCurrent = {name: 'read_str', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -41,18 +41,19 @@
     </nav>
 
     <section id='main' class="content fn">
-<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>bear_lib_terminal</a>::<wbr><a href='index.html'>terminal</a>::<wbr><a class='fn' href=''>clear</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>bear_lib_terminal</a>::<wbr><a href='index.html'>terminal</a>::<wbr><a class='fn' href=''>read_str</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1911' class='srclink' href='../../src/bear_lib_terminal/terminal/mod.rs.html#57-62' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn clear(area: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../bear_lib_terminal/geometry/struct.Rect.html' title='bear_lib_terminal::geometry::Rect'>Rect</a>&gt;)</pre><div class='docblock'><p>Clears the screen (either partailly or fully)</p>
+        </span><a id='src-1979' class='srclink' href='../../src/bear_lib_terminal/terminal/mod.rs.html#252-254' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn read_str(point: <a class='struct' href='../../bear_lib_terminal/geometry/struct.Point.html' title='bear_lib_terminal::geometry::Point'>Point</a>, max: <a href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</pre><div class='docblock'><p>Reads up to <code>max</code> characters without parsing, starting from the specified coordinates.</p>
 
-<p>If <code>area</code> is <code>None</code>, clears the entire screen, all layers
-(identically to the <a href="http://foo.wyrd.name/en:bearlibterminal:reference#clear"><code>terminal_clear()</code> C API function</a>.</p>
+<p>Returns <code>None</code> if the user closed the window or pressed <code>Escape</code>,
+<code>Some</code> containing the read string otherwise.</p>
 
-<p>Otherwise clears specified area on the current layer, as would the
-<a href="http://foo.wyrd.name/en:bearlibterminal:reference#clear_area"><code>terminal_clear_area()</code> C API function</a>.</p>
+<p>The read string will contain up to <code>max</code> characters.</p>
+
+<p>The string being read will be kept on-screen only <em>during</em> the reading process, the scene will be restored before returning.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

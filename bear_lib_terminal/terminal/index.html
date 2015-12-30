@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-279' class='srclink' href='../../src/bear_lib_terminal/terminal/mod.rs.html#1-427' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-279' class='srclink' href='../../src/bear_lib_terminal/terminal/mod.rs.html#1-440' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Rusticized interface for the FFI.</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
@@ -179,8 +179,8 @@ To show the window use the <a href="fn.refresh.html"><code>refresh()</code></a> 
                     </tr>
                 
                     <tr class=' module-item'>
-                        <td><a class='fn' href='fn.pick_bgcolor.html'
-                               title='bear_lib_terminal::terminal::pick_bgcolor'>pick_bgcolor</a></td>
+                        <td><a class='fn' href='fn.pick_background_color.html'
+                               title='bear_lib_terminal::terminal::pick_background_color'>pick_background_color</a></td>
                         <td class='docblock short'>
                              <p>Get the background color in the specified coordinates.</p>
 
@@ -188,8 +188,8 @@ To show the window use the <a href="fn.refresh.html"><code>refresh()</code></a> 
                     </tr>
                 
                     <tr class=' module-item'>
-                        <td><a class='fn' href='fn.pick_color.html'
-                               title='bear_lib_terminal::terminal::pick_color'>pick_color</a></td>
+                        <td><a class='fn' href='fn.pick_foreground_color.html'
+                               title='bear_lib_terminal::terminal::pick_foreground_color'>pick_foreground_color</a></td>
                         <td class='docblock short'>
                              <p>Get the color of the character in the specified coordinates on the specified layer.</p>
 
@@ -246,6 +246,15 @@ To show the window use the <a href="fn.refresh.html"><code>refresh()</code></a> 
                                title='bear_lib_terminal::terminal::read_event'>read_event</a></td>
                         <td class='docblock short'>
                              <p>Returns the next event in the queue if it&#39;s available, otherwise returns <code>None</code>.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.read_str.html'
+                               title='bear_lib_terminal::terminal::read_str'>read_str</a></td>
+                        <td class='docblock short'>
+                             <p>Reads up to <code>max</code> characters without parsing, starting from the specified coordinates.</p>
 
                         </td>
                     </tr>

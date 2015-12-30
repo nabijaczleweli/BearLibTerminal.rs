@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/bear-lib-terminal-sys-1.0.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/bear-lib-terminal-sys-1.1.0/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -429,6 +429,7 @@
 <span id="387">387</span>
 <span id="388">388</span>
 <span id="389">389</span>
+<span id="390">390</span>
 </pre><pre class='rust '>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
 
@@ -539,37 +540,24 @@
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_MOUSE_SCROLL</span> : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x86</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_MOUSE_X</span>      : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x87</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_MOUSE_Y</span>      : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x88</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_MOUSE_PIXEL_X</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x89</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_MOUSE_PIXEL_Y</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x8A</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_MOUSE_WHEEL</span>  : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x8B</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_MOUSE_CLICKS</span> : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x8C</span>;
 
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_KEY_RELEASED</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x100</span>;
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_WIDTH</span>      : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC0</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_HEIGHT</span>     : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC1</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_CELL_WIDTH</span> : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC2</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_CELL_HEIGHT</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC3</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_COLOR</span>      : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC4</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_BKCOLOR</span>    : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC5</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_LAYER</span>      : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC6</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_COMPOSITION</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC7</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_CHAR</span>       : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC8</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_WCHAR</span>      : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xC9</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_EVENT</span>      : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xCA</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_FULLSCREEN</span> : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xCB</span>;
 
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_CLOSE</span>  : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0xE0</span>;
@@ -578,9 +566,7 @@
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_OFF</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_ON</span> : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>1</span>;
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_INPUT_NONE</span>     : <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TK_INPUT_CANCELLED</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span>;
 
 
@@ -683,7 +669,7 @@
 	<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>x</span> <span class='op'>&gt;=</span> <span class='number'>0</span>);
 	<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>y</span> <span class='op'>&gt;=</span> <span class='number'>0</span>);
 	<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>code</span> <span class='op'>&gt;=</span> <span class='number'>0</span>);
-	<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>corners</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>4</span>);
+	<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>corners</span>.<span class='ident'>len</span>(), <span class='number'>4</span>);
 
 	<span class='kw'>let</span> <span class='ident'>corners_ptr</span> <span class='op'>=</span> <span class='ident'>corners</span>.<span class='ident'>as_ptr</span>();
 	<span class='kw'>unsafe</span> {
@@ -776,6 +762,21 @@
 	}
 }
 
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read_str</span>(<span class='ident'>x</span>: <span class='ident'>i32</span>, <span class='ident'>y</span>: <span class='ident'>i32</span>, <span class='ident'>max</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
+	<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>x</span> <span class='op'>&gt;=</span> <span class='number'>0</span>);
+	<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>y</span> <span class='op'>&gt;=</span> <span class='number'>0</span>);
+	<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>max</span> <span class='op'>&gt;=</span> <span class='number'>0</span>);
+
+	<span class='kw'>match</span> <span class='kw'>unsafe</span> {
+		<span class='kw'>let</span> <span class='ident'>i8_ptr</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span><span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>libc</span>::<span class='ident'>c_char</span>, <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>i8</span><span class='op'>&gt;</span>(<span class='ident'>CString</span>::<span class='ident'>from_vec_unchecked</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>0</span>; <span class='ident'>max</span> <span class='kw'>as</span> <span class='ident'>usize</span>]).<span class='ident'>into_raw</span>());
+		(<span class='ident'>terminal_read_str8</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>i8_ptr</span>, <span class='ident'>max</span>) <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='ident'>CString</span>::<span class='ident'>from_raw</span>(<span class='ident'>i8_ptr</span>))
+	} {
+		(<span class='ident'>TK_INPUT_CANCELLED</span>, _) <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+		(<span class='ident'>TK_INPUT_NONE</span>,      _) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>String</span>::<span class='ident'>with_capacity</span>(<span class='number'>0</span>)),  <span class='comment'>// Utilize zero-alloc here</span>
+		(_,             <span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>string</span>.<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>()),
+	}
+}
+
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delay</span>(<span class='ident'>period</span>: <span class='ident'>i32</span>) {
 	<span class='kw'>unsafe</span> {
 		<span class='ident'>terminal_delay</span>(<span class='ident'>period</span>)
@@ -807,6 +808,7 @@
 	<span class='kw'>fn</span> <span class='ident'>terminal_state</span>(<span class='ident'>code</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='ident'>i32</span>;
 	<span class='kw'>fn</span> <span class='ident'>terminal_read</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span>;
 	<span class='kw'>fn</span> <span class='ident'>terminal_peek</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span>;
+	<span class='kw'>fn</span> <span class='ident'>terminal_read_str8</span>(<span class='ident'>x</span>: <span class='ident'>i32</span>, <span class='ident'>y</span>: <span class='ident'>i32</span>, <span class='ident'>buffer</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>i8</span>, <span class='ident'>max</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='ident'>ColorT</span>;
 	<span class='kw'>fn</span> <span class='ident'>terminal_delay</span>(<span class='ident'>period</span>: <span class='ident'>i32</span>);
 }
 
