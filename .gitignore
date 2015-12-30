@@ -1,6 +1,7 @@
 *
 !.gitignore
 !.travis.yml
+!appveyor.yml
 !LICENSE
 !README.md
 !Cargo.toml

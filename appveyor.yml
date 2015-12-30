@@ -1,0 +1,43 @@
+version: 0.9.0-{build}
+
+branches:
+  except:
+    - doc
+
+skip_tags: false
+
+platform: x64
+configuration: Release
+
+clone_folder: C:\BearLibTerminal.rs
+
+install:
+  - curl -L https://www.dropbox.com/s/oo4j8djdis4kdc5/BearLibTerminal.dll?dl=1 -oC:\BearLibTerminal.dll
+  - copy C:\BearLibTerminal.dll .
+  - curl -L https://static.rust-lang.org/dist/rust-nightly-x86_64-pc-windows-gnu.msi -oC:\rust-nightly-x86_64-pc-windows-gnu.msi
+  - start /w msiexec /qn /quiet /passive /a C:\rust-nightly-x86_64-pc-windows-gnu.msi TARGETDIR="C:\Program Files"
+  - set LIBRARY_PATH=C:\
+  - set PATH=%PATH%;C:\Program Files\Rust\bin;C:\
+
+build: off
+build_script:
+  - cargo build --verbose
+
+test: off
+test_script:
+  - cargo test --verbose
+
+deploy:
+  provider: GitHub
+  artifact: BearLibTerminal.dll
+  auth_token:
+    secure: +xqyPTmE5gQCvtd/lyTfuNiCxR1v302T/k0vnbprwN8TraRQPaiOAWU1jUt43cdE
+  on:
+    branch: master
+    appveyor_repo_tag: true
+
+notifications:
+  - provider: Email
+    to:
+      - nabijaczleweli@gmail.com
+    on_build_status_changed: true
