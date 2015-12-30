@@ -24,15 +24,6 @@ pub fn open(title: &str, width: u32, height: u32) {
 	set(Window::empty().size(Size::new(width as i32, height as i32)).title(title.to_string()));
 }
 
-/// Invoke the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the argument's `config_str`.
-///
-/// Returns `false` iff the config string is malformed.
-///
-/// For build-in [`ConfigPart`](config/trait.ConfigPart.html)s see the [`config`](config/index.html) module.
-pub fn set<T: ConfigPart>(cfg: T) -> bool {
-	ffi::set(&*&cfg.to_config_str())
-}
-
 /// Closes the terminal window, causing all subsequent functions from the module (apart from [`open()`](fn.open.html)) to fail
 ///
 /// Equivalent to the [`terminal_close()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#close).
@@ -40,35 +31,13 @@ pub fn close() {
 	ffi::close();
 }
 
-/// Prints the specified string to the specified location, formatting it along the way.
+/// Invoke the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the argument's `config_str`.
 ///
-/// For formatting spec see the docs for the [`terminal_print()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#print).
-pub fn print(point: Point, value: &str) {
-	let _ = ffi::print(point.x, point.y, value);
-}
-
-/// Equivalent to [`print()`](fn.print.html) with a `Point` constructed from the first two arguments.
-pub fn print_xy(x: i32, y: i32, value: &str) {
-	print(Point::new(x, y), value);
-}
-
-/// Prints the specified character to the specified location.
+/// Returns `false` iff the config string is malformed.
 ///
-/// Equivalent to the [`terminal_put()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put).
-pub fn put(point: Point, cell: char) {
-	ffi::put(point.x, point.y, cell as i32);
-}
-
-/// Equivalent to [`put()`](fn.put.html) with a `Point` constructed from the first two arguments.
-pub fn put_xy(x: i32, y: i32, cell: char) {
-	ffi::put(x, y, cell as i32);
-}
-
-/// Prints the specified character to the specified pixel-offsetted location, gradient-colouring it from the corners.
-///
-/// For details see the docs for the [`terminal_put_ext()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put_ext).
-pub fn put_ext(pos: Point, offset: Point, cell: char, corners: &Vec<Color>) {
-	ffi::put_ext(pos.x, pos.y, offset.x, offset.y, cell as i32, &corners.iter().cloned().map(to_color_t).collect::<Vec<_>>()[..]);
+/// For build-in [`ConfigPart`](config/trait.ConfigPart.html)s see the [`config`](config/index.html) module.
+pub fn set<T: ConfigPart>(cfg: T) -> bool {
+	ffi::set(&*&cfg.to_config_str())
 }
 
 /// Flushes all changes made to the screen; also shows the window after the [`open()`](fn.open.html) call
@@ -105,100 +74,6 @@ pub fn crop(rect: Rect) {
 /// For more information consult the documentation for the [`terminal_layer()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#layer).
 pub fn layer(index: i32) {
 	ffi::layer(index);
-}
-
-/// Enable or disable composition, (dis)allowing for "stacking" tiles on top of each other in the same cell.
-///
-/// For details and other uses consult the documentation for the
-/// [`terminal_composition()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#composition).
-pub fn composition(enable: bool) {
-	ffi::composition(enable);
-}
-
-/// Get the character in the specified coordinates on the specified layer.
-///
-/// Returns 0 if the cell is empty on the specified layer.
-///
-/// Consult the documentation for the [`terminal_pick()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick) for more data.
-pub fn pick(point: Point, index: i32) -> char {
-	char::from_u32(ffi::pick(point.x, point.y, index) as u32).unwrap()
-}
-
-/// Get the color of the character in the specified coordinates on the specified layer.
-///
-/// Consult the documentation for the [`terminal_pick_color()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_color),
-/// despite its laconicity.
-pub fn pick_color(point: Point, index: i32) -> Color {
-	from_color_t(ffi::pick_color(point.x, point.y, index))
-}
-
-/// Get the background color in the specified coordinates.
-///
-/// Consult the documentation for the [`terminal_pick_bkcolor()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_bkcolor)
-/// for the same amount of information.
-pub fn pick_bgcolor(point: Point) -> Color {
-	from_color_t(ffi::pick_bkcolor(point.x, point.y))
-}
-
-/// Sleep for the specified amount of milliseconds.
-///
-/// See the [`terminal_delay()` C API function's documentation](http://foo.wyrd.name/en:bearlibterminal:reference#delay).
-pub fn delay(period: i32) {
-	ffi::delay(period)
-}
-
-/// Check, whether the next [`read_event()`](fn.read_event.html) call will return `Some`.
-///
-/// Consult the [documentation for the `terminal_has_input()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#has_input).
-pub fn has_input() -> bool {
-	ffi::has_input()
-}
-
-/// Calculate the argument's width/height without printing it.
-///
-/// Whether the function returns the width or the height depends on the presence of the `bbox` tag in the string.
-///
-/// Refer to the [docs for the `terminal_measure()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#measure), note,
-/// that the return type therein is incorrect.
-pub fn measure(value: &str) -> i32 {
-	ffi::measure(value)
-}
-
-/// Returns the next event in the queue if it's available, otherwise returns `None`.
-///
-/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.
-///
-/// This is equivalent to the behaviour mentioned in the
-/// [docs for the `terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read), but not the function's behaviour itself.
-pub fn read_event() -> Option<Event> {
-	if !has_input() {
-		None
-	} else {
-		wait_event()
-	}
-}
-
-/// Returns the next event in the queue if it's available without popping it therefrom, otherwise returns `None`.
-///
-/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.
-///
-/// If one intends on popping the events, the [`read_event()`](fn.read_event.html) function is recommended.
-///
-/// If one intends on just checking if an event is ready, the [`has_input()`](fn.has_input.html) function is recommended.
-///
-/// This is equivalent to the [`terminal_peek()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#peek).
-pub fn peek_event() -> Option<Event> {
-	match ffi::peek() {
-		0 => None,
-		event => to_event(event),
-	}
-}
-
-/// Returns the next event, blocks until one's available.
-///
-/// This is equivalent to the [`terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read).
-pub fn wait_event() -> Option<Event> {
-	to_event(ffi::read())
 }
 
 /// Sets the current foreground color, which will affect all the output functions called later.
@@ -247,6 +122,132 @@ pub fn with_colors<F: Fn()>(fg: Color, bg: Color, callback: F) {
 		)
 	);
 }
+
+/// Enable or disable composition, (dis)allowing for "stacking" tiles on top of each other in the same cell.
+///
+/// For details and other uses consult the documentation for the
+/// [`terminal_composition()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#composition).
+pub fn composition(enable: bool) {
+	ffi::composition(enable);
+}
+
+/// Prints the specified character to the specified location.
+///
+/// Equivalent to the [`terminal_put()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put).
+pub fn put(point: Point, cell: char) {
+	ffi::put(point.x, point.y, cell as i32);
+}
+
+/// Equivalent to [`put()`](fn.put.html) with a `Point` constructed from the first two arguments.
+pub fn put_xy(x: i32, y: i32, cell: char) {
+	ffi::put(x, y, cell as i32);
+}
+
+/// Prints the specified character to the specified pixel-offsetted location, gradient-colouring it from the corners.
+///
+/// For details see the docs for the [`terminal_put_ext()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put_ext).
+pub fn put_ext(pos: Point, offset: Point, cell: char, corners: &Vec<Color>) {
+	ffi::put_ext(pos.x, pos.y, offset.x, offset.y, cell as i32, &corners.iter().cloned().map(to_color_t).collect::<Vec<_>>()[..]);
+}
+
+/// Get the character in the specified coordinates on the specified layer.
+///
+/// Returns 0 if the cell is empty on the specified layer.
+///
+/// Consult the documentation for the [`terminal_pick()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick) for more data.
+pub fn pick(point: Point, index: i32) -> char {
+	char::from_u32(ffi::pick(point.x, point.y, index) as u32).unwrap()
+}
+
+/// Get the color of the character in the specified coordinates on the specified layer.
+///
+/// Consult the documentation for the [`terminal_pick_color()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_color),
+/// despite its laconicity.
+pub fn pick_foreground_color(point: Point, index: i32) -> Color {
+	from_color_t(ffi::pick_color(point.x, point.y, index))
+}
+
+/// Get the background color in the specified coordinates.
+///
+/// Consult the documentation for the [`terminal_pick_bkcolor()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_bkcolor)
+/// for the same amount of information.
+pub fn pick_background_color(point: Point) -> Color {
+	from_color_t(ffi::pick_bkcolor(point.x, point.y))
+}
+
+/// Prints the specified string to the specified location, formatting it along the way.
+///
+/// For formatting spec see the docs for the [`terminal_print()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#print).
+pub fn print(point: Point, value: &str) {
+	let _ = ffi::print(point.x, point.y, value);
+}
+
+/// Equivalent to [`print()`](fn.print.html) with a `Point` constructed from the first two arguments.
+pub fn print_xy(x: i32, y: i32, value: &str) {
+	print(Point::new(x, y), value);
+}
+
+/// Calculate the argument's width/height without printing it.
+///
+/// Whether the function returns the width or the height depends on the presence of the `bbox` tag in the string.
+///
+/// Refer to the [docs for the `terminal_measure()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#measure), note,
+/// that the return type therein is incorrect.
+pub fn measure(value: &str) -> i32 {
+	ffi::measure(value)
+}
+
+/// Check, whether the next [`read_event()`](fn.read_event.html) call will return `Some`.
+///
+/// Consult the [documentation for the `terminal_has_input()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#has_input).
+pub fn has_input() -> bool {
+	ffi::has_input()
+}
+
+/// Returns the next event, blocks until one's available.
+///
+/// This is equivalent to the [`terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read).
+pub fn wait_event() -> Option<Event> {
+	to_event(ffi::read())
+}
+
+/// Returns the next event in the queue if it's available, otherwise returns `None`.
+///
+/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.
+///
+/// This is equivalent to the behaviour mentioned in the
+/// [docs for the `terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read), but not the function's behaviour itself.
+pub fn read_event() -> Option<Event> {
+	if !has_input() {
+		None
+	} else {
+		wait_event()
+	}
+}
+
+/// Returns the next event in the queue if it's available without popping it therefrom, otherwise returns `None`.
+///
+/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.
+///
+/// If one intends on popping the events, the [`read_event()`](fn.read_event.html) function is recommended.
+///
+/// If one intends on just checking if an event is ready, the [`has_input()`](fn.has_input.html) function is recommended.
+///
+/// This is equivalent to the [`terminal_peek()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#peek).
+pub fn peek_event() -> Option<Event> {
+	match ffi::peek() {
+		0 => None,
+		event => to_event(event),
+	}
+}
+
+/// Sleep for the specified amount of milliseconds.
+///
+/// See the [`terminal_delay()` C API function's documentation](http://foo.wyrd.name/en:bearlibterminal:reference#delay).
+pub fn delay(period: i32) {
+	ffi::delay(period)
+}
+
 
 fn from_color_t(color: ColorT) -> Color {
 	let alpha = ((color >> 24) & 0xFF) as u8;
