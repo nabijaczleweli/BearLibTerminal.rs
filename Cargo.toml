@@ -12,4 +12,4 @@ authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
 exclude = ["*.enc"]
 
 [dependencies]
-libc = "0.2.4"
+bear-lib-terminal-sys = "1.0.0"

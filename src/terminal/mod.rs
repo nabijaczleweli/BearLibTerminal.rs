@@ -1,15 +1,15 @@
 //! Rusticized interface for the FFI.
 
 
-mod ffi;
 mod input;
 pub mod config;
 
 use std::char;
-use geometry::{Rect, Point, Size};
 use colors::Color;
-use self::ffi::ColorT;
+use geometry::{Rect, Point, Size};
 use self::config::{ConfigPart, Window};
+use bear_lib_terminal_sys as ffi;
+use bear_lib_terminal_sys::ColorT;
 
 pub use self::input::{Event, KeyCode};
 

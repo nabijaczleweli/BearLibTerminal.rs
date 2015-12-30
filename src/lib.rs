@@ -15,7 +15,7 @@
 //! ```
 
 
-extern crate libc;
+extern crate bear_lib_terminal_sys;
 
 mod colors;
 pub mod geometry;
