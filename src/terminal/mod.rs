@@ -241,14 +241,17 @@ pub fn peek_event() -> Option<Event> {
 	}
 }
 
-/// Reads up to `max` characters without parsing, starting from the specified coordinates.
+/// Reads up to `max` characters without parsing, starting at the specified coordinates.
 ///
 /// Returns `None` if the user closed the window or pressed `Escape`,
 /// `Some` containing the read string otherwise.
 ///
 /// The read string will contain up to `max` characters.
 ///
-/// The string being read will be kept on-screen only *during* the reading process, the scene will be restored before returning.
+/// The string being read will be kept on-screen only *during* the reading process, the scene will be restored before returning (needs a refresh, though).
+///
+/// Refer to the [documentation for the for the `terminal_read_str()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read_str)
+/// for specific information.
 pub fn read_str(point: Point, max: i32) -> Option<String> {
 	ffi::read_str(point.x, point.y, max)
 }
