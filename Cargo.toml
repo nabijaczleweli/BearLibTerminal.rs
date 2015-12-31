@@ -13,4 +13,4 @@ authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
 exclude = ["*.enc"]
 
 [dependencies]
-bear-lib-terminal-sys = "1.1.0"
+bear-lib-terminal-sys = "1.1.1"
