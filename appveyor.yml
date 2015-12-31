@@ -27,6 +27,9 @@ test: off
 test_script:
   - cargo test --verbose
 
+artifacts:
+  - path: BearLibTerminal.dll
+
 deploy:
   provider: GitHub
   artifact: BearLibTerminal.dll
