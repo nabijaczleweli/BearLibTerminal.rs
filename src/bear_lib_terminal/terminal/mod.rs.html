@@ -480,6 +480,9 @@
 <span id="438">438</span>
 <span id="439">439</span>
 <span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Rusticized interface for the FFI.</span>
 
@@ -724,14 +727,17 @@
 	}
 }
 
-<span class='doccomment'>/// Reads up to `max` characters without parsing, starting from the specified coordinates.</span>
+<span class='doccomment'>/// Reads up to `max` characters without parsing, starting at the specified coordinates.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// Returns `None` if the user closed the window or pressed `Escape`,</span>
 <span class='doccomment'>/// `Some` containing the read string otherwise.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// The read string will contain up to `max` characters.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// The string being read will be kept on-screen only *during* the reading process, the scene will be restored before returning.</span>
+<span class='doccomment'>/// The string being read will be kept on-screen only *during* the reading process, the scene will be restored before returning (needs a refresh, though).</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Refer to the [documentation for the for the `terminal_read_str()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read_str)</span>
+<span class='doccomment'>/// for specific information.</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read_str</span>(<span class='ident'>point</span>: <span class='ident'>Point</span>, <span class='ident'>max</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
 	<span class='ident'>ffi</span>::<span class='ident'>read_str</span>(<span class='ident'>point</span>.<span class='ident'>x</span>, <span class='ident'>point</span>.<span class='ident'>y</span>, <span class='ident'>max</span>)
 }

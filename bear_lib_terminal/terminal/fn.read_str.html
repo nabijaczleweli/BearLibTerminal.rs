@@ -45,15 +45,18 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1979' class='srclink' href='../../src/bear_lib_terminal/terminal/mod.rs.html#252-254' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn read_str(point: <a class='struct' href='../../bear_lib_terminal/geometry/struct.Point.html' title='bear_lib_terminal::geometry::Point'>Point</a>, max: <a href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</pre><div class='docblock'><p>Reads up to <code>max</code> characters without parsing, starting from the specified coordinates.</p>
+        </span><a id='src-1979' class='srclink' href='../../src/bear_lib_terminal/terminal/mod.rs.html#255-257' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn read_str(point: <a class='struct' href='../../bear_lib_terminal/geometry/struct.Point.html' title='bear_lib_terminal::geometry::Point'>Point</a>, max: <a href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</pre><div class='docblock'><p>Reads up to <code>max</code> characters without parsing, starting at the specified coordinates.</p>
 
 <p>Returns <code>None</code> if the user closed the window or pressed <code>Escape</code>,
 <code>Some</code> containing the read string otherwise.</p>
 
 <p>The read string will contain up to <code>max</code> characters.</p>
 
-<p>The string being read will be kept on-screen only <em>during</em> the reading process, the scene will be restored before returning.</p>
+<p>The string being read will be kept on-screen only <em>during</em> the reading process, the scene will be restored before returning (needs a refresh, though).</p>
+
+<p>Refer to the <a href="http://foo.wyrd.name/en:bearlibterminal:reference#read_str">documentation for the for the <code>terminal_read_str()</code> C API function</a>
+for specific information.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
