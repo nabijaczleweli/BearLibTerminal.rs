@@ -144,8 +144,16 @@ pub enum KeyCode {
 pub enum Event {
 	/// Terminal window closed.
 	Close,
-	/// Terminal window resized.
-	Resize,
+	/// Terminal window resized. Needs to have `window.resizeable = true` to occur.
+	///
+	/// Note, that, as of [`40e6253`](https://bitbucket.org/cfyzium/bearlibterminal/commits/40e625311f0cccc43b94633add4dec0d6b77c2b7),
+	/// the terminal window is cleared when resized.
+	Resize{
+		/// Width the terminal was resized to.
+		width: i32,
+		/// Heigth the terminal was resized to.
+		height: i32,
+	},
 	/// Mouse moved.
 	///
 	/// If [`precise-mouse`](config/struct.Input.html#structfield.precise_mouse) is off, generated each time mouse moves from cell to cell, otherwise,

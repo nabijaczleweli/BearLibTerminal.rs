@@ -387,7 +387,7 @@ fn to_keycode(code: i32) -> Option<KeyCode> {
 fn to_event(code: i32) -> Option<Event> {
 	match code {
 		ffi::TK_CLOSE        => Some(Event::Close),
-		ffi::TK_RESIZED      => Some(Event::Resize),
+		ffi::TK_RESIZED      => Some(get_window_resize()),
 		ffi::TK_MOUSE_MOVE   => Some(get_mouse_move()),
 		ffi::TK_MOUSE_SCROLL => Some(get_mouse_scroll()),
 		_                    => to_key_event(code),
@@ -410,6 +410,13 @@ fn to_key_event(code: i32) -> Option<Event> {
 				None            => None,
 			}
 		}
+	}
+}
+
+fn get_window_resize() -> Event {
+	Event::Resize{
+		width: ffi::state(ffi::TK_WIDTH),
+		height: ffi::state(ffi::TK_HEIGHT),
 	}
 }
 
