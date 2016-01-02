@@ -35,7 +35,7 @@ script:
   - LD_PRELOAD=~/lib/libBearLibTerminal.so LD_LIBRARY_PATH="~/lib:$LD_LIBRARY_PATH" LIBRARY_PATH=~/lib cargo build --verbose
   - LD_PRELOAD=~/lib/libBearLibTerminal.so LD_LIBRARY_PATH="~/lib:$LD_LIBRARY_PATH" LIBRARY_PATH=~/lib cargo test --verbose
 
-after_script:
+after_success:
   - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then echo "Update docs for commits $TRAVIS_COMMIT_RANGE" > $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG; fi
   - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then echo >> $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG; fi
   - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then git log $TRAVIS_COMMIT_RANGE --pretty=oneline >> $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG; fi
