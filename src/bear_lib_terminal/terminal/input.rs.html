@@ -234,6 +234,14 @@
 <span id="192">192</span>
 <span id="193">193</span>
 <span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
 </pre><pre class='rust '>
 <span class='doccomment'>/// All pressable keys.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>)]</span>
@@ -381,8 +389,16 @@
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Event</span> {
 	<span class='doccomment'>/// Terminal window closed.</span>
 	<span class='ident'>Close</span>,
-	<span class='doccomment'>/// Terminal window resized.</span>
-	<span class='ident'>Resize</span>,
+	<span class='doccomment'>/// Terminal window resized. Needs to have `window.resizeable = true` to occur.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>/// Note, that, as of [`40e6253`](https://bitbucket.org/cfyzium/bearlibterminal/commits/40e625311f0cccc43b94633add4dec0d6b77c2b7),</span>
+	<span class='doccomment'>/// the terminal window is cleared when resized.</span>
+	<span class='ident'>Resize</span>{
+		<span class='doccomment'>/// Width the terminal was resized to.</span>
+		<span class='ident'>width</span>: <span class='ident'>i32</span>,
+		<span class='doccomment'>/// Heigth the terminal was resized to.</span>
+		<span class='ident'>height</span>: <span class='ident'>i32</span>,
+	},
 	<span class='doccomment'>/// Mouse moved.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// If [`precise-mouse`](config/struct.Input.html#structfield.precise_mouse) is off, generated each time mouse moves from cell to cell, otherwise,</span>

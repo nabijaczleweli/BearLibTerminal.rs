@@ -483,6 +483,13 @@
 <span id="441">441</span>
 <span id="442">442</span>
 <span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Rusticized interface for the FFI.</span>
 
@@ -873,7 +880,7 @@
 <span class='kw'>fn</span> <span class='ident'>to_event</span>(<span class='ident'>code</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;</span> {
 	<span class='kw'>match</span> <span class='ident'>code</span> {
 		<span class='ident'>ffi</span>::<span class='ident'>TK_CLOSE</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>Event</span>::<span class='ident'>Close</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_RESIZED</span>      <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>Event</span>::<span class='ident'>Resize</span>),
+		<span class='ident'>ffi</span>::<span class='ident'>TK_RESIZED</span>      <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>get_window_resize</span>()),
 		<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_MOVE</span>   <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>get_mouse_move</span>()),
 		<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_SCROLL</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>get_mouse_scroll</span>()),
 		_                    <span class='op'>=&gt;</span> <span class='ident'>to_key_event</span>(<span class='ident'>code</span>),
@@ -896,6 +903,13 @@
 				<span class='prelude-val'>None</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
 			}
 		}
+	}
+}
+
+<span class='kw'>fn</span> <span class='ident'>get_window_resize</span>() <span class='op'>-&gt;</span> <span class='ident'>Event</span> {
+	<span class='ident'>Event</span>::<span class='ident'>Resize</span>{
+		<span class='ident'>width</span>: <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_WIDTH</span>),
+		<span class='ident'>height</span>: <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_HEIGHT</span>),
 	}
 }
 

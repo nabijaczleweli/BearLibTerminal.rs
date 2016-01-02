@@ -45,10 +45,13 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-407' class='srclink' href='../../src/bear_lib_terminal/terminal/input.rs.html#144-194' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-407' class='srclink' href='../../src/bear_lib_terminal/terminal/input.rs.html#144-202' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Event {
     Close,
-    Resize,
+    Resize {
+        width: <a href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+        height: <a href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+    },
     MouseMove {
         x: <a href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
         y: <a href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
@@ -73,8 +76,15 @@
 }</pre><div class='docblock'><p>A single input event.</p>
 </div><h2 class='variants'>Variants</h2>
 <table><tr><td id='variant.Close'><code>Close</code></td><td><div class='docblock'><p>Terminal window closed.</p>
-</div></td></tr><tr><td id='variant.Resize'><code>Resize</code></td><td><div class='docblock'><p>Terminal window resized.</p>
-</div></td></tr><tr><td id='variant.MouseMove'><code>MouseMove</code></td><td><div class='docblock'><p>Mouse moved.</p>
+</div></td></tr><tr><td id='variant.Resize'><code>Resize</code></td><td><div class='docblock'><p>Terminal window resized. Needs to have <code>window.resizeable = true</code> to occur.</p>
+
+<p>Note, that, as of <a href="https://bitbucket.org/cfyzium/bearlibterminal/commits/40e625311f0cccc43b94633add4dec0d6b77c2b7"><code>40e6253</code></a>,
+the terminal window is cleared when resized.</p>
+</div><h3 class='fields'>Fields</h3>
+
+                                              <table><tr><td id='variant.Resize.field.width'><code>width</code></td><td><div class='docblock'><p>Width the terminal was resized to.</p>
+</div></td></tr><tr><td id='variant.Resize.field.height'><code>height</code></td><td><div class='docblock'><p>Heigth the terminal was resized to.</p>
+</div></td></tr></table></td></tr><tr><td id='variant.MouseMove'><code>MouseMove</code></td><td><div class='docblock'><p>Mouse moved.</p>
 
 <p>If <a href="config/struct.Input.html#structfield.precise_mouse"><code>precise-mouse</code></a> is off, generated each time mouse moves from cell to cell, otherwise,
 when it moves from pixel to pixel.</p>
