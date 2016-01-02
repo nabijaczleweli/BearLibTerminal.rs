@@ -207,7 +207,11 @@ impl TrueType {
 
 impl ConfigPart for Bitmap {
 	fn to_config_str(&self) -> String {
-		format!("{}: {}{}{}{}{}{}{}{};", self.origin, escape_config_string(&self.path),
+		format!("{}: {}{}{}{}{}{}{}{}{};", self.origin, escape_config_string(&self.path),
+			match self.size {
+				None           => "".to_string(),
+				Some(ref size) => format!(", size={}", size),
+			},
 			match self.resize {
 				None             => "".to_string(),
 				Some(ref resize) => format!(", resize={}", resize),
