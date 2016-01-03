@@ -368,6 +368,17 @@
 <span id="326">326</span>
 <span id="327">327</span>
 <span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Module containing font changing tools.</span>
 <span class='doccomment'>//!</span>
@@ -526,26 +537,33 @@
 <span class='kw'>impl</span> <span class='ident'>Bitmap</span> {
 	<span class='doccomment'>/// The size of a single tile in the tileset.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>)                  <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>size</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>)         ; <span class='self'>self</span>}
+
 	<span class='doccomment'>/// The size to resize the image to.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize</span>       (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize</span>: <span class='ident'>Size</span>)                <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize</span>        <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize</span>)       ; <span class='self'>self</span>}
+
 	<span class='doccomment'>/// How to resize the image.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `ResizeFilter::Bilinear`.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize_filter</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize_filter</span>: <span class='ident'>ResizeFilter</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize_filter</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize_filter</span>); <span class='self'>self</span>}
+
 	<span class='doccomment'>/// Resize aspect method.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `ResizeMode::Stretch`.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize_mode</span>  (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize_mode</span>: <span class='ident'>ResizeMode</span>)     <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize_mode</span>   <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize_mode</span>)  ; <span class='self'>self</span>}
+
 	<span class='doccomment'>/// Raw memory size, `size` if not specified.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>raw_size</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>raw_size</span>: <span class='ident'>Size</span>)              <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>raw_size</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>raw_size</span>)     ; <span class='self'>self</span>}
+
 	<span class='doccomment'>/// Tileset&#39;s codepage.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `&quot;ascii&quot;`.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>codepage</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>codepage</span>: <span class='ident'>String</span>)            <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>codepage</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>codepage</span>)     ; <span class='self'>self</span>}
+
 	<span class='doccomment'>/// How tiles are to be aligned.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `Align::Center`.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>        (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>)                <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>align</span>         <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>align</span>)        ; <span class='self'>self</span>}
+
 	<span class='doccomment'>/// Tile alignment area \[cells\].</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `1x1`.</span>
@@ -559,16 +577,20 @@
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `&#39;@&#39;`.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size_reference</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size_reference</span>: <span class='ident'>char</span>)    <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>size_reference</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size_reference</span>); <span class='self'>self</span>}
+
 	<span class='doccomment'>/// Rasterization mode. Note: `RasterizationMode::Lcd` forces opaque black background.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `RasterizationMode::Normal`.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mode</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mode</span>: <span class='ident'>RasterizationMode</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>mode</span>           <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mode</span>)          ; <span class='self'>self</span>}
+
 	<span class='doccomment'>/// Reverse codepage for loading symbols.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>codepage</span>      (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>codepage</span>: <span class='ident'>String</span>)        <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>codepage</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>codepage</span>)      ; <span class='self'>self</span>}
+
 	<span class='doccomment'>/// How tiles are to be aligned.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `Align::Center`.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>)            <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>align</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>align</span>)         ; <span class='self'>self</span>}
+
 	<span class='doccomment'>/// Tile alignment area \[cells\].</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `1x1`.</span>
