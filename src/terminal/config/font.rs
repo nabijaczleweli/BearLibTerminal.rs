@@ -155,26 +155,33 @@ pub struct TrueType {
 impl Bitmap {
 	/// The size of a single tile in the tileset.
 	pub fn size         (mut self, size: Size)                  -> Self {self.size          = Some(size)         ; self}
+
 	/// The size to resize the image to.
 	pub fn resize       (mut self, resize: Size)                -> Self {self.resize        = Some(resize)       ; self}
+
 	/// How to resize the image.
 	///
 	/// Default: `ResizeFilter::Bilinear`.
 	pub fn resize_filter(mut self, resize_filter: ResizeFilter) -> Self {self.resize_filter = Some(resize_filter); self}
+
 	/// Resize aspect method.
 	///
 	/// Default: `ResizeMode::Stretch`.
 	pub fn resize_mode  (mut self, resize_mode: ResizeMode)     -> Self {self.resize_mode   = Some(resize_mode)  ; self}
+
 	/// Raw memory size, `size` if not specified.
 	pub fn raw_size     (mut self, raw_size: Size)              -> Self {self.raw_size      = Some(raw_size)     ; self}
+
 	/// Tileset's codepage.
 	///
 	/// Default: `"ascii"`.
 	pub fn codepage     (mut self, codepage: String)            -> Self {self.codepage      = Some(codepage)     ; self}
+
 	/// How tiles are to be aligned.
 	///
 	/// Default: `Align::Center`.
 	pub fn align        (mut self, align: Align)                -> Self {self.align         = Some(align)        ; self}
+
 	/// Tile alignment area \[cells\].
 	///
 	/// Default: `1x1`.
@@ -188,16 +195,20 @@ impl TrueType {
 	///
 	/// Default: `'@'`.
 	pub fn size_reference(mut self, size_reference: char)    -> Self {self.size_reference = Some(size_reference); self}
+
 	/// Rasterization mode. Note: `RasterizationMode::Lcd` forces opaque black background.
 	///
 	/// Default: `RasterizationMode::Normal`.
 	pub fn mode          (mut self, mode: RasterizationMode) -> Self {self.mode           = Some(mode)          ; self}
+
 	/// Reverse codepage for loading symbols.
 	pub fn codepage      (mut self, codepage: String)        -> Self {self.codepage       = Some(codepage)      ; self}
+
 	/// How tiles are to be aligned.
 	///
 	/// Default: `Align::Center`.
 	pub fn align         (mut self, align: Align)            -> Self {self.align          = Some(align)         ; self}
+
 	/// Tile alignment area \[cells\].
 	///
 	/// Default: `1x1`.
