@@ -45,10 +45,18 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1918' class='srclink' href='../../../src/bear_lib_terminal/terminal/state/mod.rs.html#1-116' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1918' class='srclink' href='../../../src/bear_lib_terminal/terminal/state/mod.rs.html#1-128' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Wherein are contained functions for checking the terminal&#39;s properties: its size, whether cetrain keys are pressed, mouse position, etc.</p>
 
 <p>Logical property groups are represented as modules.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>bear_lib_terminal</span>::<span class='ident'>terminal</span>;
+<span class='kw'>use</span> <span class='ident'>bear_lib_terminal</span>::<span class='ident'>geometry</span>::<span class='ident'>Size</span>;
+
+<span class='ident'>terminal</span>::<span class='ident'>open</span>(<span class='string'>&quot;terminal::state example&quot;</span>, <span class='number'>60</span>, <span class='number'>25</span>);
+<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>terminal</span>::<span class='ident'>state</span>::<span class='ident'>size</span>() <span class='op'>==</span> <span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='number'>60</span>, <span class='number'>25</span>));
+<span class='ident'>terminal</span>::<span class='ident'>close</span>();</pre>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                     <tr class=' module-item'>

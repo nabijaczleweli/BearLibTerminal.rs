@@ -156,10 +156,34 @@
 <span id="114">114</span>
 <span id="115">115</span>
 <span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Wherein are contained functions for checking the terminal&#39;s properties: its size, whether cetrain keys are pressed, mouse position, etc.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! Logical property groups are represented as modules.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! # Examples</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```ignore</span>
+<span class='doccomment'>//! # // Ignore here, because on CI all `open()` calls will fail, as there&#39;s no graphical env. there</span>
+<span class='doccomment'>//! use bear_lib_terminal::terminal;</span>
+<span class='doccomment'>//! use bear_lib_terminal::geometry::Size;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! terminal::open(&quot;terminal::state example&quot;, 60, 25);</span>
+<span class='doccomment'>//! assert!(terminal::state::size() == Size::new(60, 25));</span>
+<span class='doccomment'>//! terminal::close();</span>
+<span class='doccomment'>//! ```</span>
 
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>mouse</span>;
