@@ -1,6 +1,18 @@
 //! Wherein are contained functions for checking the terminal's properties: its size, whether cetrain keys are pressed, mouse position, etc.
 //!
 //! Logical property groups are represented as modules.
+//!
+//! # Examples
+//!
+//! ```ignore
+//! # // Ignore here, because on CI all `open()` calls will fail, as there's no graphical env. there
+//! use bear_lib_terminal::terminal;
+//! use bear_lib_terminal::geometry::Size;
+//!
+//! terminal::open("terminal::state example", 60, 25);
+//! assert!(terminal::state::size() == Size::new(60, 25));
+//! terminal::close();
+//! ```
 
 
 pub mod mouse;
