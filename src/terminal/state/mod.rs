@@ -9,7 +9,7 @@ use bear_lib_terminal_sys as ffi;
 
 
 pub fn size() -> Size {
-	Size::new(ffi::state(ffi::TK_WIDTH), ffi::state(ffi::TK_HEIGHT));
+	Size::new(ffi::state(ffi::TK_WIDTH), ffi::state(ffi::TK_HEIGHT))
 }
 
 pub fn key_pressed(key: KeyCode) -> bool {
