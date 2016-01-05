@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["key_pressed",""],["size",""]],"mod":[["mouse",""]]});
+initSidebarItems({"fn":[["key_pressed",""],["size",""]],"mod":[["mouse","Checking the state of mouse-related properties, namely the mouse cursor's position, `n`-clicks and scrolling."]]});
