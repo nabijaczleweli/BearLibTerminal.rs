@@ -1,6 +1,8 @@
 //! Wherein are contained methods for checking the current `state` of the terminal's property.
 
 
+pub mod mouse;
+
 use geometry::Size;
 use terminal::KeyCode;
 use bear_lib_terminal_sys as ffi;
