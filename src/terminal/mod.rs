@@ -3,6 +3,7 @@
 
 mod input;
 pub mod config;
+pub mod state;
 
 use std::char;
 use colors::Color;
