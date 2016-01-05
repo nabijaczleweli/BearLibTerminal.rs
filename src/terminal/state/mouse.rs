@@ -1,4 +1,4 @@
-/// Checking the state of mouse-related properties, namely the mouse cursor's position, `n`-clicks and scrolling.
+//! Checking the state of mouse-related properties, namely the mouse cursor's position, `n`-clicks and scrolling.
 
 
 use geometry::Point;
