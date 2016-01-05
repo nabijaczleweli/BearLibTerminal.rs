@@ -1,4 +1,6 @@
-//! Wherein are contained methods for checking the current `state` of the terminal's property.
+//! Wherein are contained functions for checking the terminal's properties: its size, whether cetrain keys are pressed, mouse position, etc.
+//!
+//! Logical property groups are represented as modules.
 
 
 pub mod mouse;

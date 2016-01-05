@@ -1,3 +1,6 @@
+/// Checking the state of mouse-related properties, namely the mouse cursor's position, `n`-clicks and scrolling.
+
+
 use geometry::Point;
 use bear_lib_terminal_sys as ffi;
 
