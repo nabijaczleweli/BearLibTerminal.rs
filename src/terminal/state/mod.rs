@@ -25,6 +25,7 @@ use bear_lib_terminal_sys as ffi;
 pub use self::terminal::*;
 
 
+/// Check, whether a [`KeyCode`](../enum.KeyCode.html)-specified key is currently pressed.
 pub fn key_pressed(key: KeyCode) -> bool {
 	ffi::check(match key {
 		KeyCode::A            => ffi::TK_A,
