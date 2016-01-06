@@ -186,17 +186,17 @@
 <span class='doccomment'>//! ```</span>
 
 
+<span class='kw'>mod</span> <span class='ident'>terminal</span>;
+
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>mouse</span>;
 
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>Size</span>;
 <span class='kw'>use</span> <span class='ident'>terminal</span>::<span class='ident'>KeyCode</span>;
 <span class='kw'>use</span> <span class='ident'>bear_lib_terminal_sys</span> <span class='kw'>as</span> <span class='ident'>ffi</span>;
 
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>terminal</span>::<span class='op'>*</span>;
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>() <span class='op'>-&gt;</span> <span class='ident'>Size</span> {
-	<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_WIDTH</span>), <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_HEIGHT</span>))
-}
 
+<span class='doccomment'>/// Check, whether a [`KeyCode`](../enum.KeyCode.html)-specified key is currently pressed.</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>key_pressed</span>(<span class='ident'>key</span>: <span class='ident'>KeyCode</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
 	<span class='ident'>ffi</span>::<span class='ident'>check</span>(<span class='kw'>match</span> <span class='ident'>key</span> {
 		<span class='ident'>KeyCode</span>::<span class='ident'>A</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_A</span>,
