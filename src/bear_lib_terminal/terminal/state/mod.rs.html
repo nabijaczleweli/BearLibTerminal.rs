@@ -166,6 +166,53 @@
 <span id="124">124</span>
 <span id="125">125</span>
 <span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Wherein are contained functions for checking the terminal&#39;s properties: its size, whether cetrain keys are pressed, mouse position, etc.</span>
 <span class='doccomment'>//!</span>
@@ -182,15 +229,62 @@
 <span class='doccomment'>//! ```</span>
 
 
-<span class='kw'>mod</span> <span class='ident'>terminal</span>;
-
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>mouse</span>;
 
-<span class='kw'>use</span> <span class='ident'>terminal</span>::<span class='ident'>KeyCode</span>;
+<span class='kw'>use</span> <span class='ident'>Color</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>char</span>;
+<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>Size</span>;
+<span class='kw'>use</span> <span class='ident'>terminal</span>::{<span class='self'>self</span>, <span class='ident'>Event</span>, <span class='ident'>KeyCode</span>};
 <span class='kw'>use</span> <span class='ident'>bear_lib_terminal_sys</span> <span class='kw'>as</span> <span class='ident'>ffi</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>terminal</span>::<span class='op'>*</span>;
 
+<span class='doccomment'>/// Get the terminal size in cells.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>() <span class='op'>-&gt;</span> <span class='ident'>Size</span> {
+	<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_WIDTH</span>), <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_HEIGHT</span>))
+}
+
+<span class='doccomment'>/// Get cell size in pixels.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cell_size</span>() <span class='op'>-&gt;</span> <span class='ident'>Size</span> {
+	<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_CELL_WIDTH</span>), <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_CELL_HEIGHT</span>))
+}
+
+<span class='doccomment'>/// Get the currently selected foreground colour.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Foreground colours are changed by using the [`terminal::*_foreground()`](../index.html) function family.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>foreground</span>() <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
+	<span class='ident'>terminal</span>::<span class='ident'>from_color_t</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_COLOR</span>) <span class='kw'>as</span> <span class='ident'>ffi</span>::<span class='ident'>ColorT</span>)
+}
+
+<span class='doccomment'>/// Get the currently selected background colour.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Background colours are changed by using the [`terminal::*_background()`](../index.html) function family.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>background</span>() <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
+	<span class='ident'>terminal</span>::<span class='ident'>from_color_t</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_BKCOLOR</span>) <span class='kw'>as</span> <span class='ident'>ffi</span>::<span class='ident'>ColorT</span>)
+}
+
+<span class='doccomment'>/// Get the currently selected layer.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Layer is selected by using the [`terminal::layer()`](../fn.layer.html) function.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>layer</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span> {
+	<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_LAYER</span>)
+}
+
+<span class='doccomment'>/// Most-recent-event-produced unicode character.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>char</span>() <span class='op'>-&gt;</span> <span class='ident'>char</span> {
+	<span class='ident'>char</span>::<span class='ident'>from_u32</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_WCHAR</span>) <span class='kw'>as</span> <span class='ident'>u32</span>).<span class='ident'>unwrap</span>()
+}
+
+<span class='doccomment'>/// Get last dequeued event.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Returns `None` iff no events have been dequeued yet.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>event</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;</span> {
+	<span class='ident'>terminal</span>::<span class='ident'>to_event</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_EVENT</span>))
+}
+
+<span class='doccomment'>/// Check, whether the terminal is currently full-screen.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fullscreen</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+	<span class='ident'>ffi</span>::<span class='ident'>check</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_FULLSCREEN</span>)
+}
 
 <span class='doccomment'>/// Check, whether a [`KeyCode`](../enum.KeyCode.html)-specified key is currently pressed.</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>key_pressed</span>(<span class='ident'>key</span>: <span class='ident'>KeyCode</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
