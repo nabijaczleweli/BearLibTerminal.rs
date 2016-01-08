@@ -12,12 +12,22 @@ configuration: Release
 clone_folder: C:\BearLibTerminal.rs
 
 install:
-  - curl -L https://www.dropbox.com/s/oo4j8djdis4kdc5/BearLibTerminal.dll?dl=1 -oC:\BearLibTerminal.dll
-  - copy C:\BearLibTerminal.dll .
-  - curl -L https://static.rust-lang.org/dist/rust-nightly-x86_64-pc-windows-gnu.msi -oC:\rust-nightly-x86_64-pc-windows-gnu.msi
-  - start /w msiexec /qn /quiet /passive /a C:\rust-nightly-x86_64-pc-windows-gnu.msi TARGETDIR="C:\Program Files"
+  - curl -L https://static.rust-lang.org/dist/rust-beta-x86_64-pc-windows-gnu.msi -oC:\rust-beta-x86_64-pc-windows-gnu.msi
+  - start /w msiexec /qn /quiet /passive /a C:\rust-beta-x86_64-pc-windows-gnu.msi TARGETDIR="C:\Program Files"
+  -
+  - set PATH=C:\msys64\mingw64\bin;C:\msys64\usr\bin;%PATH%;C:\Program Files\Rust\bin;C:\
   - set LIBRARY_PATH=C:\
-  - set PATH=%PATH%;C:\Program Files\Rust\bin;C:\
+  -
+  - bash -lc "pacman --needed --noconfirm -Sy pacman-mirrors"
+  - bash -lc "pacman --noconfirm -Sy"
+  - bash -lc "pacman --noconfirm -S mingw-w64-x86_64-toolchain cmake"
+  -
+  - git clone https://github.com/nabijaczleweli/BearLibTerminal.git C:\BearLibTerminal
+  - cd C:\BearLibTerminal\Build
+  - cmake -G"MSYS Makefiles" ..
+  - make BearLibTerminal
+  - copy ..\Output\Windows64\BearLibTerminal.dll C:\
+  - copy C:\BearLibTerminal.dll .
 
 build: off
 build_script:
