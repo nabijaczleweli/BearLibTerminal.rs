@@ -28,6 +28,7 @@ install:
   - make BearLibTerminal
   - copy ..\Output\Windows64\BearLibTerminal.dll C:\
   - copy C:\BearLibTerminal.dll .
+  - cd C:\BearLibTerminal.rs
 
 build: off
 build_script:
