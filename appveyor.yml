@@ -27,8 +27,8 @@ install:
   - cmake -G"MSYS Makefiles" ..
   - make BearLibTerminal
   - copy ..\Output\Windows64\BearLibTerminal.dll C:\
-  - copy C:\BearLibTerminal.dll .
   - cd C:\BearLibTerminal.rs
+  - copy C:\BearLibTerminal.dll .
 
 build: off
 build_script:
