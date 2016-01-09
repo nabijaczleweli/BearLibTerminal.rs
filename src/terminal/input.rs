@@ -93,9 +93,13 @@ pub enum KeyCode {
 	Delete,
 	End,
 	PageDown,
+	/// Right arrow key.
 	Right,
+	/// Left arrow key.
 	Left,
+	/// Down arrow key.
 	Down,
+	/// Up arrow key.
 	Up,
 	/// Numpad `/` key.
 	NumDivide,
