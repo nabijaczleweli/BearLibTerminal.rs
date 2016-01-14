@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `read_event` fn in crate `bear_lib_terminal`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, read_event">
+    <meta name="description" content="API documentation for the Rust `events` fn in crate `bear_lib_terminal`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, events">
 
-    <title>bear_lib_terminal::terminal::read_event - Rust</title>
+    <title>bear_lib_terminal::terminal::events - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>bear_lib_terminal</a>::<wbr><a href='index.html'>terminal</a></p><script>window.sidebarCurrent = {name: 'read_event', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>bear_lib_terminal</a>::<wbr><a href='index.html'>terminal</a></p><script>window.sidebarCurrent = {name: 'events', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -41,17 +41,12 @@
     </nav>
 
     <section id='main' class="content fn">
-<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>bear_lib_terminal</a>::<wbr><a href='index.html'>terminal</a>::<wbr><a class='fn' href=''>read_event</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>bear_lib_terminal</a>::<wbr><a href='index.html'>terminal</a>::<wbr><a class='fn' href=''>events</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-2025' class='srclink' href='../../src/bear_lib_terminal/terminal/mod.rs.html#226-232' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn read_event() -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../bear_lib_terminal/terminal/enum.Event.html' title='bear_lib_terminal::terminal::Event'>Event</a>&gt;</pre><div class='docblock'><p>Returns the next event in the queue if it&#39;s available, otherwise returns <code>None</code>.</p>
-
-<p>If one intends on waiting for events, the <a href="fn.wait_event.html"><code>wait_event()</code></a> function is recommended.</p>
-
-<p>This is equivalent to the behaviour mentioned in the
-<a href="http://foo.wyrd.name/en:bearlibterminal:reference#read">docs for the <code>terminal_read()</code> C API function</a>, but not the function&#39;s behaviour itself.</p>
+        </span><a id='src-2024' class='srclink' href='../../src/bear_lib_terminal/terminal/mod.rs.html#216-218' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn events() -&gt; <a class='struct' href='../../bear_lib_terminal/terminal/struct.EventIterator.html' title='bear_lib_terminal::terminal::EventIterator'>EventIterator</a></pre><div class='docblock'><p>Returns an instance of <a href="struct.EventIterator.html"><code>EventIterator</code></a>, an infinite iterator over Terminal events.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
