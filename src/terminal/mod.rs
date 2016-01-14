@@ -212,6 +212,7 @@ pub fn wait_event() -> Option<Event> {
 	to_event(ffi::read())
 }
 
+/// Returns an instance of [`EventIterator`](struct.EventIterator.html), an infinite iterator over Terminal events.
 pub fn events() -> EventIterator {
 	EventIterator
 }
@@ -269,6 +270,27 @@ pub fn delay(period: i32) {
 }
 
 
+/// Infinite iterator over Terminal events, instantiated by [`events()`](fn.events.html).
+///
+/// Yields `None` iff BLT is closed.
+///
+/// # Examples
+///
+/// The "standard" way:
+///
+/// ```ignore
+/// while let Some(event) = terminal::wait_event() {
+/// 	// ...
+/// }
+/// ```
+///
+/// Is equivalent to, but not as good as:
+///
+/// ```ignore
+/// for event in terminal::events() {
+/// 	// ...
+/// }
+/// ```
 pub struct EventIterator;
 
 impl Iterator for EventIterator {
