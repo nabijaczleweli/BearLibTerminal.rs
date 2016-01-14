@@ -265,6 +265,17 @@ pub fn delay(period: i32) {
 }
 
 
+pub struct EventIterator;
+
+impl Iterator for EventIterator {
+	type Item = Event;
+
+	fn next(&mut self) -> Option<Event> {
+		wait_event()
+	}
+}
+
+
 fn from_color_t(color: ColorT) -> Color {
 	let alpha = ((color >> 24) & 0xFF) as u8;
 	let red   = ((color >> 16) & 0xFF) as u8;
