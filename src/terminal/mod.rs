@@ -212,6 +212,10 @@ pub fn wait_event() -> Option<Event> {
 	to_event(ffi::read())
 }
 
+pub fn events() -> EventIterator {
+	EventIterator
+}
+
 /// Returns the next event in the queue if it's available, otherwise returns `None`.
 ///
 /// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.
