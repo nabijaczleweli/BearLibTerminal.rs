@@ -24,9 +24,9 @@ fn main() {
 		terminal::print_xy(0, 5, &*&string);
 	}
 	terminal::refresh();
-	while let Some(event) = terminal::wait_event() {
+	for event in terminal::events() {
 		match event {
-			Event::Resize{width, height}                                              => {
+			Event::Resize{width, height} => {
 				terminal::print_xy(0, 0, &*&format!("Width: {}\nHeight: {}", width, height));
 				terminal::refresh();
 			},
