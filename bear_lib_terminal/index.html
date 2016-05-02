@@ -9,6 +9,7 @@
 
     <title>bear_lib_terminal - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -45,12 +46,13 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-0' class='srclink' href='../src/bear_lib_terminal/lib.rs.html#1-24' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-0' class='srclink' href='../src/bear_lib_terminal/src/lib.rs.html#1-24' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Slightly rustic FFI for <a href="https://bitbucket.org/cfyzium/bearlibterminal">BearLibTerminal</a>.</p>
 
 <p>All <a href="https://bitbucket.org/cfyzium/bearlibterminal">BearLibTerminal</a> function equivalents reside inside the <a href="terminal/index.html"><code>terminal</code></a> module.</p>
 
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1><pre class='rust rust-example-rendered'>
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>bear_lib_terminal</span>::<span class='ident'>terminal</span>;
 
 <span class='ident'>terminal</span>::<span class='ident'>open</span>(<span class='string'>&quot;Test&quot;</span>, <span class='number'>80</span>, <span class='number'>30</span>);
@@ -65,7 +67,6 @@
                                title='bear_lib_terminal::geometry'>geometry</a></td>
                         <td class='docblock short'>
                              <p>Helper <code>struct</code>s for abstracting on-screen geometry.</p>
-
                         </td>
                     </tr>
                 
@@ -74,7 +75,6 @@
                                title='bear_lib_terminal::terminal'>terminal</a></td>
                         <td class='docblock short'>
                              <p>Rusticized interface for the FFI.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -84,7 +84,6 @@
                                title='bear_lib_terminal::Color'>Color</a></td>
                         <td class='docblock short'>
                              <p>An RGBA colour repr.</p>
-
                         </td>
                     </tr>
                 </table></section>
@@ -130,7 +129,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
@@ -146,6 +145,6 @@
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>
