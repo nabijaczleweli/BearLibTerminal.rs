@@ -85,7 +85,7 @@ pub fn set_foreground(color: Color) {
 }
 
 /// Sets the foreground color before calling the function and resets it afterwards.
-pub fn with_foreground<F: Fn()>(color: Color, callback: F) {
+pub fn with_foreground<F: FnOnce()>(color: Color, callback: F) {
 	let current = ffi::state_color(ffi::TK_COLOR);
 	set_foreground(color);
 	callback();
@@ -100,7 +100,7 @@ pub fn set_background(color: Color) {
 }
 
 /// Sets the background color before calling the function and resets it afterwards.
-pub fn with_background<F: Fn()>(color: Color, callback: F) {
+pub fn with_background<F: FnOnce()>(color: Color, callback: F) {
 	let current = ffi::state_color(ffi::TK_BKCOLOR);
 	set_background(color);
 	callback();
@@ -116,7 +116,7 @@ pub fn set_colors(fg: Color, bg: Color) {
 }
 
 /// Sets the foreground and background color before calling the function and resets them afterwards.
-pub fn with_colors<F: Fn()>(fg: Color, bg: Color, callback: F) {
+pub fn with_colors<F: FnOnce()>(fg: Color, bg: Color, callback: F) {
 	with_foreground(fg, ||
 		with_background(bg, ||
 			callback()
