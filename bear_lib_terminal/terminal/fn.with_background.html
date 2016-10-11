@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,11 +44,11 @@
 
     <section id='main' class="content fn">
 <h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>bear_lib_terminal</a>::<wbr><a href='index.html'>terminal</a>::<wbr><a class='fn' href=''>with_background</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-2248' class='srclink' href='../../src/bear_lib_terminal/src/terminal/mod.rs.html#103-108' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn with_background&lt;F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>()&gt;(color: <a class='struct' href='../../bear_lib_terminal/struct.Color.html' title='bear_lib_terminal::Color'>Color</a>, callback: F)</pre><div class='docblock'><p>Sets the background color before calling the function and resets it afterwards.</p>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-2191' class='srclink' href='../../src/bear_lib_terminal/src/terminal/mod.rs.html#103-108' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn with_background&lt;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>()&gt;(color: <a class='struct' href='../../bear_lib_terminal/struct.Color.html' title='bear_lib_terminal::Color'>Color</a>, callback: F)</pre><div class='docblock'><p>Sets the background color before calling the function and resets it afterwards.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -71,6 +72,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

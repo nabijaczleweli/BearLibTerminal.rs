@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    
 
     
     
@@ -43,10 +44,10 @@
 
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../../../index.html'>bear_lib_terminal</a>::<wbr><a href='../../index.html'>terminal</a>::<wbr><a href='../index.html'>config</a>::<wbr><a class='mod' href=''>font</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-1632' class='srclink' href='../../../../src/bear_lib_terminal/src/terminal/config/font.rs.html#1-339' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1598' class='srclink' href='../../../../src/bear_lib_terminal/src/terminal/config/font.rs.html#1-339' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Module containing font changing tools.</p>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
@@ -68,80 +69,71 @@
 <span class='ident'>terminal</span>::<span class='ident'>set</span>(<span class='ident'>font</span>::<span class='ident'>bitmap</span>(<span class='ident'>font</span>::<span class='ident'>Origin</span>::<span class='ident'>Offset</span>(<span class='string'>&#39;\u{E000}&#39;</span>), <span class='string'>&quot;tileset.png&quot;</span>).<span class='ident'>size</span>(<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='number'>16</span>, <span class='number'>16</span>)).<span class='ident'>spacing</span>(<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>1</span>)));</pre>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Bitmap.html'
-                               title='bear_lib_terminal::terminal::config::font::Bitmap'>Bitmap</a></td>
-                        <td class='docblock short'>
-                             <p>A bitmap font override segment repr, constructed with <a href="fn.true_type.html"><code>true_type()</code></a>.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.TrueType.html'
-                               title='bear_lib_terminal::terminal::config::font::TrueType'>TrueType</a></td>
-                        <td class='docblock short'>
-                             <p>A TrueType font override segment repr, constructed with <a href="fn.true_type.html"><code>true_type()</code></a>.</p>
-                        </td>
-                    </tr>
-                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Bitmap.html'
+                                  title='bear_lib_terminal::terminal::config::font::Bitmap'>Bitmap</a></td>
+                           <td class='docblock short'>
+                                <p>A bitmap font override segment repr, constructed with <a href="fn.true_type.html"><code>true_type()</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.TrueType.html'
+                                  title='bear_lib_terminal::terminal::config::font::TrueType'>TrueType</a></td>
+                           <td class='docblock short'>
+                                <p>A TrueType font override segment repr, constructed with <a href="fn.true_type.html"><code>true_type()</code></a>.</p>
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='enum' href='enum.Align.html'
-                               title='bear_lib_terminal::terminal::config::font::Align'>Align</a></td>
-                        <td class='docblock short'>
-                             <p>Per-tileset tile alignment.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='enum' href='enum.Origin.html'
-                               title='bear_lib_terminal::terminal::config::font::Origin'>Origin</a></td>
-                        <td class='docblock short'>
-                             <p>The origin for the font (the part before <code>:</code> in the config string).</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='enum' href='enum.RasterizationMode.html'
-                               title='bear_lib_terminal::terminal::config::font::RasterizationMode'>RasterizationMode</a></td>
-                        <td class='docblock short'>
-                             <p>Rasterization mode for TrueType fonts.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='enum' href='enum.ResizeFilter.html'
-                               title='bear_lib_terminal::terminal::config::font::ResizeFilter'>ResizeFilter</a></td>
-                        <td class='docblock short'>
-                             <p>Resizing filter for bitmaps.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='enum' href='enum.ResizeMode.html'
-                               title='bear_lib_terminal::terminal::config::font::ResizeMode'>ResizeMode</a></td>
-                        <td class='docblock short'>
-                             <p>How to aspect-change when resizing a bitmap.</p>
-                        </td>
-                    </tr>
-                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Align.html'
+                                  title='bear_lib_terminal::terminal::config::font::Align'>Align</a></td>
+                           <td class='docblock short'>
+                                <p>Per-tileset tile alignment.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Origin.html'
+                                  title='bear_lib_terminal::terminal::config::font::Origin'>Origin</a></td>
+                           <td class='docblock short'>
+                                <p>The origin for the font (the part before <code>:</code> in the config string).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.RasterizationMode.html'
+                                  title='bear_lib_terminal::terminal::config::font::RasterizationMode'>RasterizationMode</a></td>
+                           <td class='docblock short'>
+                                <p>Rasterization mode for TrueType fonts.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.ResizeFilter.html'
+                                  title='bear_lib_terminal::terminal::config::font::ResizeFilter'>ResizeFilter</a></td>
+                           <td class='docblock short'>
+                                <p>Resizing filter for bitmaps.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.ResizeMode.html'
+                                  title='bear_lib_terminal::terminal::config::font::ResizeMode'>ResizeMode</a></td>
+                           <td class='docblock short'>
+                                <p>How to aspect-change when resizing a bitmap.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='fn' href='fn.bitmap.html'
-                               title='bear_lib_terminal::terminal::config::font::bitmap'>bitmap</a></td>
-                        <td class='docblock short'>
-                             <p>Construct a bitmap font override segment repr.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='fn' href='fn.true_type.html'
-                               title='bear_lib_terminal::terminal::config::font::true_type'>true_type</a></td>
-                        <td class='docblock short'>
-                             <p>Construct a TrueType font override segment repr.</p>
-                        </td>
-                    </tr>
-                </table></section>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.bitmap.html'
+                                  title='bear_lib_terminal::terminal::config::font::bitmap'>bitmap</a></td>
+                           <td class='docblock short'>
+                                <p>Construct a bitmap font override segment repr.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.true_type.html'
+                                  title='bear_lib_terminal::terminal::config::font::true_type'>true_type</a></td>
+                           <td class='docblock short'>
+                                <p>Construct a TrueType font override segment repr.</p>
+                           </td>
+                       </tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -164,6 +156,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

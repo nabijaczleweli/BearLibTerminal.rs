@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
 
     
     
@@ -43,10 +44,10 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='../../index.html'>bear_lib_terminal</a>::<wbr><a href='../index.html'>terminal</a>::<wbr><a href='index.html'>config</a>::<wbr><a class='trait' href=''>ConfigPart</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-2183' class='srclink' href='../../../src/bear_lib_terminal/src/terminal/config/mod.rs.html#35-37' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-2128' class='srclink' href='../../../src/bear_lib_terminal/src/terminal/config/mod.rs.html#35-37' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ConfigPart {
     fn <a href='#tymethod.to_config_str' class='fnname'>to_config_str</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>;
 }</pre><div class='docblock'><p>Trait for generating BLT configuration strings.</p>
@@ -58,17 +59,17 @@
         <h3 id='tymethod.to_config_str' class='method stab '><code>fn <a href='#tymethod.to_config_str' class='fnname'>to_config_str</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Terminal.html' title='bear_lib_terminal::terminal::config::Terminal'>Terminal</a></code></li>
-<li><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></li>
-<li><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></li>
-<li><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Output.html' title='bear_lib_terminal::terminal::config::Output'>Output</a></code></li>
-<li><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></li>
-<li><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.InputFilter.html' title='bear_lib_terminal::terminal::config::InputFilter'>InputFilter</a>&gt;</code></li>
-<li><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/font/struct.Bitmap.html' title='bear_lib_terminal::terminal::config::font::Bitmap'>Bitmap</a></code></li>
-<li><code>impl <a class='trait' href='../../../bear_lib_terminal/terminal/config/trait.ConfigPart.html' title='bear_lib_terminal::terminal::config::ConfigPart'>ConfigPart</a> for <a class='struct' href='../../../bear_lib_terminal/terminal/config/font/struct.TrueType.html' title='bear_lib_terminal::terminal::config::font::TrueType'>TrueType</a></code></li>
+    <li><code>impl ConfigPart for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Terminal.html' title='bear_lib_terminal::terminal::config::Terminal'>Terminal</a></code></li>
+<li><code>impl ConfigPart for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Window.html' title='bear_lib_terminal::terminal::config::Window'>Window</a></code></li>
+<li><code>impl ConfigPart for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Input.html' title='bear_lib_terminal::terminal::config::Input'>Input</a></code></li>
+<li><code>impl ConfigPart for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Output.html' title='bear_lib_terminal::terminal::config::Output'>Output</a></code></li>
+<li><code>impl ConfigPart for <a class='struct' href='../../../bear_lib_terminal/terminal/config/struct.Log.html' title='bear_lib_terminal::terminal::config::Log'>Log</a></code></li>
+<li><code>impl ConfigPart for <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../bear_lib_terminal/terminal/config/enum.InputFilter.html' title='bear_lib_terminal::terminal::config::InputFilter'>InputFilter</a>&gt;</code></li>
+<li><code>impl ConfigPart for <a class='struct' href='../../../bear_lib_terminal/terminal/config/font/struct.Bitmap.html' title='bear_lib_terminal::terminal::config::font::Bitmap'>Bitmap</a></code></li>
+<li><code>impl ConfigPart for <a class='struct' href='../../../bear_lib_terminal/terminal/config/font/struct.TrueType.html' title='bear_lib_terminal::terminal::config::font::TrueType'>TrueType</a></code></li>
 </ul><script type="text/javascript" async
-                              src="../../../implementors/bear_lib_terminal/terminal/config/trait.ConfigPart.js">
-                      </script></section>
+                         src="../../../implementors/bear_lib_terminal/terminal/config/trait.ConfigPart.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -91,6 +92,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
