@@ -5,6 +5,7 @@ documentation = "https://cdn.rawgit.com/nabijaczleweli/BearLibTerminal.rs/doc/be
 repository = "https://github.com/nabijaczleweli/BearLibTerminal.rs"
 readme = "README.md"
 keywords = ["BearLibTerminal", "FFI", "TUI", "UI"]
+categories = ["external-ffi-bindings", "gui", "multimedia"]
 license = "MIT"
 # Remember to also update in appveyor.yml
 version = "1.3.1"
