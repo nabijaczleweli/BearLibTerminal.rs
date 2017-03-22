@@ -57,7 +57,7 @@ pub fn refresh() {
 /// [`terminal_clear_area()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#clear_area).
 pub fn clear(area: Option<Rect>) {
 	match area {
-		Some(rect) => ffi::clear_area(rect.top_left.x, rect.top_left.y, rect.bottom_right.x, rect.bottom_right.y),
+		Some(rect) => ffi::clear_area(rect.top_left.x, rect.top_left.y, rect.size.width, rect.size.height),
 		None       => ffi::clear(),
 	}
 }
