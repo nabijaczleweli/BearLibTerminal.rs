@@ -9,7 +9,10 @@
 
     <title>colors.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -81,7 +84,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>Color</span> {
 	<span class='doccomment'>/// Equivalent to [`from_rgba()`](fn.from_rgba.html) with full opacity</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_rgb</span>(<span class='ident'>red</span>: <span class='ident'>u8</span>, <span class='ident'>green</span>: <span class='ident'>u8</span>, <span class='ident'>blue</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_rgb</span>(<span class='ident'>red</span>: <span class='ident'>u8</span>, <span class='ident'>green</span>: <span class='ident'>u8</span>, <span class='ident'>blue</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
 		<span class='ident'>Color</span>{
 			<span class='ident'>red</span>: <span class='ident'>red</span>,
 			<span class='ident'>green</span>: <span class='ident'>green</span>,
@@ -90,7 +93,7 @@
 		}
 	}
 
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_rgba</span>(<span class='ident'>red</span>: <span class='ident'>u8</span>, <span class='ident'>green</span>: <span class='ident'>u8</span>, <span class='ident'>blue</span>: <span class='ident'>u8</span>, <span class='ident'>alpha</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_rgba</span>(<span class='ident'>red</span>: <span class='ident'>u8</span>, <span class='ident'>green</span>: <span class='ident'>u8</span>, <span class='ident'>blue</span>: <span class='ident'>u8</span>, <span class='ident'>alpha</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
 		<span class='ident'>Color</span>{
 			<span class='ident'>red</span>: <span class='ident'>red</span>,
 			<span class='ident'>green</span>: <span class='ident'>green</span>,
@@ -123,6 +126,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -143,7 +148,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
@@ -154,11 +159,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "bear_lib_terminal";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

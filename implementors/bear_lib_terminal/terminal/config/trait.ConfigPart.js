@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["bear_lib_terminal"] = [];
 implementors['bear_lib_terminal'] = [];implementors['bear_lib_terminal'] = [];implementors["bear_lib_terminal"] = [];implementors["bear_lib_terminal"] = [];implementors["bear_lib_terminal"] = [];
 
             if (window.register_implementors) {

@@ -9,7 +9,10 @@
 
     <title>section.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    
 
     
     
@@ -542,32 +545,32 @@
 	<span class='doccomment'>/// Window size in cells.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `80x25`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>                (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>)         <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>size</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>)                                       ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>                (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>)         <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>size</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>)                                       ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Size of all cells, in pixels.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: [`Cellsize::Auto`](enum.Cellsize.html#variant.Auto).</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cellsize</span>            (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cellsize</span>: <span class='ident'>Cellsize</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>cellsize</span>   <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cellsize</span>)                                   ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cellsize</span>            (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cellsize</span>: <span class='ident'>Cellsize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>cellsize</span>   <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cellsize</span>)                                   ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// The terminal window&#39;s title.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `&quot;BearLibTerminal&quot;`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>title</span>               (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>title</span>: <span class='ident'>String</span>)      <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>title</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>title</span>)                                      ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>title</span>               (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>title</span>: <span class='ident'>String</span>)      <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>title</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>title</span>)                                      ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// The path of the icon used for the terminal window.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: none.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>icon</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>icon</span>: <span class='ident'>T</span>)            <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>icon</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>icon</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>()); <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>icon</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>icon</span>: <span class='ident'>T</span>)            <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>icon</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>icon</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>()); <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Whether the terminal window should be resizeable.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `false`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resizeable</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resizeable</span>: <span class='ident'>bool</span>)   <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>resizeable</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resizeable</span>)                                 ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resizeable</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resizeable</span>: <span class='ident'>bool</span>)   <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>resizeable</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resizeable</span>)                                 ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Whether to enforce fullscreen mode.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `false`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fullscreen</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>fullscreen</span>: <span class='ident'>bool</span>)   <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>fullscreen</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>fullscreen</span>)                                 ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fullscreen</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>fullscreen</span>: <span class='ident'>bool</span>)   <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>fullscreen</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>fullscreen</span>)                                 ; <span class='self'>self</span>}
 }
 
 <span class='kw'>impl</span> <span class='ident'>Input</span> {
@@ -585,22 +588,22 @@
 	<span class='doccomment'>/// Whether to generate a mouse-move event when a mouse moves from one pixel to another as opposed to from one cell to another.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `false`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>precise_mouse</span>    (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>precise_mouse</span>: <span class='ident'>bool</span>)    <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>precise_mouse</span>     <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>precise_mouse</span>)    ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>precise_mouse</span>    (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>precise_mouse</span>: <span class='ident'>bool</span>)    <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>precise_mouse</span>     <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>precise_mouse</span>)    ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Whether to show the cursor.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `true`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mouse_cursor</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mouse_cursor</span>: <span class='ident'>bool</span>)     <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>mouse_cursor</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mouse_cursor</span>)     ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mouse_cursor</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mouse_cursor</span>: <span class='ident'>bool</span>)     <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>mouse_cursor</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mouse_cursor</span>)     ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// The cursor symbol to blink in the read string function.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `&#39;_&#39;` a.k.a. `0x5F`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_symbol</span>    (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_symbol</span>: <span class='ident'>char</span>)    <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>cursor_symbol</span>     <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_symbol</span>)    ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_symbol</span>    (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_symbol</span>: <span class='ident'>char</span>)    <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>cursor_symbol</span>     <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_symbol</span>)    ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Amount of time in milliseconds to blink the cursor symbol for.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `500`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_blink_rate</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_blink_rate</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>cursor_blink_rate</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_blink_rate</span>); <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_blink_rate</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_blink_rate</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>cursor_blink_rate</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_blink_rate</span>); <span class='self'>self</span>}
 }
 
 <span class='kw'>impl</span> <span class='ident'>Output</span> {
@@ -616,12 +619,12 @@
 	<span class='doccomment'>/// Whether to process special tags in the [`print()`](../fn.print.html) function.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `true`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>postformatting</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>postformatting</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>postformatting</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>postformatting</span>); <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>postformatting</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>postformatting</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>postformatting</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>postformatting</span>); <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Toggle OpenGL VSync.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `true`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vsync</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>vsync</span>: <span class='ident'>bool</span>)          <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>vsync</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>vsync</span>);          <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vsync</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>vsync</span>: <span class='ident'>bool</span>)          <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>vsync</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>vsync</span>);          <span class='self'>self</span>}
 }
 
 <span class='kw'>impl</span> <span class='ident'>Log</span> {
@@ -714,7 +717,7 @@
 					<span class='prelude-val'>None</span>                   <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
 				},
 				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>cursor_symbol</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>cursor_symbol</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;cursor-symbol=0x{:x}&quot;</span>, <span class='op'>*</span><span class='ident'>cursor_symbol</span> <span class='kw'>as</span> <span class='ident'>i8</span>),
+					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>cursor_symbol</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;cursor-symbol=0x{:x}&quot;</span>, <span class='kw-2'>*</span><span class='ident'>cursor_symbol</span> <span class='kw'>as</span> <span class='ident'>i8</span>),
 					<span class='prelude-val'>None</span>                    <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
 				},
 				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>cursor_blink_rate</span> {
@@ -817,6 +820,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -837,7 +842,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
@@ -848,11 +853,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "bear_lib_terminal";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
-    <script async src="../../../../search-index.js"></script>
+    <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

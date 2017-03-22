@@ -9,7 +9,10 @@
 
     <title>font.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    
 
     
     
@@ -536,38 +539,38 @@
 <span class='doccomment'>/// [the official docs](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
 <span class='kw'>impl</span> <span class='ident'>Bitmap</span> {
 	<span class='doccomment'>/// The size of a single tile in the tileset.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>)                  <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>size</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>)         ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>)                  <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>size</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>)         ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// The size to resize the image to.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize</span>       (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize</span>: <span class='ident'>Size</span>)                <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize</span>        <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize</span>)       ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize</span>       (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize</span>: <span class='ident'>Size</span>)                <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize</span>        <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize</span>)       ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// How to resize the image.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `ResizeFilter::Bilinear`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize_filter</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize_filter</span>: <span class='ident'>ResizeFilter</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize_filter</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize_filter</span>); <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize_filter</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize_filter</span>: <span class='ident'>ResizeFilter</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize_filter</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize_filter</span>); <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Resize aspect method.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `ResizeMode::Stretch`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize_mode</span>  (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize_mode</span>: <span class='ident'>ResizeMode</span>)     <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize_mode</span>   <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize_mode</span>)  ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize_mode</span>  (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize_mode</span>: <span class='ident'>ResizeMode</span>)     <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize_mode</span>   <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize_mode</span>)  ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Raw memory size, `size` if not specified.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>raw_size</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>raw_size</span>: <span class='ident'>Size</span>)              <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>raw_size</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>raw_size</span>)     ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>raw_size</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>raw_size</span>: <span class='ident'>Size</span>)              <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>raw_size</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>raw_size</span>)     ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Tileset&#39;s codepage.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `&quot;ascii&quot;`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>codepage</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>codepage</span>: <span class='ident'>String</span>)            <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>codepage</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>codepage</span>)     ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>codepage</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>codepage</span>: <span class='ident'>String</span>)            <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>codepage</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>codepage</span>)     ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// How tiles are to be aligned.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `Align::Center`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>        (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>)                <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>align</span>         <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>align</span>)        ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>        (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>)                <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>align</span>         <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>align</span>)        ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Tile alignment area \[cells\].</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `1x1`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>spacing</span>      (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>spacing</span>: <span class='ident'>Size</span>)               <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>spacing</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>spacing</span>)      ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>spacing</span>      (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>spacing</span>: <span class='ident'>Size</span>)               <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>spacing</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>spacing</span>)      ; <span class='self'>self</span>}
 }
 
 <span class='doccomment'>/// For all functions consult the corresponding attributes in</span>
@@ -576,25 +579,25 @@
 	<span class='doccomment'>/// Character used for size probing.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `&#39;@&#39;`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size_reference</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size_reference</span>: <span class='ident'>char</span>)    <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>size_reference</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size_reference</span>); <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size_reference</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size_reference</span>: <span class='ident'>char</span>)    <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>size_reference</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size_reference</span>); <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Rasterization mode. Note: `RasterizationMode::Lcd` forces opaque black background.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `RasterizationMode::Normal`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mode</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mode</span>: <span class='ident'>RasterizationMode</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>mode</span>           <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mode</span>)          ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mode</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mode</span>: <span class='ident'>RasterizationMode</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>mode</span>           <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mode</span>)          ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Reverse codepage for loading symbols.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>codepage</span>      (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>codepage</span>: <span class='ident'>String</span>)        <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>codepage</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>codepage</span>)      ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>codepage</span>      (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>codepage</span>: <span class='ident'>String</span>)        <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>codepage</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>codepage</span>)      ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// How tiles are to be aligned.</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `Align::Center`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>)            <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>align</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>align</span>)         ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>)            <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>align</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>align</span>)         ; <span class='self'>self</span>}
 
 	<span class='doccomment'>/// Tile alignment area \[cells\].</span>
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>/// Default: `1x1`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>spacing</span>       (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>spacing</span>: <span class='ident'>Size</span>)           <span class='op'>-&gt;</span> <span class='kw'>Self</span> {<span class='self'>self</span>.<span class='ident'>spacing</span>        <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>spacing</span>)       ; <span class='self'>self</span>}
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>spacing</span>       (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>spacing</span>: <span class='ident'>Size</span>)           <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>spacing</span>        <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>spacing</span>)       ; <span class='self'>self</span>}
 }
 
 
@@ -646,7 +649,7 @@
 			},
 			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>size_reference</span> {
 				<span class='prelude-val'>None</span>                     <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>size_reference</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, size-reference=0x{:X}&quot;</span>, <span class='op'>*</span><span class='ident'>size_reference</span> <span class='kw'>as</span> <span class='ident'>i32</span>),
+				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>size_reference</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, size-reference=0x{:X}&quot;</span>, <span class='kw-2'>*</span><span class='ident'>size_reference</span> <span class='kw'>as</span> <span class='ident'>i32</span>),
 			},
 			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>mode</span> {
 				<span class='prelude-val'>None</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
@@ -673,7 +676,7 @@
 	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
 		<span class='kw'>match</span> <span class='self'>self</span> {
 			<span class='kw-2'>&amp;</span><span class='ident'>Origin</span>::<span class='ident'>Root</span>      <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;font&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>Origin</span>::<span class='ident'>Offset</span>(<span class='ident'>o</span>) <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;0x{:X}&quot;</span>, <span class='ident'>o</span> <span class='kw'>as</span> <span class='ident'>i32</span>)),
+			<span class='kw-2'>&amp;</span><span class='ident'>Origin</span>::<span class='ident'>Offset</span>(<span class='ident'>o</span>) <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;0x{:X}&quot;</span>, <span class='ident'>o</span> <span class='kw'>as</span> <span class='ident'>i32</span>)),
 		}
 	}
 }
@@ -743,6 +746,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -763,7 +768,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
@@ -774,11 +779,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "bear_lib_terminal";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
-    <script async src="../../../../search-index.js"></script>
+    <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

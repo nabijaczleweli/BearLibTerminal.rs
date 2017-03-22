@@ -9,6 +9,7 @@
 
     <title>bear_lib_terminal::terminal - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -47,21 +48,21 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-281' class='srclink' href='../../src/bear_lib_terminal/src/terminal/mod.rs.html#1-488' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/bear_lib_terminal/terminal/mod.rs.html#1-488' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Rusticized interface for the FFI.</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class='mod' href='config/index.html'
                                   title='bear_lib_terminal::terminal::config'>config</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Module containing BLT configuration options.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='mod' href='state/index.html'
                                   title='bear_lib_terminal::terminal::state'>state</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Wherein are contained functions for checking the terminal&#39;s properties: its size, whether cetrain keys are pressed, mouse position, etc.</p>
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -69,7 +70,7 @@
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.EventIterator.html'
                                   title='bear_lib_terminal::terminal::EventIterator'>EventIterator</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Infinite iterator over Terminal events, instantiated by <a href="fn.events.html"><code>events()</code></a>.</p>
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -77,14 +78,14 @@
                        <tr class=' module-item'>
                            <td><a class='enum' href='enum.Event.html'
                                   title='bear_lib_terminal::terminal::Event'>Event</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A single input event.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='enum' href='enum.KeyCode.html'
                                   title='bear_lib_terminal::terminal::KeyCode'>KeyCode</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>All pressable keys.</p>
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
@@ -92,70 +93,70 @@
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.clear.html'
                                   title='bear_lib_terminal::terminal::clear'>clear</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Clears the screen (either partailly or fully)</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.close.html'
                                   title='bear_lib_terminal::terminal::close'>close</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Closes the terminal window, causing all subsequent functions from the module (apart from <a href="fn.open.html"><code>open()</code></a>) to fail</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.composition.html'
                                   title='bear_lib_terminal::terminal::composition'>composition</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Enable or disable composition, (dis)allowing for &quot;stacking&quot; tiles on top of each other in the same cell.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.crop.html'
                                   title='bear_lib_terminal::terminal::crop'>crop</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Sets the current layer&#39;s crop area.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.delay.html'
                                   title='bear_lib_terminal::terminal::delay'>delay</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Sleep for the specified amount of milliseconds.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.events.html'
                                   title='bear_lib_terminal::terminal::events'>events</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Returns an instance of <a href="struct.EventIterator.html"><code>EventIterator</code></a>, an infinite iterator over Terminal events.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.has_input.html'
                                   title='bear_lib_terminal::terminal::has_input'>has_input</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Check, whether the next <a href="fn.read_event.html"><code>read_event()</code></a> call will return <code>Some</code>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.layer.html'
                                   title='bear_lib_terminal::terminal::layer'>layer</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Selects the current layer.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.measure.html'
                                   title='bear_lib_terminal::terminal::measure'>measure</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Calculate the argument&#39;s width/height without printing it.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.open.html'
                                   title='bear_lib_terminal::terminal::open'>open</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Creates the terminal window of the specified size with the specified title, without showing it.
 To show the window use the <a href="fn.refresh.html"><code>refresh()</code></a> function.</p>
                            </td>
@@ -163,140 +164,140 @@ To show the window use the <a href="fn.refresh.html"><code>refresh()</code></a> 
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.peek_event.html'
                                   title='bear_lib_terminal::terminal::peek_event'>peek_event</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Returns the next event in the queue if it&#39;s available without popping it therefrom, otherwise returns <code>None</code>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.pick.html'
                                   title='bear_lib_terminal::terminal::pick'>pick</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Get the character in the specified coordinates on the specified layer.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.pick_background_color.html'
                                   title='bear_lib_terminal::terminal::pick_background_color'>pick_background_color</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Get the background color in the specified coordinates.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.pick_foreground_color.html'
                                   title='bear_lib_terminal::terminal::pick_foreground_color'>pick_foreground_color</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Get the color of the character in the specified coordinates on the specified layer.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.print.html'
                                   title='bear_lib_terminal::terminal::print'>print</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Prints the specified string to the specified location, formatting it along the way.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.print_xy.html'
                                   title='bear_lib_terminal::terminal::print_xy'>print_xy</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Equivalent to <a href="fn.print.html"><code>print()</code></a> with a <code>Point</code> constructed from the first two arguments.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.put.html'
                                   title='bear_lib_terminal::terminal::put'>put</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Prints the specified character to the specified location.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.put_ext.html'
                                   title='bear_lib_terminal::terminal::put_ext'>put_ext</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Prints the specified character to the specified pixel-offsetted location, gradient-colouring it from the corners.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.put_xy.html'
                                   title='bear_lib_terminal::terminal::put_xy'>put_xy</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Equivalent to <a href="fn.put.html"><code>put()</code></a> with a <code>Point</code> constructed from the first two arguments.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.read_event.html'
                                   title='bear_lib_terminal::terminal::read_event'>read_event</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Returns the next event in the queue if it&#39;s available, otherwise returns <code>None</code>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.read_str.html'
                                   title='bear_lib_terminal::terminal::read_str'>read_str</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Reads up to <code>max</code> characters without parsing, starting at the specified coordinates.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.refresh.html'
                                   title='bear_lib_terminal::terminal::refresh'>refresh</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Flushes all changes made to the screen; also shows the window after the <a href="fn.open.html"><code>open()</code></a> call</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.set.html'
                                   title='bear_lib_terminal::terminal::set'>set</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Invoke the <a href="http://foo.wyrd.name/en:bearlibterminal:reference#set"><code>terminal_set()</code> C API function</a> with the argument&#39;s <code>config_str</code>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.set_background.html'
                                   title='bear_lib_terminal::terminal::set_background'>set_background</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Sets the current background color, which will affect all the output functions called later.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.set_colors.html'
                                   title='bear_lib_terminal::terminal::set_colors'>set_colors</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Sets the current foreground and background color, which will affect all the output functions called later.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.set_foreground.html'
                                   title='bear_lib_terminal::terminal::set_foreground'>set_foreground</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Sets the current foreground color, which will affect all the output functions called later.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.wait_event.html'
                                   title='bear_lib_terminal::terminal::wait_event'>wait_event</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Returns the next event, blocks until one&#39;s available.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.with_background.html'
                                   title='bear_lib_terminal::terminal::with_background'>with_background</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Sets the background color before calling the function and resets it afterwards.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.with_colors.html'
                                   title='bear_lib_terminal::terminal::with_colors'>with_colors</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Sets the foreground and background color before calling the function and resets them afterwards.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.with_foreground.html'
                                   title='bear_lib_terminal::terminal::with_foreground'>with_foreground</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Sets the foreground color before calling the function and resets it afterwards.</p>
                            </td>
                        </tr></table></section>
@@ -355,11 +356,9 @@ To show the window use the <a href="fn.refresh.html"><code>refresh()</code></a> 
     <script>
         window.rootPath = "../../";
         window.currentCrate = "bear_lib_terminal";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>
