@@ -7,6 +7,12 @@ rust:
 cache:
   apt: true
 
+env:
+  global:
+    - PATH="$HOME/bin:$PATH"
+    - CMAKE_VERSION_PREFIX=3.7
+    - CMAKE_VERSION_FULL=3.7.2
+
 addons:
   apt:
     packages:
@@ -27,6 +33,15 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_2620d498bbb7_key -iv $encrypted_2620d498bbb7_iv -in gh_rsa.enc -out gh_rsa -d
 
 install:
+  - mkdir -p /tmp/tools
+  - pushd /tmp/tools
+  - if [[ ! -f "cmake-$CMAKE_VERSION_FULL-Linux-x86_64.sh" ]]; then
+      curl -SOL "https://cmake.org/files/v$CMAKE_VERSION_PREFIX/cmake-$CMAKE_VERSION_FULL-Linux-x86_64.sh";
+      chmod +x "cmake-$CMAKE_VERSION_FULL-Linux-x86_64.sh";
+    fi
+  - ./"cmake-$CMAKE_VERSION_FULL-Linux-x86_64.sh" --prefix="$HOME" --exclude-subdir --skip-license
+  - popd
+  -
   - git clone https://github.com/nabijaczleweli/BearLibTerminal ~/BearLibTerminal && cd ~/BearLibTerminal/Build
   - cmake -G"Unix Makefiles" .. && make BearLibTerminal
   - mkdir ~/lib/ && cp ../Output/Linux64/libBearLibTerminal.so ~/lib/ && cd $TRAVIS_BUILD_DIR
