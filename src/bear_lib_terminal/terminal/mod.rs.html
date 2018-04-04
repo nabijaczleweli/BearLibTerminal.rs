@@ -10,14 +10,17 @@
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -531,492 +542,492 @@
 <span id="486">486</span>
 <span id="487">487</span>
 <span id="488">488</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Rusticized interface for the FFI.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Rusticized interface for the FFI.</span>
 
 
-<span class='kw'>mod</span> <span class='ident'>input</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>config</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>state</span>;
+<span class="kw">mod</span> <span class="ident">input</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">config</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">state</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>char</span>;
-<span class='kw'>use</span> <span class='ident'>colors</span>::<span class='ident'>Color</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::{<span class='ident'>Rect</span>, <span class='ident'>Point</span>, <span class='ident'>Size</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>config</span>::{<span class='ident'>ConfigPart</span>, <span class='ident'>Window</span>};
-<span class='kw'>use</span> <span class='ident'>bear_lib_terminal_sys</span> <span class='kw'>as</span> <span class='ident'>ffi</span>;
-<span class='kw'>use</span> <span class='ident'>bear_lib_terminal_sys</span>::<span class='ident'>ColorT</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">char</span>;
+<span class="kw">use</span> <span class="ident">colors</span>::<span class="ident">Color</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::{<span class="ident">Rect</span>, <span class="ident">Point</span>, <span class="ident">Size</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">config</span>::{<span class="ident">ConfigPart</span>, <span class="ident">Window</span>};
+<span class="kw">use</span> <span class="ident">bear_lib_terminal_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
+<span class="kw">use</span> <span class="ident">bear_lib_terminal_sys</span>::<span class="ident">ColorT</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>input</span>::{<span class='ident'>Event</span>, <span class='ident'>KeyCode</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">input</span>::{<span class="ident">Event</span>, <span class="ident">KeyCode</span>};
 
 
-<span class='doccomment'>/// Creates the terminal window of the specified size with the specified title, without showing it.</span>
-<span class='doccomment'>/// To show the window use the [`refresh()`](fn.refresh.html) function.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Equivalent to the [`terminal_open()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#open) with a subsequent call to</span>
-<span class='doccomment'>/// the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the title.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>open</span>(<span class='ident'>title</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>width</span>: <span class='ident'>u32</span>, <span class='ident'>height</span>: <span class='ident'>u32</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>open</span>();
-	<span class='ident'>set</span>(<span class='ident'>Window</span>::<span class='ident'>empty</span>().<span class='ident'>size</span>(<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='ident'>width</span> <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='ident'>height</span> <span class='kw'>as</span> <span class='ident'>i32</span>)).<span class='ident'>title</span>(<span class='ident'>title</span>.<span class='ident'>to_string</span>()));
+<span class="doccomment">/// Creates the terminal window of the specified size with the specified title, without showing it.</span>
+<span class="doccomment">/// To show the window use the [`refresh()`](fn.refresh.html) function.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Equivalent to the [`terminal_open()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#open) with a subsequent call to</span>
+<span class="doccomment">/// the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the title.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">width</span>: <span class="ident">u32</span>, <span class="ident">height</span>: <span class="ident">u32</span>) {
+	<span class="ident">ffi</span>::<span class="ident">open</span>();
+	<span class="ident">set</span>(<span class="ident">Window</span>::<span class="ident">empty</span>().<span class="ident">size</span>(<span class="ident">Size</span>::<span class="ident">new</span>(<span class="ident">width</span> <span class="kw">as</span> <span class="ident">i32</span>, <span class="ident">height</span> <span class="kw">as</span> <span class="ident">i32</span>)).<span class="ident">title</span>(<span class="ident">title</span>.<span class="ident">to_string</span>()));
 }
 
-<span class='doccomment'>/// Closes the terminal window, causing all subsequent functions from the module (apart from [`open()`](fn.open.html)) to fail</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Equivalent to the [`terminal_close()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#close).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>close</span>() {
-	<span class='ident'>ffi</span>::<span class='ident'>close</span>();
+<span class="doccomment">/// Closes the terminal window, causing all subsequent functions from the module (apart from [`open()`](fn.open.html)) to fail</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Equivalent to the [`terminal_close()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#close).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">close</span>() {
+	<span class="ident">ffi</span>::<span class="ident">close</span>();
 }
 
-<span class='doccomment'>/// Invoke the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the argument&#39;s `config_str`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Returns `false` iff the config string is malformed.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// For build-in [`ConfigPart`](config/trait.ConfigPart.html)s see the [`config`](config/index.html) module.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ConfigPart</span><span class='op'>&gt;</span>(<span class='ident'>cfg</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-	<span class='ident'>ffi</span>::<span class='ident'>set</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>&amp;</span><span class='ident'>cfg</span>.<span class='ident'>to_config_str</span>())
+<span class="doccomment">/// Invoke the [`terminal_set()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#set) with the argument&#39;s `config_str`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Returns `false` iff the config string is malformed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For build-in [`ConfigPart`](config/trait.ConfigPart.html)s see the [`config`](config/index.html) module.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ConfigPart</span><span class="op">&gt;</span>(<span class="ident">cfg</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+	<span class="ident">ffi</span>::<span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">&amp;</span><span class="ident">cfg</span>.<span class="ident">to_config_str</span>())
 }
 
-<span class='doccomment'>/// Flushes all changes made to the screen; also shows the window after the [`open()`](fn.open.html) call</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Equivalent to the [`terminal_refresh()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#refresh).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>refresh</span>() {
-	<span class='ident'>ffi</span>::<span class='ident'>refresh</span>();
+<span class="doccomment">/// Flushes all changes made to the screen; also shows the window after the [`open()`](fn.open.html) call</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Equivalent to the [`terminal_refresh()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#refresh).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">refresh</span>() {
+	<span class="ident">ffi</span>::<span class="ident">refresh</span>();
 }
 
-<span class='doccomment'>/// Clears the screen (either partailly or fully)</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If `area` is `None`, clears the entire screen, all layers</span>
-<span class='doccomment'>/// (identically to the [`terminal_clear()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#clear).</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Otherwise clears specified area on the current layer, as would the</span>
-<span class='doccomment'>/// [`terminal_clear_area()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#clear_area).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='ident'>area</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Rect</span><span class='op'>&gt;</span>) {
-	<span class='kw'>match</span> <span class='ident'>area</span> {
-		<span class='prelude-val'>Some</span>(<span class='ident'>rect</span>) <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>clear_area</span>(<span class='ident'>rect</span>.<span class='ident'>top_left</span>.<span class='ident'>x</span>, <span class='ident'>rect</span>.<span class='ident'>top_left</span>.<span class='ident'>y</span>, <span class='ident'>rect</span>.<span class='ident'>size</span>.<span class='ident'>width</span>, <span class='ident'>rect</span>.<span class='ident'>size</span>.<span class='ident'>height</span>),
-		<span class='prelude-val'>None</span>       <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>clear</span>(),
+<span class="doccomment">/// Clears the screen (either partailly or fully)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If `area` is `None`, clears the entire screen, all layers</span>
+<span class="doccomment">/// (identically to the [`terminal_clear()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#clear).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Otherwise clears specified area on the current layer, as would the</span>
+<span class="doccomment">/// [`terminal_clear_area()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#clear_area).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear</span>(<span class="ident">area</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rect</span><span class="op">&gt;</span>) {
+	<span class="kw">match</span> <span class="ident">area</span> {
+		<span class="prelude-val">Some</span>(<span class="ident">rect</span>) <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">clear_area</span>(<span class="ident">rect</span>.<span class="ident">top_left</span>.<span class="ident">x</span>, <span class="ident">rect</span>.<span class="ident">top_left</span>.<span class="ident">y</span>, <span class="ident">rect</span>.<span class="ident">size</span>.<span class="ident">width</span>, <span class="ident">rect</span>.<span class="ident">size</span>.<span class="ident">height</span>),
+		<span class="prelude-val">None</span>       <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">clear</span>(),
 	}
 }
 
-<span class='doccomment'>/// Sets the current layer&#39;s crop area.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// &lt;sub&gt;I don&#39;t get it either, refer the [`terminal_crop()` C API function&#39;s documentation](http://foo.wyrd.name/en:bearlibterminal:reference#crop).&lt;/sub&gt;</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>crop</span>(<span class='ident'>rect</span>: <span class='ident'>Rect</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>crop</span>(<span class='ident'>rect</span>.<span class='ident'>top_left</span>.<span class='ident'>x</span>, <span class='ident'>rect</span>.<span class='ident'>top_left</span>.<span class='ident'>y</span>, <span class='ident'>rect</span>.<span class='ident'>size</span>.<span class='ident'>width</span>, <span class='ident'>rect</span>.<span class='ident'>size</span>.<span class='ident'>height</span>);
+<span class="doccomment">/// Sets the current layer&#39;s crop area.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// &lt;sub&gt;I don&#39;t get it either, refer the [`terminal_crop()` C API function&#39;s documentation](http://foo.wyrd.name/en:bearlibterminal:reference#crop).&lt;/sub&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">crop</span>(<span class="ident">rect</span>: <span class="ident">Rect</span>) {
+	<span class="ident">ffi</span>::<span class="ident">crop</span>(<span class="ident">rect</span>.<span class="ident">top_left</span>.<span class="ident">x</span>, <span class="ident">rect</span>.<span class="ident">top_left</span>.<span class="ident">y</span>, <span class="ident">rect</span>.<span class="ident">size</span>.<span class="ident">width</span>, <span class="ident">rect</span>.<span class="ident">size</span>.<span class="ident">height</span>);
 }
 
-<span class='doccomment'>/// Selects the current layer.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The layer `index` must be between 0 and 255.</span>
-<span class='doccomment'>/// For more information consult the documentation for the [`terminal_layer()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#layer).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>layer</span>(<span class='ident'>index</span>: <span class='ident'>i32</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>layer</span>(<span class='ident'>index</span>);
+<span class="doccomment">/// Selects the current layer.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The layer `index` must be between 0 and 255.</span>
+<span class="doccomment">/// For more information consult the documentation for the [`terminal_layer()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#layer).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">layer</span>(<span class="ident">index</span>: <span class="ident">i32</span>) {
+	<span class="ident">ffi</span>::<span class="ident">layer</span>(<span class="ident">index</span>);
 }
 
-<span class='doccomment'>/// Sets the current foreground color, which will affect all the output functions called later.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is equivalent to the [`terminal_color()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#color).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_foreground</span>(<span class='ident'>color</span>: <span class='ident'>Color</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>color</span>(<span class='ident'>to_color_t</span>(<span class='ident'>color</span>));
+<span class="doccomment">/// Sets the current foreground color, which will affect all the output functions called later.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is equivalent to the [`terminal_color()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#color).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_foreground</span>(<span class="ident">color</span>: <span class="ident">Color</span>) {
+	<span class="ident">ffi</span>::<span class="ident">color</span>(<span class="ident">to_color_t</span>(<span class="ident">color</span>));
 }
 
-<span class='doccomment'>/// Sets the foreground color before calling the function and resets it afterwards.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_foreground</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='ident'>color</span>: <span class='ident'>Color</span>, <span class='ident'>callback</span>: <span class='ident'>F</span>) {
-	<span class='kw'>let</span> <span class='ident'>current</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>state_color</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_COLOR</span>);
-	<span class='ident'>set_foreground</span>(<span class='ident'>color</span>);
-	<span class='ident'>callback</span>();
-	<span class='ident'>ffi</span>::<span class='ident'>color</span>(<span class='ident'>current</span>);
+<span class="doccomment">/// Sets the foreground color before calling the function and resets it afterwards.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_foreground</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>()<span class="op">&gt;</span>(<span class="ident">color</span>: <span class="ident">Color</span>, <span class="ident">callback</span>: <span class="ident">F</span>) {
+	<span class="kw">let</span> <span class="ident">current</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">state_color</span>(<span class="ident">ffi</span>::<span class="ident">TK_COLOR</span>);
+	<span class="ident">set_foreground</span>(<span class="ident">color</span>);
+	<span class="ident">callback</span>();
+	<span class="ident">ffi</span>::<span class="ident">color</span>(<span class="ident">current</span>);
 }
 
-<span class='doccomment'>/// Sets the current background color, which will affect all the output functions called later.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is equivalent to the [`terminal_bkcolor()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#bkcolor).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_background</span>(<span class='ident'>color</span>: <span class='ident'>Color</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>bkcolor</span>(<span class='ident'>to_color_t</span>(<span class='ident'>color</span>));
+<span class="doccomment">/// Sets the current background color, which will affect all the output functions called later.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is equivalent to the [`terminal_bkcolor()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#bkcolor).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_background</span>(<span class="ident">color</span>: <span class="ident">Color</span>) {
+	<span class="ident">ffi</span>::<span class="ident">bkcolor</span>(<span class="ident">to_color_t</span>(<span class="ident">color</span>));
 }
 
-<span class='doccomment'>/// Sets the background color before calling the function and resets it afterwards.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_background</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='ident'>color</span>: <span class='ident'>Color</span>, <span class='ident'>callback</span>: <span class='ident'>F</span>) {
-	<span class='kw'>let</span> <span class='ident'>current</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>state_color</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_BKCOLOR</span>);
-	<span class='ident'>set_background</span>(<span class='ident'>color</span>);
-	<span class='ident'>callback</span>();
-	<span class='ident'>ffi</span>::<span class='ident'>bkcolor</span>(<span class='ident'>current</span>);
+<span class="doccomment">/// Sets the background color before calling the function and resets it afterwards.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_background</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>()<span class="op">&gt;</span>(<span class="ident">color</span>: <span class="ident">Color</span>, <span class="ident">callback</span>: <span class="ident">F</span>) {
+	<span class="kw">let</span> <span class="ident">current</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">state_color</span>(<span class="ident">ffi</span>::<span class="ident">TK_BKCOLOR</span>);
+	<span class="ident">set_background</span>(<span class="ident">color</span>);
+	<span class="ident">callback</span>();
+	<span class="ident">ffi</span>::<span class="ident">bkcolor</span>(<span class="ident">current</span>);
 }
 
-<span class='doccomment'>/// Sets the current foreground and background color, which will affect all the output functions called later.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is equivalent to calling [`set_background()`](fn.set_background.html) and [`set_foreground()`](fn.set_foreground.html) in succession.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_colors</span>(<span class='ident'>fg</span>: <span class='ident'>Color</span>, <span class='ident'>bg</span>: <span class='ident'>Color</span>) {
-	<span class='ident'>set_foreground</span>(<span class='ident'>fg</span>);
-	<span class='ident'>set_background</span>(<span class='ident'>bg</span>);
+<span class="doccomment">/// Sets the current foreground and background color, which will affect all the output functions called later.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is equivalent to calling [`set_background()`](fn.set_background.html) and [`set_foreground()`](fn.set_foreground.html) in succession.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_colors</span>(<span class="ident">fg</span>: <span class="ident">Color</span>, <span class="ident">bg</span>: <span class="ident">Color</span>) {
+	<span class="ident">set_foreground</span>(<span class="ident">fg</span>);
+	<span class="ident">set_background</span>(<span class="ident">bg</span>);
 }
 
-<span class='doccomment'>/// Sets the foreground and background color before calling the function and resets them afterwards.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_colors</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='ident'>fg</span>: <span class='ident'>Color</span>, <span class='ident'>bg</span>: <span class='ident'>Color</span>, <span class='ident'>callback</span>: <span class='ident'>F</span>) {
-	<span class='ident'>with_foreground</span>(<span class='ident'>fg</span>, <span class='op'>||</span>
-		<span class='ident'>with_background</span>(<span class='ident'>bg</span>, <span class='op'>||</span>
-			<span class='ident'>callback</span>()
+<span class="doccomment">/// Sets the foreground and background color before calling the function and resets them afterwards.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_colors</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>()<span class="op">&gt;</span>(<span class="ident">fg</span>: <span class="ident">Color</span>, <span class="ident">bg</span>: <span class="ident">Color</span>, <span class="ident">callback</span>: <span class="ident">F</span>) {
+	<span class="ident">with_foreground</span>(<span class="ident">fg</span>, <span class="op">||</span>
+		<span class="ident">with_background</span>(<span class="ident">bg</span>, <span class="op">||</span>
+			<span class="ident">callback</span>()
 		)
 	);
 }
 
-<span class='doccomment'>/// Enable or disable composition, (dis)allowing for &quot;stacking&quot; tiles on top of each other in the same cell.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// For details and other uses consult the documentation for the</span>
-<span class='doccomment'>/// [`terminal_composition()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#composition).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>composition</span>(<span class='ident'>enable</span>: <span class='ident'>bool</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>composition</span>(<span class='ident'>enable</span>);
+<span class="doccomment">/// Enable or disable composition, (dis)allowing for &quot;stacking&quot; tiles on top of each other in the same cell.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For details and other uses consult the documentation for the</span>
+<span class="doccomment">/// [`terminal_composition()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#composition).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">composition</span>(<span class="ident">enable</span>: <span class="ident">bool</span>) {
+	<span class="ident">ffi</span>::<span class="ident">composition</span>(<span class="ident">enable</span>);
 }
 
-<span class='doccomment'>/// Prints the specified character to the specified location.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Equivalent to the [`terminal_put()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>put</span>(<span class='ident'>point</span>: <span class='ident'>Point</span>, <span class='ident'>cell</span>: <span class='ident'>char</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>put</span>(<span class='ident'>point</span>.<span class='ident'>x</span>, <span class='ident'>point</span>.<span class='ident'>y</span>, <span class='ident'>cell</span> <span class='kw'>as</span> <span class='ident'>i32</span>);
+<span class="doccomment">/// Prints the specified character to the specified location.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Equivalent to the [`terminal_put()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">put</span>(<span class="ident">point</span>: <span class="ident">Point</span>, <span class="ident">cell</span>: <span class="ident">char</span>) {
+	<span class="ident">ffi</span>::<span class="ident">put</span>(<span class="ident">point</span>.<span class="ident">x</span>, <span class="ident">point</span>.<span class="ident">y</span>, <span class="ident">cell</span> <span class="kw">as</span> <span class="ident">i32</span>);
 }
 
-<span class='doccomment'>/// Equivalent to [`put()`](fn.put.html) with a `Point` constructed from the first two arguments.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>put_xy</span>(<span class='ident'>x</span>: <span class='ident'>i32</span>, <span class='ident'>y</span>: <span class='ident'>i32</span>, <span class='ident'>cell</span>: <span class='ident'>char</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>put</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>cell</span> <span class='kw'>as</span> <span class='ident'>i32</span>);
+<span class="doccomment">/// Equivalent to [`put()`](fn.put.html) with a `Point` constructed from the first two arguments.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">put_xy</span>(<span class="ident">x</span>: <span class="ident">i32</span>, <span class="ident">y</span>: <span class="ident">i32</span>, <span class="ident">cell</span>: <span class="ident">char</span>) {
+	<span class="ident">ffi</span>::<span class="ident">put</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">cell</span> <span class="kw">as</span> <span class="ident">i32</span>);
 }
 
-<span class='doccomment'>/// Prints the specified character to the specified pixel-offsetted location, gradient-colouring it from the corners.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// For details see the docs for the [`terminal_put_ext()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put_ext).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>put_ext</span>(<span class='ident'>pos</span>: <span class='ident'>Point</span>, <span class='ident'>offset</span>: <span class='ident'>Point</span>, <span class='ident'>cell</span>: <span class='ident'>char</span>, <span class='ident'>corners</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Color</span><span class='op'>&gt;</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>put_ext</span>(<span class='ident'>pos</span>.<span class='ident'>x</span>, <span class='ident'>pos</span>.<span class='ident'>y</span>, <span class='ident'>offset</span>.<span class='ident'>x</span>, <span class='ident'>offset</span>.<span class='ident'>y</span>, <span class='ident'>cell</span> <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='kw-2'>&amp;</span><span class='ident'>corners</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>().<span class='ident'>map</span>(<span class='ident'>to_color_t</span>).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>()[..]);
+<span class="doccomment">/// Prints the specified character to the specified pixel-offsetted location, gradient-colouring it from the corners.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For details see the docs for the [`terminal_put_ext()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#put_ext).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">put_ext</span>(<span class="ident">pos</span>: <span class="ident">Point</span>, <span class="ident">offset</span>: <span class="ident">Point</span>, <span class="ident">cell</span>: <span class="ident">char</span>, <span class="ident">corners</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) {
+	<span class="ident">ffi</span>::<span class="ident">put_ext</span>(<span class="ident">pos</span>.<span class="ident">x</span>, <span class="ident">pos</span>.<span class="ident">y</span>, <span class="ident">offset</span>.<span class="ident">x</span>, <span class="ident">offset</span>.<span class="ident">y</span>, <span class="ident">cell</span> <span class="kw">as</span> <span class="ident">i32</span>, <span class="kw-2">&amp;</span><span class="ident">corners</span>.<span class="ident">iter</span>().<span class="ident">cloned</span>().<span class="ident">map</span>(<span class="ident">to_color_t</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()[..]);
 }
 
-<span class='doccomment'>/// Get the character in the specified coordinates on the specified layer.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Returns 0 if the cell is empty on the specified layer.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Consult the documentation for the [`terminal_pick()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick) for more data.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pick</span>(<span class='ident'>point</span>: <span class='ident'>Point</span>, <span class='ident'>index</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='ident'>char</span> {
-	<span class='ident'>char</span>::<span class='ident'>from_u32</span>(<span class='ident'>ffi</span>::<span class='ident'>pick</span>(<span class='ident'>point</span>.<span class='ident'>x</span>, <span class='ident'>point</span>.<span class='ident'>y</span>, <span class='ident'>index</span>) <span class='kw'>as</span> <span class='ident'>u32</span>).<span class='ident'>unwrap</span>()
+<span class="doccomment">/// Get the character in the specified coordinates on the specified layer.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Returns 0 if the cell is empty on the specified layer.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Consult the documentation for the [`terminal_pick()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick) for more data.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pick</span>(<span class="ident">point</span>: <span class="ident">Point</span>, <span class="ident">index</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">char</span> {
+	<span class="ident">char</span>::<span class="ident">from_u32</span>(<span class="ident">ffi</span>::<span class="ident">pick</span>(<span class="ident">point</span>.<span class="ident">x</span>, <span class="ident">point</span>.<span class="ident">y</span>, <span class="ident">index</span>) <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">unwrap</span>()
 }
 
-<span class='doccomment'>/// Get the color of the character in the specified coordinates on the specified layer.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Consult the documentation for the [`terminal_pick_color()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_color),</span>
-<span class='doccomment'>/// despite its laconicity.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pick_foreground_color</span>(<span class='ident'>point</span>: <span class='ident'>Point</span>, <span class='ident'>index</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-	<span class='ident'>from_color_t</span>(<span class='ident'>ffi</span>::<span class='ident'>pick_color</span>(<span class='ident'>point</span>.<span class='ident'>x</span>, <span class='ident'>point</span>.<span class='ident'>y</span>, <span class='ident'>index</span>))
+<span class="doccomment">/// Get the color of the character in the specified coordinates on the specified layer.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Consult the documentation for the [`terminal_pick_color()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_color),</span>
+<span class="doccomment">/// despite its laconicity.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pick_foreground_color</span>(<span class="ident">point</span>: <span class="ident">Point</span>, <span class="ident">index</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">Color</span> {
+	<span class="ident">from_color_t</span>(<span class="ident">ffi</span>::<span class="ident">pick_color</span>(<span class="ident">point</span>.<span class="ident">x</span>, <span class="ident">point</span>.<span class="ident">y</span>, <span class="ident">index</span>))
 }
 
-<span class='doccomment'>/// Get the background color in the specified coordinates.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Consult the documentation for the [`terminal_pick_bkcolor()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_bkcolor)</span>
-<span class='doccomment'>/// for the same amount of information.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pick_background_color</span>(<span class='ident'>point</span>: <span class='ident'>Point</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-	<span class='ident'>from_color_t</span>(<span class='ident'>ffi</span>::<span class='ident'>pick_bkcolor</span>(<span class='ident'>point</span>.<span class='ident'>x</span>, <span class='ident'>point</span>.<span class='ident'>y</span>))
+<span class="doccomment">/// Get the background color in the specified coordinates.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Consult the documentation for the [`terminal_pick_bkcolor()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#pick_bkcolor)</span>
+<span class="doccomment">/// for the same amount of information.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pick_background_color</span>(<span class="ident">point</span>: <span class="ident">Point</span>) <span class="op">-&gt;</span> <span class="ident">Color</span> {
+	<span class="ident">from_color_t</span>(<span class="ident">ffi</span>::<span class="ident">pick_bkcolor</span>(<span class="ident">point</span>.<span class="ident">x</span>, <span class="ident">point</span>.<span class="ident">y</span>))
 }
 
-<span class='doccomment'>/// Prints the specified string to the specified location, formatting it along the way.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// For formatting spec see the docs for the [`terminal_print()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#print).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print</span>(<span class='ident'>point</span>: <span class='ident'>Point</span>, <span class='ident'>value</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-	<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>print</span>(<span class='ident'>point</span>.<span class='ident'>x</span>, <span class='ident'>point</span>.<span class='ident'>y</span>, <span class='ident'>value</span>);
+<span class="doccomment">/// Prints the specified string to the specified location, formatting it along the way.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For formatting spec see the docs for the [`terminal_print()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#print).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print</span>(<span class="ident">point</span>: <span class="ident">Point</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+	<span class="kw">let</span> _ <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">print</span>(<span class="ident">point</span>.<span class="ident">x</span>, <span class="ident">point</span>.<span class="ident">y</span>, <span class="ident">value</span>);
 }
 
-<span class='doccomment'>/// Equivalent to [`print()`](fn.print.html) with a `Point` constructed from the first two arguments.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_xy</span>(<span class='ident'>x</span>: <span class='ident'>i32</span>, <span class='ident'>y</span>: <span class='ident'>i32</span>, <span class='ident'>value</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-	<span class='ident'>print</span>(<span class='ident'>Point</span>::<span class='ident'>new</span>(<span class='ident'>x</span>, <span class='ident'>y</span>), <span class='ident'>value</span>);
+<span class="doccomment">/// Equivalent to [`print()`](fn.print.html) with a `Point` constructed from the first two arguments.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_xy</span>(<span class="ident">x</span>: <span class="ident">i32</span>, <span class="ident">y</span>: <span class="ident">i32</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+	<span class="ident">print</span>(<span class="ident">Point</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="ident">y</span>), <span class="ident">value</span>);
 }
 
-<span class='doccomment'>/// Calculate the argument&#39;s width/height without printing it.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Whether the function returns the width or the height depends on the presence of the `bbox` tag in the string.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Refer to the [docs for the `terminal_measure()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#measure), note,</span>
-<span class='doccomment'>/// that the return type therein is incorrect.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>measure</span>(<span class='ident'>value</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>i32</span> {
-	<span class='ident'>ffi</span>::<span class='ident'>measure</span>(<span class='ident'>value</span>)
+<span class="doccomment">/// Calculate the argument&#39;s width/height without printing it.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Whether the function returns the width or the height depends on the presence of the `bbox` tag in the string.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Refer to the [docs for the `terminal_measure()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#measure), note,</span>
+<span class="doccomment">/// that the return type therein is incorrect.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">measure</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+	<span class="ident">ffi</span>::<span class="ident">measure</span>(<span class="ident">value</span>)
 }
 
-<span class='doccomment'>/// Check, whether the next [`read_event()`](fn.read_event.html) call will return `Some`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Consult the [documentation for the `terminal_has_input()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#has_input).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_input</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-	<span class='ident'>ffi</span>::<span class='ident'>has_input</span>()
+<span class="doccomment">/// Check, whether the next [`read_event()`](fn.read_event.html) call will return `Some`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Consult the [documentation for the `terminal_has_input()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#has_input).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_input</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+	<span class="ident">ffi</span>::<span class="ident">has_input</span>()
 }
 
-<span class='doccomment'>/// Returns the next event, blocks until one&#39;s available.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is equivalent to the [`terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wait_event</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;</span> {
-	<span class='ident'>to_event</span>(<span class='ident'>ffi</span>::<span class='ident'>read</span>())
+<span class="doccomment">/// Returns the next event, blocks until one&#39;s available.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is equivalent to the [`terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wait_event</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
+	<span class="ident">to_event</span>(<span class="ident">ffi</span>::<span class="ident">read</span>())
 }
 
-<span class='doccomment'>/// Returns an instance of [`EventIterator`](struct.EventIterator.html), an infinite iterator over Terminal events.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>events</span>() <span class='op'>-&gt;</span> <span class='ident'>EventIterator</span> {
-	<span class='ident'>EventIterator</span>
+<span class="doccomment">/// Returns an instance of [`EventIterator`](struct.EventIterator.html), an infinite iterator over Terminal events.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">events</span>() <span class="op">-&gt;</span> <span class="ident">EventIterator</span> {
+	<span class="ident">EventIterator</span>
 }
 
-<span class='doccomment'>/// Returns the next event in the queue if it&#39;s available, otherwise returns `None`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is equivalent to the behaviour mentioned in the</span>
-<span class='doccomment'>/// [docs for the `terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read), but not the function&#39;s behaviour itself.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read_event</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;</span> {
-	<span class='kw'>if</span> <span class='op'>!</span><span class='ident'>has_input</span>() {
-		<span class='prelude-val'>None</span>
-	} <span class='kw'>else</span> {
-		<span class='ident'>wait_event</span>()
+<span class="doccomment">/// Returns the next event in the queue if it&#39;s available, otherwise returns `None`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is equivalent to the behaviour mentioned in the</span>
+<span class="doccomment">/// [docs for the `terminal_read()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read), but not the function&#39;s behaviour itself.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_event</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
+	<span class="kw">if</span> <span class="op">!</span><span class="ident">has_input</span>() {
+		<span class="prelude-val">None</span>
+	} <span class="kw">else</span> {
+		<span class="ident">wait_event</span>()
 	}
 }
 
-<span class='doccomment'>/// Returns the next event in the queue if it&#39;s available without popping it therefrom, otherwise returns `None`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If one intends on popping the events, the [`read_event()`](fn.read_event.html) function is recommended.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If one intends on just checking if an event is ready, the [`has_input()`](fn.has_input.html) function is recommended.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is equivalent to the [`terminal_peek()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#peek).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>peek_event</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;</span> {
-	<span class='kw'>match</span> <span class='ident'>ffi</span>::<span class='ident'>peek</span>() {
-		<span class='number'>0</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
-		<span class='ident'>event</span> <span class='op'>=&gt;</span> <span class='ident'>to_event</span>(<span class='ident'>event</span>),
+<span class="doccomment">/// Returns the next event in the queue if it&#39;s available without popping it therefrom, otherwise returns `None`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If one intends on waiting for events, the [`wait_event()`](fn.wait_event.html) function is recommended.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If one intends on popping the events, the [`read_event()`](fn.read_event.html) function is recommended.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If one intends on just checking if an event is ready, the [`has_input()`](fn.has_input.html) function is recommended.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is equivalent to the [`terminal_peek()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#peek).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">peek_event</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
+	<span class="kw">match</span> <span class="ident">ffi</span>::<span class="ident">peek</span>() {
+		<span class="number">0</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+		<span class="ident">event</span> <span class="op">=&gt;</span> <span class="ident">to_event</span>(<span class="ident">event</span>),
 	}
 }
 
-<span class='doccomment'>/// Reads up to `max` characters without parsing, starting at the specified coordinates.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Returns `None` if the user closed the window or pressed `Escape`,</span>
-<span class='doccomment'>/// `Some` containing the read string otherwise.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The read string will contain up to `max` characters.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The string being read will be kept on-screen only *during* the reading process, the scene will be restored before returning (needs a refresh, though).</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Refer to the [documentation for the for the `terminal_read_str()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read_str)</span>
-<span class='doccomment'>/// for specific information.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read_str</span>(<span class='ident'>point</span>: <span class='ident'>Point</span>, <span class='ident'>max</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-	<span class='ident'>ffi</span>::<span class='ident'>read_str</span>(<span class='ident'>point</span>.<span class='ident'>x</span>, <span class='ident'>point</span>.<span class='ident'>y</span>, <span class='ident'>max</span>)
+<span class="doccomment">/// Reads up to `max` characters without parsing, starting at the specified coordinates.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Returns `None` if the user closed the window or pressed `Escape`,</span>
+<span class="doccomment">/// `Some` containing the read string otherwise.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The read string will contain up to `max` characters.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The string being read will be kept on-screen only *during* the reading process, the scene will be restored before returning (needs a refresh, though).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Refer to the [documentation for the for the `terminal_read_str()` C API function](http://foo.wyrd.name/en:bearlibterminal:reference#read_str)</span>
+<span class="doccomment">/// for specific information.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_str</span>(<span class="ident">point</span>: <span class="ident">Point</span>, <span class="ident">max</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+	<span class="ident">ffi</span>::<span class="ident">read_str</span>(<span class="ident">point</span>.<span class="ident">x</span>, <span class="ident">point</span>.<span class="ident">y</span>, <span class="ident">max</span>)
 }
 
-<span class='doccomment'>/// Sleep for the specified amount of milliseconds.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// See the [`terminal_delay()` C API function&#39;s documentation](http://foo.wyrd.name/en:bearlibterminal:reference#delay).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delay</span>(<span class='ident'>period</span>: <span class='ident'>i32</span>) {
-	<span class='ident'>ffi</span>::<span class='ident'>delay</span>(<span class='ident'>period</span>)
+<span class="doccomment">/// Sleep for the specified amount of milliseconds.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See the [`terminal_delay()` C API function&#39;s documentation](http://foo.wyrd.name/en:bearlibterminal:reference#delay).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delay</span>(<span class="ident">period</span>: <span class="ident">i32</span>) {
+	<span class="ident">ffi</span>::<span class="ident">delay</span>(<span class="ident">period</span>)
 }
 
 
-<span class='doccomment'>/// Infinite iterator over Terminal events, instantiated by [`events()`](fn.events.html).</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Yields `None` iff BLT is closed.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The &quot;standard&quot; way:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```ignore</span>
-<span class='doccomment'>/// while let Some(event) = terminal::wait_event() {</span>
-<span class='doccomment'>/// 	// ...</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Is equivalent to, but not as good as:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```ignore</span>
-<span class='doccomment'>/// for event in terminal::events() {</span>
-<span class='doccomment'>/// 	// ...</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>EventIterator</span>;
+<span class="doccomment">/// Infinite iterator over Terminal events, instantiated by [`events()`](fn.events.html).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Yields `None` iff BLT is closed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The &quot;standard&quot; way:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore</span>
+<span class="doccomment">/// while let Some(event) = terminal::wait_event() {</span>
+<span class="doccomment">/// 	// ...</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Is equivalent to, but not as good as:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore</span>
+<span class="doccomment">/// for event in terminal::events() {</span>
+<span class="doccomment">/// 	// ...</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EventIterator</span>;
 
-<span class='kw'>impl</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>EventIterator</span> {
-	<span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>Event</span>;
+<span class="kw">impl</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">EventIterator</span> {
+	<span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Event</span>;
 
-	<span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;</span> {
-		<span class='ident'>wait_event</span>()
+	<span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
+		<span class="ident">wait_event</span>()
 	}
 }
 
 
-<span class='kw'>fn</span> <span class='ident'>from_color_t</span>(<span class='ident'>color</span>: <span class='ident'>ColorT</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-	<span class='kw'>let</span> <span class='ident'>alpha</span> <span class='op'>=</span> ((<span class='ident'>color</span> <span class='op'>&gt;&gt;</span> <span class='number'>24</span>) <span class='op'>&amp;</span> <span class='number'>0xFF</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
-	<span class='kw'>let</span> <span class='ident'>red</span>   <span class='op'>=</span> ((<span class='ident'>color</span> <span class='op'>&gt;&gt;</span> <span class='number'>16</span>) <span class='op'>&amp;</span> <span class='number'>0xFF</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
-	<span class='kw'>let</span> <span class='ident'>green</span> <span class='op'>=</span> ((<span class='ident'>color</span> <span class='op'>&gt;&gt;</span> <span class='number'>8</span>)  <span class='op'>&amp;</span> <span class='number'>0xFF</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
-	<span class='kw'>let</span> <span class='ident'>blue</span>  <span class='op'>=</span> (<span class='ident'>color</span>         <span class='op'>&amp;</span> <span class='number'>0xFF</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+<span class="kw">fn</span> <span class="ident">from_color_t</span>(<span class="ident">color</span>: <span class="ident">ColorT</span>) <span class="op">-&gt;</span> <span class="ident">Color</span> {
+	<span class="kw">let</span> <span class="ident">alpha</span> <span class="op">=</span> ((<span class="ident">color</span> <span class="op">&gt;&gt;</span> <span class="number">24</span>) <span class="op">&amp;</span> <span class="number">0xFF</span>) <span class="kw">as</span> <span class="ident">u8</span>;
+	<span class="kw">let</span> <span class="ident">red</span>   <span class="op">=</span> ((<span class="ident">color</span> <span class="op">&gt;&gt;</span> <span class="number">16</span>) <span class="op">&amp;</span> <span class="number">0xFF</span>) <span class="kw">as</span> <span class="ident">u8</span>;
+	<span class="kw">let</span> <span class="ident">green</span> <span class="op">=</span> ((<span class="ident">color</span> <span class="op">&gt;&gt;</span> <span class="number">8</span>)  <span class="op">&amp;</span> <span class="number">0xFF</span>) <span class="kw">as</span> <span class="ident">u8</span>;
+	<span class="kw">let</span> <span class="ident">blue</span>  <span class="op">=</span> (<span class="ident">color</span>         <span class="op">&amp;</span> <span class="number">0xFF</span>) <span class="kw">as</span> <span class="ident">u8</span>;
 
-	<span class='ident'>Color</span>::<span class='ident'>from_rgba</span>(<span class='ident'>red</span>, <span class='ident'>green</span>, <span class='ident'>blue</span>, <span class='ident'>alpha</span>)
+	<span class="ident">Color</span>::<span class="ident">from_rgba</span>(<span class="ident">red</span>, <span class="ident">green</span>, <span class="ident">blue</span>, <span class="ident">alpha</span>)
 }
 
-<span class='kw'>fn</span> <span class='ident'>to_color_t</span>(<span class='ident'>color</span>: <span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='ident'>ColorT</span> {
+<span class="kw">fn</span> <span class="ident">to_color_t</span>(<span class="ident">color</span>: <span class="ident">Color</span>) <span class="op">-&gt;</span> <span class="ident">ColorT</span> {
 	(
-		((<span class='ident'>color</span>.<span class='ident'>alpha</span> <span class='kw'>as</span> <span class='ident'>ColorT</span>) <span class='op'>&lt;&lt;</span> <span class='number'>24</span>) <span class='op'>|</span>
-		((<span class='ident'>color</span>.<span class='ident'>red</span>   <span class='kw'>as</span> <span class='ident'>ColorT</span>) <span class='op'>&lt;&lt;</span> <span class='number'>16</span>) <span class='op'>|</span>
-		((<span class='ident'>color</span>.<span class='ident'>green</span> <span class='kw'>as</span> <span class='ident'>ColorT</span>) <span class='op'>&lt;&lt;</span> <span class='number'>8</span>)  <span class='op'>|</span>
-		(<span class='ident'>color</span>.<span class='ident'>blue</span>   <span class='kw'>as</span> <span class='ident'>ColorT</span>)
+		((<span class="ident">color</span>.<span class="ident">alpha</span> <span class="kw">as</span> <span class="ident">ColorT</span>) <span class="op">&lt;&lt;</span> <span class="number">24</span>) <span class="op">|</span>
+		((<span class="ident">color</span>.<span class="ident">red</span>   <span class="kw">as</span> <span class="ident">ColorT</span>) <span class="op">&lt;&lt;</span> <span class="number">16</span>) <span class="op">|</span>
+		((<span class="ident">color</span>.<span class="ident">green</span> <span class="kw">as</span> <span class="ident">ColorT</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span>)  <span class="op">|</span>
+		(<span class="ident">color</span>.<span class="ident">blue</span>   <span class="kw">as</span> <span class="ident">ColorT</span>)
 	)
 }
 
-<span class='kw'>fn</span> <span class='ident'>to_keycode</span>(<span class='ident'>code</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>KeyCode</span><span class='op'>&gt;</span> {
-	<span class='kw'>match</span> <span class='ident'>code</span> {
-		<span class='ident'>ffi</span>::<span class='ident'>TK_A</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>A</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_B</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>B</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_C</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>C</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_D</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>D</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_E</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>E</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_G</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>G</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_H</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>H</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_I</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>I</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_J</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>J</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_K</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>K</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_L</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>L</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_M</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>M</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_N</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>N</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_O</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>O</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_P</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>P</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_Q</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Q</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_R</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>R</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_S</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>S</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_T</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>T</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_U</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>U</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_V</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>V</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_W</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>W</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_X</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>X</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_Y</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Y</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_Z</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Z</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_1</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row1</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_2</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row2</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_3</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row3</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_4</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row4</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_5</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row5</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_6</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row6</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_7</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row7</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_8</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row8</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_9</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row9</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_0</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Row0</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_ENTER</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Enter</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_ESCAPE</span>       <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Escape</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_BACKSPACE</span>    <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Backspace</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_TAB</span>          <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Tab</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_SPACE</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Space</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_MINUS</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Minus</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_EQUALS</span>       <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Equals</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_LBRACKET</span>     <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>LeftBracket</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_RBRACKET</span>     <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>RightBracket</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_BACKSLASH</span>    <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Backslash</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_SEMICOLON</span>    <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Semicolon</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_APOSTROPHE</span>   <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Apostrophe</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_GRAVE</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Grave</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_COMMA</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Comma</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_PERIOD</span>       <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Period</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_SLASH</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Slash</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F1</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F1</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F2</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F2</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F3</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F3</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F4</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F4</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F5</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F5</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F6</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F6</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F7</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F7</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F8</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F8</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F9</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F9</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F10</span>          <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F10</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F11</span>          <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F11</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_F12</span>          <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>F12</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_PAUSE</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Pause</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_INSERT</span>       <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Insert</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_HOME</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Home</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_PAGEUP</span>       <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>PageUp</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_DELETE</span>       <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Delete</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_END</span>          <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>End</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_PAGEDOWN</span>     <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>PageDown</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_RIGHT</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Right</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_LEFT</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Left</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_DOWN</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Down</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_UP</span>           <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Up</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_DIVIDE</span>    <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>NumDivide</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_MULTIPLY</span>  <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>NumMultiply</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_MINUS</span>     <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>NumMinus</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_PLUS</span>      <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>NumPlus</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_ENTER</span>     <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>NumEnter</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_1</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num1</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_2</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num2</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_3</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num3</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_4</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num4</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_5</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num5</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_6</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num6</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_7</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num7</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_8</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num8</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_9</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num9</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_0</span>         <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>Num0</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_KP_PERIOD</span>    <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>NumPeriod</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_LEFT</span>   <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>MouseLeft</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_RIGHT</span>  <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>MouseRight</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_MIDDLE</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>MouseMiddle</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_X1</span>     <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>MouseFourth</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_X2</span>     <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>KeyCode</span>::<span class='ident'>MouseFifth</span>),
-		_                    <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+<span class="kw">fn</span> <span class="ident">to_keycode</span>(<span class="ident">code</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">KeyCode</span><span class="op">&gt;</span> {
+	<span class="kw">match</span> <span class="ident">code</span> {
+		<span class="ident">ffi</span>::<span class="ident">TK_A</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">A</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_B</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">B</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_C</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">C</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_D</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">D</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_E</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">E</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_G</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">G</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_H</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">H</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_I</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">I</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_J</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">J</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_K</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">K</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_L</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">L</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_M</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">M</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_N</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">N</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_O</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">O</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_P</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">P</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_Q</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Q</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_R</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">R</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_S</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">S</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_T</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">T</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_U</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">U</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_V</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">V</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_W</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">W</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_X</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">X</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_Y</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Y</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_Z</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Z</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_1</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row1</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_2</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row2</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_3</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row3</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_4</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row4</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_5</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row5</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_6</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row6</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_7</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row7</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_8</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row8</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_9</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row9</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_0</span>            <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Row0</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_ENTER</span>        <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Enter</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_ESCAPE</span>       <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Escape</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_BACKSPACE</span>    <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Backspace</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_TAB</span>          <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Tab</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_SPACE</span>        <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Space</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_MINUS</span>        <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Minus</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_EQUALS</span>       <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Equals</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_LBRACKET</span>     <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">LeftBracket</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_RBRACKET</span>     <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">RightBracket</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_BACKSLASH</span>    <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Backslash</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_SEMICOLON</span>    <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Semicolon</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_APOSTROPHE</span>   <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Apostrophe</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_GRAVE</span>        <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Grave</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_COMMA</span>        <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Comma</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_PERIOD</span>       <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Period</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_SLASH</span>        <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Slash</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F1</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F1</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F2</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F2</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F3</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F3</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F4</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F4</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F5</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F5</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F6</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F6</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F7</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F7</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F8</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F8</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F9</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F9</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F10</span>          <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F10</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F11</span>          <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F11</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_F12</span>          <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">F12</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_PAUSE</span>        <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Pause</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_INSERT</span>       <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Insert</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_HOME</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Home</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_PAGEUP</span>       <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">PageUp</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_DELETE</span>       <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Delete</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_END</span>          <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">End</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_PAGEDOWN</span>     <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">PageDown</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_RIGHT</span>        <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Right</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_LEFT</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Left</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_DOWN</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Down</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_UP</span>           <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Up</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_DIVIDE</span>    <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">NumDivide</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_MULTIPLY</span>  <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">NumMultiply</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_MINUS</span>     <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">NumMinus</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_PLUS</span>      <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">NumPlus</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_ENTER</span>     <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">NumEnter</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_1</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num1</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_2</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num2</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_3</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num3</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_4</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num4</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_5</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num5</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_6</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num6</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_7</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num7</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_8</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num8</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_9</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num9</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_0</span>         <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">Num0</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_KP_PERIOD</span>    <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">NumPeriod</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_LEFT</span>   <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">MouseLeft</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_RIGHT</span>  <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">MouseRight</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_MIDDLE</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">MouseMiddle</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_X1</span>     <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">MouseFourth</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_X2</span>     <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">KeyCode</span>::<span class="ident">MouseFifth</span>),
+		_                    <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
 	}
 }
 
-<span class='kw'>fn</span> <span class='ident'>to_event</span>(<span class='ident'>code</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;</span> {
-	<span class='kw'>match</span> <span class='ident'>code</span> {
-		<span class='ident'>ffi</span>::<span class='ident'>TK_CLOSE</span>        <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>Event</span>::<span class='ident'>Close</span>),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_RESIZED</span>      <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>get_window_resize</span>()),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_MOVE</span>   <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>get_mouse_move</span>()),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_SCROLL</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>get_mouse_scroll</span>()),
-		_                    <span class='op'>=&gt;</span> <span class='ident'>to_key_event</span>(<span class='ident'>code</span>),
+<span class="kw">fn</span> <span class="ident">to_event</span>(<span class="ident">code</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
+	<span class="kw">match</span> <span class="ident">code</span> {
+		<span class="ident">ffi</span>::<span class="ident">TK_CLOSE</span>        <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Event</span>::<span class="ident">Close</span>),
+		<span class="ident">ffi</span>::<span class="ident">TK_RESIZED</span>      <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">get_window_resize</span>()),
+		<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_MOVE</span>   <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">get_mouse_move</span>()),
+		<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_SCROLL</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">get_mouse_scroll</span>()),
+		_                    <span class="op">=&gt;</span> <span class="ident">to_key_event</span>(<span class="ident">code</span>),
 	}
 }
 
-<span class='kw'>fn</span> <span class='ident'>to_key_event</span>(<span class='ident'>code</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;</span> {
-	<span class='kw'>let</span> <span class='ident'>key</span>      <span class='op'>=</span> <span class='ident'>code</span> <span class='op'>&amp;</span> <span class='op'>!</span><span class='ident'>ffi</span>::<span class='ident'>TK_KEY_RELEASED</span>;
-	<span class='kw'>let</span> <span class='ident'>released</span> <span class='op'>=</span> (<span class='ident'>code</span> <span class='op'>&amp;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KEY_RELEASED</span>) <span class='op'>==</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KEY_RELEASED</span>;
+<span class="kw">fn</span> <span class="ident">to_key_event</span>(<span class="ident">code</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
+	<span class="kw">let</span> <span class="ident">key</span>      <span class="op">=</span> <span class="ident">code</span> <span class="op">&amp;</span> <span class="op">!</span><span class="ident">ffi</span>::<span class="ident">TK_KEY_RELEASED</span>;
+	<span class="kw">let</span> <span class="ident">released</span> <span class="op">=</span> (<span class="ident">code</span> <span class="op">&amp;</span> <span class="ident">ffi</span>::<span class="ident">TK_KEY_RELEASED</span>) <span class="op">==</span> <span class="ident">ffi</span>::<span class="ident">TK_KEY_RELEASED</span>;
 
-	<span class='kw'>match</span> <span class='ident'>key</span> {
-		<span class='ident'>ffi</span>::<span class='ident'>TK_SHIFT</span>   <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='kw'>if</span> <span class='ident'>released</span> {<span class='ident'>Event</span>::<span class='ident'>ShiftReleased</span>}   <span class='kw'>else</span> {<span class='ident'>Event</span>::<span class='ident'>ShiftPressed</span>}),
-		<span class='ident'>ffi</span>::<span class='ident'>TK_CONTROL</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='kw'>if</span> <span class='ident'>released</span> {<span class='ident'>Event</span>::<span class='ident'>ControlReleased</span>} <span class='kw'>else</span> {<span class='ident'>Event</span>::<span class='ident'>ControlPressed</span>}),
-		<span class='ident'>key</span>             <span class='op'>=&gt;</span> {
-			<span class='kw'>let</span> <span class='ident'>ctrl</span>  <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>check</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_CONTROL</span>);
-			<span class='kw'>let</span> <span class='ident'>shift</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>check</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_SHIFT</span>);
+	<span class="kw">match</span> <span class="ident">key</span> {
+		<span class="ident">ffi</span>::<span class="ident">TK_SHIFT</span>   <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="kw">if</span> <span class="ident">released</span> {<span class="ident">Event</span>::<span class="ident">ShiftReleased</span>}   <span class="kw">else</span> {<span class="ident">Event</span>::<span class="ident">ShiftPressed</span>}),
+		<span class="ident">ffi</span>::<span class="ident">TK_CONTROL</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="kw">if</span> <span class="ident">released</span> {<span class="ident">Event</span>::<span class="ident">ControlReleased</span>} <span class="kw">else</span> {<span class="ident">Event</span>::<span class="ident">ControlPressed</span>}),
+		<span class="ident">key</span>             <span class="op">=&gt;</span> {
+			<span class="kw">let</span> <span class="ident">ctrl</span>  <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">check</span>(<span class="ident">ffi</span>::<span class="ident">TK_CONTROL</span>);
+			<span class="kw">let</span> <span class="ident">shift</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">check</span>(<span class="ident">ffi</span>::<span class="ident">TK_SHIFT</span>);
 
-			<span class='kw'>match</span> <span class='ident'>to_keycode</span>(<span class='ident'>key</span>) {
-				<span class='prelude-val'>Some</span>(<span class='ident'>converted</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>get_key</span>(<span class='ident'>released</span>, <span class='ident'>converted</span>, <span class='ident'>ctrl</span>, <span class='ident'>shift</span>)),
-				<span class='prelude-val'>None</span>            <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+			<span class="kw">match</span> <span class="ident">to_keycode</span>(<span class="ident">key</span>) {
+				<span class="prelude-val">Some</span>(<span class="ident">converted</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">get_key</span>(<span class="ident">released</span>, <span class="ident">converted</span>, <span class="ident">ctrl</span>, <span class="ident">shift</span>)),
+				<span class="prelude-val">None</span>            <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
 			}
 		}
 	}
 }
 
-<span class='kw'>fn</span> <span class='ident'>get_window_resize</span>() <span class='op'>-&gt;</span> <span class='ident'>Event</span> {
-	<span class='ident'>Event</span>::<span class='ident'>Resize</span>{
-		<span class='ident'>width</span>: <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_WIDTH</span>),
-		<span class='ident'>height</span>: <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_HEIGHT</span>),
+<span class="kw">fn</span> <span class="ident">get_window_resize</span>() <span class="op">-&gt;</span> <span class="ident">Event</span> {
+	<span class="ident">Event</span>::<span class="ident">Resize</span>{
+		<span class="ident">width</span>: <span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_WIDTH</span>),
+		<span class="ident">height</span>: <span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_HEIGHT</span>),
 	}
 }
 
-<span class='kw'>fn</span> <span class='ident'>get_mouse_move</span>() <span class='op'>-&gt;</span> <span class='ident'>Event</span> {
-	<span class='ident'>Event</span>::<span class='ident'>MouseMove</span>{
-		<span class='ident'>x</span>: <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_X</span>),
-		<span class='ident'>y</span>: <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_Y</span>),
+<span class="kw">fn</span> <span class="ident">get_mouse_move</span>() <span class="op">-&gt;</span> <span class="ident">Event</span> {
+	<span class="ident">Event</span>::<span class="ident">MouseMove</span>{
+		<span class="ident">x</span>: <span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_X</span>),
+		<span class="ident">y</span>: <span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_Y</span>),
 	}
 }
 
-<span class='kw'>fn</span> <span class='ident'>get_mouse_scroll</span>() <span class='op'>-&gt;</span> <span class='ident'>Event</span> {
-	<span class='ident'>Event</span>::<span class='ident'>MouseScroll</span>{
-		<span class='ident'>delta</span>: <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_WHEEL</span>),
+<span class="kw">fn</span> <span class="ident">get_mouse_scroll</span>() <span class="op">-&gt;</span> <span class="ident">Event</span> {
+	<span class="ident">Event</span>::<span class="ident">MouseScroll</span>{
+		<span class="ident">delta</span>: <span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_WHEEL</span>),
 	}
 }
 
-<span class='kw'>fn</span> <span class='ident'>get_key</span>(<span class='ident'>released</span>: <span class='ident'>bool</span>, <span class='ident'>key</span>: <span class='ident'>KeyCode</span>, <span class='ident'>ctrl</span>: <span class='ident'>bool</span>, <span class='ident'>shift</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Event</span> {
-	<span class='kw'>if</span> <span class='ident'>released</span> {
-		<span class='ident'>Event</span>::<span class='ident'>KeyReleased</span>{
-			<span class='ident'>key</span>: <span class='ident'>key</span>,
-			<span class='ident'>ctrl</span>: <span class='ident'>ctrl</span>,
-			<span class='ident'>shift</span>: <span class='ident'>shift</span>,
+<span class="kw">fn</span> <span class="ident">get_key</span>(<span class="ident">released</span>: <span class="ident">bool</span>, <span class="ident">key</span>: <span class="ident">KeyCode</span>, <span class="ident">ctrl</span>: <span class="ident">bool</span>, <span class="ident">shift</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">Event</span> {
+	<span class="kw">if</span> <span class="ident">released</span> {
+		<span class="ident">Event</span>::<span class="ident">KeyReleased</span>{
+			<span class="ident">key</span>: <span class="ident">key</span>,
+			<span class="ident">ctrl</span>: <span class="ident">ctrl</span>,
+			<span class="ident">shift</span>: <span class="ident">shift</span>,
 		}
-	} <span class='kw'>else</span> {
-		<span class='ident'>Event</span>::<span class='ident'>KeyPressed</span>{
-			<span class='ident'>key</span>: <span class='ident'>key</span>,
-			<span class='ident'>ctrl</span>: <span class='ident'>ctrl</span>,
-			<span class='ident'>shift</span>: <span class='ident'>shift</span>,
+	} <span class="kw">else</span> {
+		<span class="ident">Event</span>::<span class="ident">KeyPressed</span>{
+			<span class="ident">key</span>: <span class="ident">key</span>,
+			<span class="ident">ctrl</span>: <span class="ident">ctrl</span>,
+			<span class="ident">shift</span>: <span class="ident">shift</span>,
 		}
 	}
 }
@@ -1034,18 +1045,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -1078,7 +1093,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "bear_lib_terminal";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

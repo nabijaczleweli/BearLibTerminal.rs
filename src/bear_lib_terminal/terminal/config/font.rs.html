@@ -10,14 +10,17 @@
     <title>font.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <script src="../../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -382,343 +393,343 @@
 <span id="337">337</span>
 <span id="338">338</span>
 <span id="339">339</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Module containing font changing tools.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Examples</span>
-<span class='doccomment'>//! The following from [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management):</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```text</span>
-<span class='doccomment'>//! font: UbuntuMono-R.ttf, size=12;</span>
-<span class='doccomment'>//! 0x5E: curcumflex.png;</span>
-<span class='doccomment'>//! 0xE000: tileset.png, size=16x16, spacing=2x1;</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Is equivalent to</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! use bear_lib_terminal::terminal;</span>
-<span class='doccomment'>//! use bear_lib_terminal::terminal::config::font;</span>
-<span class='doccomment'>//! use bear_lib_terminal::geometry::Size;</span>
-<span class='doccomment'>//! # assert!({let result =</span>
-<span class='doccomment'>//! terminal::set(font::true_type(font::Origin::Root, &quot;UbuntuMono-R.ttf&quot;, Size::new(0, 12)));</span>
-<span class='doccomment'>//! # result}); assert!({let result =</span>
-<span class='doccomment'>//! terminal::set(font::bitmap(font::Origin::Offset(&#39;^&#39;), &quot;circumflex.png&quot;));</span>
-<span class='doccomment'>//! # result}); assert!({let result =</span>
-<span class='doccomment'>//! terminal::set(font::bitmap(font::Origin::Offset(&#39;\u{E000}&#39;), &quot;tileset.png&quot;).size(Size::new(16, 16)).spacing(Size::new(2, 1)));</span>
-<span class='doccomment'>//! # result});</span>
-<span class='doccomment'>//! ```</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Module containing font changing tools.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Examples</span>
+<span class="doccomment">//! The following from [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management):</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```text</span>
+<span class="doccomment">//! font: UbuntuMono-R.ttf, size=12;</span>
+<span class="doccomment">//! 0x5E: curcumflex.png;</span>
+<span class="doccomment">//! 0xE000: tileset.png, size=16x16, spacing=2x1;</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Is equivalent to</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use bear_lib_terminal::terminal;</span>
+<span class="doccomment">//! use bear_lib_terminal::terminal::config::font;</span>
+<span class="doccomment">//! use bear_lib_terminal::geometry::Size;</span>
+<span class="doccomment">//! # assert!({let result =</span>
+<span class="doccomment">//! terminal::set(font::true_type(font::Origin::Root, &quot;UbuntuMono-R.ttf&quot;, Size::new(0, 12)));</span>
+<span class="doccomment">//! # result}); assert!({let result =</span>
+<span class="doccomment">//! terminal::set(font::bitmap(font::Origin::Offset(&#39;^&#39;), &quot;circumflex.png&quot;));</span>
+<span class="doccomment">//! # result}); assert!({let result =</span>
+<span class="doccomment">//! terminal::set(font::bitmap(font::Origin::Offset(&#39;\u{E000}&#39;), &quot;tileset.png&quot;).size(Size::new(16, 16)).spacing(Size::new(2, 1)));</span>
+<span class="doccomment">//! # result});</span>
+<span class="doccomment">//! ```</span>
 
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>Size</span>;
-<span class='kw'>use</span> <span class='ident'>terminal</span>::<span class='ident'>config</span>::{<span class='ident'>ConfigPart</span>, <span class='ident'>escape_config_string</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">Size</span>;
+<span class="kw">use</span> <span class="ident">terminal</span>::<span class="ident">config</span>::{<span class="ident">ConfigPart</span>, <span class="ident">escape_config_string</span>};
 
 
-<span class='doccomment'>/// Construct a bitmap font override segment repr.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bitmap</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>origin</span>: <span class='ident'>Origin</span>, <span class='ident'>path</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Bitmap</span> {
-	<span class='ident'>Bitmap</span>{
-		<span class='ident'>origin</span>: <span class='ident'>origin</span>,
-		<span class='ident'>path</span>: <span class='ident'>path</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>(),
-		<span class='ident'>size</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>resize</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>resize_filter</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>resize_mode</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>raw_size</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>codepage</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>align</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>spacing</span>: <span class='prelude-val'>None</span>,
+<span class="doccomment">/// Construct a bitmap font override segment repr.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bitmap</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="ident">origin</span>: <span class="ident">Origin</span>, <span class="ident">path</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Bitmap</span> {
+	<span class="ident">Bitmap</span>{
+		<span class="ident">origin</span>: <span class="ident">origin</span>,
+		<span class="ident">path</span>: <span class="ident">path</span>.<span class="ident">as_ref</span>().<span class="ident">to_str</span>().<span class="ident">unwrap</span>().<span class="ident">to_string</span>(),
+		<span class="ident">size</span>: <span class="prelude-val">None</span>,
+		<span class="ident">resize</span>: <span class="prelude-val">None</span>,
+		<span class="ident">resize_filter</span>: <span class="prelude-val">None</span>,
+		<span class="ident">resize_mode</span>: <span class="prelude-val">None</span>,
+		<span class="ident">raw_size</span>: <span class="prelude-val">None</span>,
+		<span class="ident">codepage</span>: <span class="prelude-val">None</span>,
+		<span class="ident">align</span>: <span class="prelude-val">None</span>,
+		<span class="ident">spacing</span>: <span class="prelude-val">None</span>,
 	}
 }
 
-<span class='doccomment'>/// Construct a TrueType font override segment repr.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If `title_size.width` is `0`, the resulting `size` prop will be `size=&lt;title_size.width&gt;` as opposed to `size=&lt;title_size&gt;`.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>true_type</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>origin</span>: <span class='ident'>Origin</span>, <span class='ident'>path</span>: <span class='ident'>T</span>, <span class='ident'>tile_size</span>: <span class='ident'>Size</span>) <span class='op'>-&gt;</span> <span class='ident'>TrueType</span> {
-	<span class='ident'>TrueType</span>{
-		<span class='ident'>origin</span>: <span class='ident'>origin</span>,
-		<span class='ident'>path</span>: <span class='ident'>path</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>(),
-		<span class='ident'>size</span>: <span class='ident'>tile_size</span>,
-		<span class='ident'>size_reference</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>mode</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>codepage</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>align</span>: <span class='prelude-val'>None</span>,
-		<span class='ident'>spacing</span>: <span class='prelude-val'>None</span>,
+<span class="doccomment">/// Construct a TrueType font override segment repr.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If `title_size.width` is `0`, the resulting `size` prop will be `size=&lt;title_size.width&gt;` as opposed to `size=&lt;title_size&gt;`.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">true_type</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="ident">origin</span>: <span class="ident">Origin</span>, <span class="ident">path</span>: <span class="ident">T</span>, <span class="ident">tile_size</span>: <span class="ident">Size</span>) <span class="op">-&gt;</span> <span class="ident">TrueType</span> {
+	<span class="ident">TrueType</span>{
+		<span class="ident">origin</span>: <span class="ident">origin</span>,
+		<span class="ident">path</span>: <span class="ident">path</span>.<span class="ident">as_ref</span>().<span class="ident">to_str</span>().<span class="ident">unwrap</span>().<span class="ident">to_string</span>(),
+		<span class="ident">size</span>: <span class="ident">tile_size</span>,
+		<span class="ident">size_reference</span>: <span class="prelude-val">None</span>,
+		<span class="ident">mode</span>: <span class="prelude-val">None</span>,
+		<span class="ident">codepage</span>: <span class="prelude-val">None</span>,
+		<span class="ident">align</span>: <span class="prelude-val">None</span>,
+		<span class="ident">spacing</span>: <span class="prelude-val">None</span>,
 	}
 }
 
 
-<span class='doccomment'>/// The origin for the font (the part before `:` in the config string).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Origin</span> {
-	<span class='doccomment'>/// `font`</span>
-	<span class='ident'>Root</span>,
-	<span class='doccomment'>/// `0xNNNN`</span>
-	<span class='ident'>Offset</span>(<span class='ident'>char</span>),
+<span class="doccomment">/// The origin for the font (the part before `:` in the config string).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Origin</span> {
+	<span class="doccomment">/// `font`</span>
+	<span class="ident">Root</span>,
+	<span class="doccomment">/// `0xNNNN`</span>
+	<span class="ident">Offset</span>(<span class="ident">char</span>),
 }
 
-<span class='doccomment'>/// Rasterization mode for TrueType fonts.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>RasterizationMode</span> {
-	<span class='ident'>Monochrome</span>,
-	<span class='ident'>Normal</span>,
-	<span class='doccomment'>/// Forces an opaque black background.</span>
-	<span class='ident'>Lcd</span>,
+<span class="doccomment">/// Rasterization mode for TrueType fonts.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">RasterizationMode</span> {
+	<span class="ident">Monochrome</span>,
+	<span class="ident">Normal</span>,
+	<span class="doccomment">/// Forces an opaque black background.</span>
+	<span class="ident">Lcd</span>,
 }
 
-<span class='doccomment'>/// Resizing filter for bitmaps.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ResizeFilter</span> {
-	<span class='ident'>Nearest</span>,
-	<span class='ident'>Bilinear</span>,
-	<span class='ident'>Bicubic</span>,
+<span class="doccomment">/// Resizing filter for bitmaps.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ResizeFilter</span> {
+	<span class="ident">Nearest</span>,
+	<span class="ident">Bilinear</span>,
+	<span class="ident">Bicubic</span>,
 }
 
-<span class='doccomment'>/// How to aspect-change when resizing a bitmap.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ResizeMode</span> {
-	<span class='ident'>Stretch</span>,
-	<span class='ident'>Fit</span>,
-	<span class='ident'>Crop</span>,
+<span class="doccomment">/// How to aspect-change when resizing a bitmap.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ResizeMode</span> {
+	<span class="ident">Stretch</span>,
+	<span class="ident">Fit</span>,
+	<span class="ident">Crop</span>,
 }
 
-<span class='doccomment'>/// Per-tileset tile alignment.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Align</span> {
-	<span class='ident'>Center</span>,
-	<span class='ident'>TopLeft</span>,
-	<span class='ident'>BottomLeft</span>,
-	<span class='ident'>TopRight</span>,
-	<span class='ident'>BottomRight</span>,
+<span class="doccomment">/// Per-tileset tile alignment.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Align</span> {
+	<span class="ident">Center</span>,
+	<span class="ident">TopLeft</span>,
+	<span class="ident">BottomLeft</span>,
+	<span class="ident">TopRight</span>,
+	<span class="ident">BottomRight</span>,
 }
 
-<span class='comment'>// What&#39;s the format for this?</span>
-<span class='comment'>// ref: http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management</span>
-<span class='comment'>// pub enum Background {</span>
-<span class='comment'>// 	Auto,</span>
-<span class='comment'>// 	Color(Color),</span>
-<span class='comment'>// }</span>
+<span class="comment">// What&#39;s the format for this?</span>
+<span class="comment">// ref: http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management</span>
+<span class="comment">// pub enum Background {</span>
+<span class="comment">// 	Auto,</span>
+<span class="comment">// 	Color(Color),</span>
+<span class="comment">// }</span>
 
 
-<span class='doccomment'>/// A bitmap font override segment repr, constructed with [`true_type()`](fn.true_type.html).</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Bitmap</span> {
-	<span class='ident'>origin</span>       : <span class='ident'>Origin</span>,
-	<span class='ident'>path</span>         : <span class='ident'>String</span>,
-	<span class='ident'>size</span>         : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Size</span><span class='op'>&gt;</span>,
-	<span class='ident'>resize</span>       : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Size</span><span class='op'>&gt;</span>,
-	<span class='ident'>resize_filter</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>ResizeFilter</span><span class='op'>&gt;</span>,
-	<span class='ident'>resize_mode</span>  : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>ResizeMode</span><span class='op'>&gt;</span>,
-	<span class='ident'>raw_size</span>     : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Size</span><span class='op'>&gt;</span>,
-	<span class='ident'>codepage</span>     : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-	<span class='ident'>align</span>        : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Align</span><span class='op'>&gt;</span>,
-	<span class='ident'>spacing</span>      : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Size</span><span class='op'>&gt;</span>,
-<span class='comment'>//	transparent  : Option&lt;Background&gt;,</span>
+<span class="doccomment">/// A bitmap font override segment repr, constructed with [`true_type()`](fn.true_type.html).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Bitmap</span> {
+	<span class="ident">origin</span>       : <span class="ident">Origin</span>,
+	<span class="ident">path</span>         : <span class="ident">String</span>,
+	<span class="ident">size</span>         : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span>,
+	<span class="ident">resize</span>       : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span>,
+	<span class="ident">resize_filter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ResizeFilter</span><span class="op">&gt;</span>,
+	<span class="ident">resize_mode</span>  : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ResizeMode</span><span class="op">&gt;</span>,
+	<span class="ident">raw_size</span>     : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span>,
+	<span class="ident">codepage</span>     : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+	<span class="ident">align</span>        : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Align</span><span class="op">&gt;</span>,
+	<span class="ident">spacing</span>      : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span>,
+<span class="comment">//	transparent  : Option&lt;Background&gt;,</span>
 }
 
-<span class='doccomment'>/// A TrueType font override segment repr, constructed with [`true_type()`](fn.true_type.html).</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TrueType</span> {
-	<span class='ident'>origin</span>        : <span class='ident'>Origin</span>,
-	<span class='ident'>path</span>          : <span class='ident'>String</span>,
-	<span class='ident'>size</span>          : <span class='ident'>Size</span>,
-	<span class='ident'>size_reference</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>,
-	<span class='ident'>mode</span>          : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>RasterizationMode</span><span class='op'>&gt;</span>,
-	<span class='ident'>codepage</span>      : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-	<span class='ident'>align</span>         : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Align</span><span class='op'>&gt;</span>,
-	<span class='ident'>spacing</span>       : <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Size</span><span class='op'>&gt;</span>,
-}
-
-
-<span class='doccomment'>/// For all functions consult the corresponding attributes in</span>
-<span class='doccomment'>/// [the official docs](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
-<span class='kw'>impl</span> <span class='ident'>Bitmap</span> {
-	<span class='doccomment'>/// The size of a single tile in the tileset.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>)                  <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>size</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>)         ; <span class='self'>self</span>}
-
-	<span class='doccomment'>/// The size to resize the image to.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize</span>       (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize</span>: <span class='ident'>Size</span>)                <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize</span>        <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize</span>)       ; <span class='self'>self</span>}
-
-	<span class='doccomment'>/// How to resize the image.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `ResizeFilter::Bilinear`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize_filter</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize_filter</span>: <span class='ident'>ResizeFilter</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize_filter</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize_filter</span>); <span class='self'>self</span>}
-
-	<span class='doccomment'>/// Resize aspect method.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `ResizeMode::Stretch`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resize_mode</span>  (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resize_mode</span>: <span class='ident'>ResizeMode</span>)     <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>resize_mode</span>   <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resize_mode</span>)  ; <span class='self'>self</span>}
-
-	<span class='doccomment'>/// Raw memory size, `size` if not specified.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>raw_size</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>raw_size</span>: <span class='ident'>Size</span>)              <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>raw_size</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>raw_size</span>)     ; <span class='self'>self</span>}
-
-	<span class='doccomment'>/// Tileset&#39;s codepage.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&quot;ascii&quot;`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>codepage</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>codepage</span>: <span class='ident'>String</span>)            <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>codepage</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>codepage</span>)     ; <span class='self'>self</span>}
-
-	<span class='doccomment'>/// How tiles are to be aligned.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `Align::Center`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>        (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>)                <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>align</span>         <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>align</span>)        ; <span class='self'>self</span>}
-
-	<span class='doccomment'>/// Tile alignment area \[cells\].</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `1x1`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>spacing</span>      (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>spacing</span>: <span class='ident'>Size</span>)               <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>spacing</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>spacing</span>)      ; <span class='self'>self</span>}
-}
-
-<span class='doccomment'>/// For all functions consult the corresponding attributes in</span>
-<span class='doccomment'>/// [the official docs](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
-<span class='kw'>impl</span> <span class='ident'>TrueType</span> {
-	<span class='doccomment'>/// Character used for size probing.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&#39;@&#39;`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size_reference</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size_reference</span>: <span class='ident'>char</span>)    <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>size_reference</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size_reference</span>); <span class='self'>self</span>}
-
-	<span class='doccomment'>/// Rasterization mode. Note: `RasterizationMode::Lcd` forces opaque black background.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `RasterizationMode::Normal`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mode</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mode</span>: <span class='ident'>RasterizationMode</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>mode</span>           <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mode</span>)          ; <span class='self'>self</span>}
-
-	<span class='doccomment'>/// Reverse codepage for loading symbols.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>codepage</span>      (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>codepage</span>: <span class='ident'>String</span>)        <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>codepage</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>codepage</span>)      ; <span class='self'>self</span>}
-
-	<span class='doccomment'>/// How tiles are to be aligned.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `Align::Center`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>)            <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>align</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>align</span>)         ; <span class='self'>self</span>}
-
-	<span class='doccomment'>/// Tile alignment area \[cells\].</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `1x1`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>spacing</span>       (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>spacing</span>: <span class='ident'>Size</span>)           <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>spacing</span>        <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>spacing</span>)       ; <span class='self'>self</span>}
+<span class="doccomment">/// A TrueType font override segment repr, constructed with [`true_type()`](fn.true_type.html).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TrueType</span> {
+	<span class="ident">origin</span>        : <span class="ident">Origin</span>,
+	<span class="ident">path</span>          : <span class="ident">String</span>,
+	<span class="ident">size</span>          : <span class="ident">Size</span>,
+	<span class="ident">size_reference</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>,
+	<span class="ident">mode</span>          : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RasterizationMode</span><span class="op">&gt;</span>,
+	<span class="ident">codepage</span>      : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+	<span class="ident">align</span>         : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Align</span><span class="op">&gt;</span>,
+	<span class="ident">spacing</span>       : <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span>,
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>Bitmap</span> {
-	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-		<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}: {}{}{}{}{}{}{}{}{};&quot;</span>, <span class='self'>self</span>.<span class='ident'>origin</span>, <span class='ident'>escape_config_string</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>path</span>),
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>size</span> {
-				<span class='prelude-val'>None</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>size</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, size={}&quot;</span>, <span class='ident'>size</span>),
+<span class="doccomment">/// For all functions consult the corresponding attributes in</span>
+<span class="doccomment">/// [the official docs](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
+<span class="kw">impl</span> <span class="ident">Bitmap</span> {
+	<span class="doccomment">/// The size of a single tile in the tileset.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>         (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">Size</span>)                  <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">size</span>          <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">size</span>)         ; <span class="self">self</span>}
+
+	<span class="doccomment">/// The size to resize the image to.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resize</span>       (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resize</span>: <span class="ident">Size</span>)                <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">resize</span>        <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resize</span>)       ; <span class="self">self</span>}
+
+	<span class="doccomment">/// How to resize the image.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `ResizeFilter::Bilinear`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resize_filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resize_filter</span>: <span class="ident">ResizeFilter</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">resize_filter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resize_filter</span>); <span class="self">self</span>}
+
+	<span class="doccomment">/// Resize aspect method.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `ResizeMode::Stretch`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resize_mode</span>  (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resize_mode</span>: <span class="ident">ResizeMode</span>)     <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">resize_mode</span>   <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resize_mode</span>)  ; <span class="self">self</span>}
+
+	<span class="doccomment">/// Raw memory size, `size` if not specified.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">raw_size</span>     (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">raw_size</span>: <span class="ident">Size</span>)              <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">raw_size</span>      <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">raw_size</span>)     ; <span class="self">self</span>}
+
+	<span class="doccomment">/// Tileset&#39;s codepage.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `&quot;ascii&quot;`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">codepage</span>     (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">codepage</span>: <span class="ident">String</span>)            <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">codepage</span>      <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">codepage</span>)     ; <span class="self">self</span>}
+
+	<span class="doccomment">/// How tiles are to be aligned.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `Align::Center`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">align</span>        (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">align</span>: <span class="ident">Align</span>)                <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">align</span>         <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">align</span>)        ; <span class="self">self</span>}
+
+	<span class="doccomment">/// Tile alignment area \[cells\].</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `1x1`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spacing</span>      (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">spacing</span>: <span class="ident">Size</span>)               <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">spacing</span>       <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">spacing</span>)      ; <span class="self">self</span>}
+}
+
+<span class="doccomment">/// For all functions consult the corresponding attributes in</span>
+<span class="doccomment">/// [the official docs](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).</span>
+<span class="kw">impl</span> <span class="ident">TrueType</span> {
+	<span class="doccomment">/// Character used for size probing.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `&#39;@&#39;`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size_reference</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size_reference</span>: <span class="ident">char</span>)    <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">size_reference</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">size_reference</span>); <span class="self">self</span>}
+
+	<span class="doccomment">/// Rasterization mode. Note: `RasterizationMode::Lcd` forces opaque black background.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `RasterizationMode::Normal`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mode</span>          (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">RasterizationMode</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">mode</span>           <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">mode</span>)          ; <span class="self">self</span>}
+
+	<span class="doccomment">/// Reverse codepage for loading symbols.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">codepage</span>      (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">codepage</span>: <span class="ident">String</span>)        <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">codepage</span>       <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">codepage</span>)      ; <span class="self">self</span>}
+
+	<span class="doccomment">/// How tiles are to be aligned.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `Align::Center`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">align</span>         (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">align</span>: <span class="ident">Align</span>)            <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">align</span>          <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">align</span>)         ; <span class="self">self</span>}
+
+	<span class="doccomment">/// Tile alignment area \[cells\].</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `1x1`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spacing</span>       (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">spacing</span>: <span class="ident">Size</span>)           <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">spacing</span>        <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">spacing</span>)       ; <span class="self">self</span>}
+}
+
+
+<span class="kw">impl</span> <span class="ident">ConfigPart</span> <span class="kw">for</span> <span class="ident">Bitmap</span> {
+	<span class="kw">fn</span> <span class="ident">to_config_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+		<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}: {}{}{}{}{}{}{}{}{};&quot;</span>, <span class="self">self</span>.<span class="ident">origin</span>, <span class="ident">escape_config_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">path</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">size</span> {
+				<span class="prelude-val">None</span>           <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">size</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, size={}&quot;</span>, <span class="ident">size</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>resize</span> {
-				<span class='prelude-val'>None</span>             <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>resize</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, resize={}&quot;</span>, <span class='ident'>resize</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">resize</span> {
+				<span class="prelude-val">None</span>             <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">resize</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, resize={}&quot;</span>, <span class="ident">resize</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>resize_filter</span> {
-				<span class='prelude-val'>None</span>                    <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>resize_filter</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, resize-filter={}&quot;</span>, <span class='ident'>resize_filter</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">resize_filter</span> {
+				<span class="prelude-val">None</span>                    <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">resize_filter</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, resize-filter={}&quot;</span>, <span class="ident">resize_filter</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>resize_mode</span> {
-				<span class='prelude-val'>None</span>                  <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>resize_mode</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, resize-mode={}&quot;</span>, <span class='ident'>resize_mode</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">resize_mode</span> {
+				<span class="prelude-val">None</span>                  <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">resize_mode</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, resize-mode={}&quot;</span>, <span class="ident">resize_mode</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>raw_size</span> {
-				<span class='prelude-val'>None</span>               <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>raw_size</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, raw-size={}&quot;</span>, <span class='ident'>raw_size</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">raw_size</span> {
+				<span class="prelude-val">None</span>               <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">raw_size</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, raw-size={}&quot;</span>, <span class="ident">raw_size</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>codepage</span> {
-				<span class='prelude-val'>None</span>               <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>codepage</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, codepage={}&quot;</span>, <span class='ident'>escape_config_string</span>(<span class='ident'>codepage</span>)),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">codepage</span> {
+				<span class="prelude-val">None</span>               <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">codepage</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, codepage={}&quot;</span>, <span class="ident">escape_config_string</span>(<span class="ident">codepage</span>)),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>align</span> {
-				<span class='prelude-val'>None</span>            <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>align</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, align={}&quot;</span>, <span class='ident'>align</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">align</span> {
+				<span class="prelude-val">None</span>            <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">align</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, align={}&quot;</span>, <span class="ident">align</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>spacing</span> {
-				<span class='prelude-val'>None</span>              <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>spacing</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, spacing={}&quot;</span>, <span class='ident'>spacing</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">spacing</span> {
+				<span class="prelude-val">None</span>              <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">spacing</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, spacing={}&quot;</span>, <span class="ident">spacing</span>),
 			}
 		)
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>TrueType</span> {
-	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-		<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}: {}, size={}{}{}{}{}{};&quot;</span>, <span class='self'>self</span>.<span class='ident'>origin</span>, <span class='ident'>escape_config_string</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>path</span>),
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>size</span> {
-				<span class='ident'>Size</span>{<span class='ident'>width</span>: <span class='number'>0</span>, <span class='ident'>height</span>} <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>height</span>),
-				<span class='ident'>size</span>                   <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>size</span>),
+<span class="kw">impl</span> <span class="ident">ConfigPart</span> <span class="kw">for</span> <span class="ident">TrueType</span> {
+	<span class="kw">fn</span> <span class="ident">to_config_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+		<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}: {}, size={}{}{}{}{}{};&quot;</span>, <span class="self">self</span>.<span class="ident">origin</span>, <span class="ident">escape_config_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">path</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">size</span> {
+				<span class="ident">Size</span>{<span class="ident">width</span>: <span class="number">0</span>, <span class="ident">height</span>} <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">height</span>),
+				<span class="ident">size</span>                   <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">size</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>size_reference</span> {
-				<span class='prelude-val'>None</span>                     <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>size_reference</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, size-reference=0x{:X}&quot;</span>, <span class='kw-2'>*</span><span class='ident'>size_reference</span> <span class='kw'>as</span> <span class='ident'>i32</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">size_reference</span> {
+				<span class="prelude-val">None</span>                     <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">size_reference</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, size-reference=0x{:X}&quot;</span>, <span class="kw-2">*</span><span class="ident">size_reference</span> <span class="kw">as</span> <span class="ident">i32</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>mode</span> {
-				<span class='prelude-val'>None</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>mode</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, mode={}&quot;</span>, <span class='ident'>mode</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">mode</span> {
+				<span class="prelude-val">None</span>           <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">mode</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, mode={}&quot;</span>, <span class="ident">mode</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>codepage</span> {
-				<span class='prelude-val'>None</span>               <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>codepage</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, codepage={}&quot;</span>, <span class='ident'>escape_config_string</span>(<span class='ident'>codepage</span>)),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">codepage</span> {
+				<span class="prelude-val">None</span>               <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">codepage</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, codepage={}&quot;</span>, <span class="ident">escape_config_string</span>(<span class="ident">codepage</span>)),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>align</span> {
-				<span class='prelude-val'>None</span>            <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>align</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, align={}&quot;</span>, <span class='ident'>align</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">align</span> {
+				<span class="prelude-val">None</span>            <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">align</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, align={}&quot;</span>, <span class="ident">align</span>),
 			},
-			<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>spacing</span> {
-				<span class='prelude-val'>None</span>              <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
-				<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>spacing</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;, spacing={}&quot;</span>, <span class='ident'>spacing</span>),
+			<span class="kw">match</span> <span class="self">self</span>.<span class="ident">spacing</span> {
+				<span class="prelude-val">None</span>              <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+				<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">spacing</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;, spacing={}&quot;</span>, <span class="ident">spacing</span>),
 			}
 		)
 	}
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Origin</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>Origin</span>::<span class='ident'>Root</span>      <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;font&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>Origin</span>::<span class='ident'>Offset</span>(<span class='ident'>o</span>) <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;0x{:X}&quot;</span>, <span class='ident'>o</span> <span class='kw'>as</span> <span class='ident'>i32</span>)),
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Origin</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="kw">match</span> <span class="self">self</span> {
+			<span class="kw-2">&amp;</span><span class="ident">Origin</span>::<span class="ident">Root</span>      <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;font&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">Origin</span>::<span class="ident">Offset</span>(<span class="ident">o</span>) <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;0x{:X}&quot;</span>, <span class="ident">o</span> <span class="kw">as</span> <span class="ident">i32</span>)),
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>RasterizationMode</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>RasterizationMode</span>::<span class='ident'>Monochrome</span> <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;monochrome&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>RasterizationMode</span>::<span class='ident'>Normal</span>     <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;normal&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>RasterizationMode</span>::<span class='ident'>Lcd</span>        <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;lcd&quot;</span>),
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">RasterizationMode</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="kw">match</span> <span class="self">self</span> {
+			<span class="kw-2">&amp;</span><span class="ident">RasterizationMode</span>::<span class="ident">Monochrome</span> <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;monochrome&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">RasterizationMode</span>::<span class="ident">Normal</span>     <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;normal&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">RasterizationMode</span>::<span class="ident">Lcd</span>        <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;lcd&quot;</span>),
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>ResizeFilter</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>ResizeFilter</span>::<span class='ident'>Nearest</span>  <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;nearest&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>ResizeFilter</span>::<span class='ident'>Bilinear</span> <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;bilinear&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>ResizeFilter</span>::<span class='ident'>Bicubic</span>  <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;bicubic&quot;</span>),
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ResizeFilter</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="kw">match</span> <span class="self">self</span> {
+			<span class="kw-2">&amp;</span><span class="ident">ResizeFilter</span>::<span class="ident">Nearest</span>  <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;nearest&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">ResizeFilter</span>::<span class="ident">Bilinear</span> <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;bilinear&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">ResizeFilter</span>::<span class="ident">Bicubic</span>  <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;bicubic&quot;</span>),
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>ResizeMode</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>ResizeMode</span>::<span class='ident'>Stretch</span> <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;stretch&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>ResizeMode</span>::<span class='ident'>Fit</span>     <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;fit&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>ResizeMode</span>::<span class='ident'>Crop</span>    <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;crop&quot;</span>),
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ResizeMode</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="kw">match</span> <span class="self">self</span> {
+			<span class="kw-2">&amp;</span><span class="ident">ResizeMode</span>::<span class="ident">Stretch</span> <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;stretch&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">ResizeMode</span>::<span class="ident">Fit</span>     <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;fit&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">ResizeMode</span>::<span class="ident">Crop</span>    <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;crop&quot;</span>),
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Align</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>Align</span>::<span class='ident'>Center</span>      <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;center&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>Align</span>::<span class='ident'>TopLeft</span>     <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;top-left&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>Align</span>::<span class='ident'>BottomLeft</span>  <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;bottom-left&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>Align</span>::<span class='ident'>TopRight</span>    <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;top-right&quot;</span>),
-			<span class='kw-2'>&amp;</span><span class='ident'>Align</span>::<span class='ident'>BottomRight</span> <span class='op'>=&gt;</span> <span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='string'>&quot;bottom-right&quot;</span>),
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Align</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="kw">match</span> <span class="self">self</span> {
+			<span class="kw-2">&amp;</span><span class="ident">Align</span>::<span class="ident">Center</span>      <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;center&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">Align</span>::<span class="ident">TopLeft</span>     <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;top-left&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">Align</span>::<span class="ident">BottomLeft</span>  <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;bottom-left&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">Align</span>::<span class="ident">TopRight</span>    <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;top-right&quot;</span>),
+			<span class="kw-2">&amp;</span><span class="ident">Align</span>::<span class="ident">BottomRight</span> <span class="op">=&gt;</span> <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;bottom-right&quot;</span>),
 		}
 	}
 }
@@ -736,18 +747,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -780,7 +795,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "bear_lib_terminal";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

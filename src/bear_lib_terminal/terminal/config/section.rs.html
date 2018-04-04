@@ -10,14 +10,17 @@
     <title>section.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <script src="../../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -419,380 +430,380 @@
 <span id="374">374</span>
 <span id="375">375</span>
 <span id="376">376</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>Size</span>;
-<span class='kw'>use</span> <span class='ident'>terminal</span>::<span class='ident'>config</span>::{<span class='ident'>ConfigPart</span>, <span class='ident'>escape_config_string</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">Size</span>;
+<span class="kw">use</span> <span class="ident">terminal</span>::<span class="ident">config</span>::{<span class="ident">ConfigPart</span>, <span class="ident">escape_config_string</span>};
 
 
-<span class='doccomment'>/// The `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Terminal</span> {
-	<span class='ident'>encoding</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,  <span class='comment'>//TODO: use an enum/validated struct?</span>
+<span class="doccomment">/// The `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See [`terminal::set()`](../fn.set.html).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Terminal</span> {
+	<span class="ident">encoding</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,  <span class="comment">//TODO: use an enum/validated struct?</span>
 }
 
-<span class='doccomment'>/// The `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// `None` values will not override current ones.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Window</span> {
-	<span class='ident'>size</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Size</span><span class='op'>&gt;</span>,
-	<span class='ident'>cellsize</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Cellsize</span><span class='op'>&gt;</span>,
-	<span class='ident'>title</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-	<span class='ident'>icon</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-	<span class='ident'>resizeable</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
-	<span class='ident'>fullscreen</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// The `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `None` values will not override current ones.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See [`terminal::set()`](../fn.set.html).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Window</span> {
+	<span class="ident">size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span>,
+	<span class="ident">cellsize</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cellsize</span><span class="op">&gt;</span>,
+	<span class="ident">title</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+	<span class="ident">icon</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+	<span class="ident">resizeable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+	<span class="ident">fullscreen</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
 }
 
-<span class='doccomment'>/// The `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// `None` values will not override current ones.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Input</span> {
-	<span class='ident'>precise_mouse</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
-	<span class='ident'>mouse_cursor</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
-	<span class='ident'>cursor_symbol</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>,
-	<span class='ident'>cursor_blink_rate</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// The `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `None` values will not override current ones.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See [`terminal::set()`](../fn.set.html).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Input</span> {
+	<span class="ident">precise_mouse</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+	<span class="ident">mouse_cursor</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+	<span class="ident">cursor_symbol</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>,
+	<span class="ident">cursor_blink_rate</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
 }
 
-<span class='doccomment'>/// The `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// `None` values will not override current ones.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Output</span> {
-	<span class='ident'>postformatting</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
-	<span class='ident'>vsync</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>,
-}
-
-
-<span class='doccomment'>/// The `log` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// `None` values will not override current ones.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// See [`terminal::set()`](../fn.set.html).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Log</span> {
-	<span class='ident'>file</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-	<span class='ident'>level</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>LogLevel</span><span class='op'>&gt;</span>,
-	<span class='ident'>mode</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>LogMode</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// The `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `None` values will not override current ones.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See [`terminal::set()`](../fn.set.html).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Output</span> {
+	<span class="ident">postformatting</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+	<span class="ident">vsync</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
 }
 
 
-<span class='doccomment'>/// Possible cell size, `Auto` will make the size be selected based on the font.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Cellsize</span> {
-	<span class='ident'>Auto</span>,
-	<span class='ident'>Sized</span>(<span class='ident'>Size</span>),
-}
-
-<span class='doccomment'>/// Logging levels, as specified [here](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>LogLevel</span> {
-	<span class='prelude-val'>None</span>,
-	<span class='ident'>Fatal</span>,
-	<span class='ident'>Error</span>,
-	<span class='ident'>Warning</span>,
-	<span class='ident'>Info</span>,
-	<span class='ident'>Debug</span>,
-	<span class='ident'>Trace</span>,
-}
-
-<span class='doccomment'>/// Log writing mode.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>LogMode</span> {
-	<span class='doccomment'>/// Reset the log each time.</span>
-	<span class='ident'>Truncate</span>,
-	<span class='doccomment'>/// Continue writing at the end.</span>
-	<span class='ident'>Append</span>,
+<span class="doccomment">/// The `log` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section repr.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `None` values will not override current ones.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See [`terminal::set()`](../fn.set.html).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Log</span> {
+	<span class="ident">file</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+	<span class="ident">level</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LogLevel</span><span class="op">&gt;</span>,
+	<span class="ident">mode</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LogMode</span><span class="op">&gt;</span>,
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>Terminal</span> {
-	<span class='doccomment'>/// Construct a new `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override</span>
-	<span class='doccomment'>/// segment with a specified used for unibyte strings, which is better left at default, as Rust uses UTF-8 for everything.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&quot;utf8&quot;`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>encoding</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>Terminal</span> {
-		<span class='ident'>Terminal</span>{
-			<span class='ident'>encoding</span>: <span class='prelude-val'>Some</span>(<span class='ident'>encoding</span>),
+<span class="doccomment">/// Possible cell size, `Auto` will make the size be selected based on the font.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Cellsize</span> {
+	<span class="ident">Auto</span>,
+	<span class="ident">Sized</span>(<span class="ident">Size</span>),
+}
+
+<span class="doccomment">/// Logging levels, as specified [here](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">LogLevel</span> {
+	<span class="prelude-val">None</span>,
+	<span class="ident">Fatal</span>,
+	<span class="ident">Error</span>,
+	<span class="ident">Warning</span>,
+	<span class="ident">Info</span>,
+	<span class="ident">Debug</span>,
+	<span class="ident">Trace</span>,
+}
+
+<span class="doccomment">/// Log writing mode.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">LogMode</span> {
+	<span class="doccomment">/// Reset the log each time.</span>
+	<span class="ident">Truncate</span>,
+	<span class="doccomment">/// Continue writing at the end.</span>
+	<span class="ident">Append</span>,
+}
+
+
+<span class="kw">impl</span> <span class="ident">Terminal</span> {
+	<span class="doccomment">/// Construct a new `terminal` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override</span>
+	<span class="doccomment">/// segment with a specified used for unibyte strings, which is better left at default, as Rust uses UTF-8 for everything.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `&quot;utf8&quot;`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="ident">Terminal</span> {
+		<span class="ident">Terminal</span>{
+			<span class="ident">encoding</span>: <span class="prelude-val">Some</span>(<span class="ident">encoding</span>),
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>Window</span> {
-	<span class='doccomment'>/// Construct a `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment</span>
-	<span class='doccomment'>/// with everything being equal to `None`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>empty</span>() <span class='op'>-&gt;</span> <span class='ident'>Window</span> {
-		<span class='ident'>Window</span>{
-			<span class='ident'>size</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>cellsize</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>title</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>icon</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>resizeable</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>fullscreen</span>: <span class='prelude-val'>None</span>,
+<span class="kw">impl</span> <span class="ident">Window</span> {
+	<span class="doccomment">/// Construct a `window` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment</span>
+	<span class="doccomment">/// with everything being equal to `None`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-&gt;</span> <span class="ident">Window</span> {
+		<span class="ident">Window</span>{
+			<span class="ident">size</span>: <span class="prelude-val">None</span>,
+			<span class="ident">cellsize</span>: <span class="prelude-val">None</span>,
+			<span class="ident">title</span>: <span class="prelude-val">None</span>,
+			<span class="ident">icon</span>: <span class="prelude-val">None</span>,
+			<span class="ident">resizeable</span>: <span class="prelude-val">None</span>,
+			<span class="ident">fullscreen</span>: <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class='doccomment'>/// Window size in cells.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `80x25`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>                (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>)         <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>size</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>)                                       ; <span class='self'>self</span>}
+	<span class="doccomment">/// Window size in cells.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `80x25`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>                (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">Size</span>)         <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">size</span>       <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">size</span>)                                       ; <span class="self">self</span>}
 
-	<span class='doccomment'>/// Size of all cells, in pixels.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: [`Cellsize::Auto`](enum.Cellsize.html#variant.Auto).</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cellsize</span>            (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cellsize</span>: <span class='ident'>Cellsize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>cellsize</span>   <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cellsize</span>)                                   ; <span class='self'>self</span>}
+	<span class="doccomment">/// Size of all cells, in pixels.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: [`Cellsize::Auto`](enum.Cellsize.html#variant.Auto).</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cellsize</span>            (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cellsize</span>: <span class="ident">Cellsize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">cellsize</span>   <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cellsize</span>)                                   ; <span class="self">self</span>}
 
-	<span class='doccomment'>/// The terminal window&#39;s title.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&quot;BearLibTerminal&quot;`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>title</span>               (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>title</span>: <span class='ident'>String</span>)      <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>title</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>title</span>)                                      ; <span class='self'>self</span>}
+	<span class="doccomment">/// The terminal window&#39;s title.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `&quot;BearLibTerminal&quot;`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>               (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="ident">String</span>)      <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">title</span>      <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">title</span>)                                      ; <span class="self">self</span>}
 
-	<span class='doccomment'>/// The path of the icon used for the terminal window.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: none.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>icon</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>icon</span>: <span class='ident'>T</span>)            <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>icon</span>       <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>icon</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>()); <span class='self'>self</span>}
+	<span class="doccomment">/// The path of the icon used for the terminal window.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: none.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">icon</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">icon</span>: <span class="ident">T</span>)            <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">icon</span>       <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">icon</span>.<span class="ident">as_ref</span>().<span class="ident">to_str</span>().<span class="ident">unwrap</span>().<span class="ident">to_string</span>()); <span class="self">self</span>}
 
-	<span class='doccomment'>/// Whether the terminal window should be resizeable.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `false`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resizeable</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>resizeable</span>: <span class='ident'>bool</span>)   <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>resizeable</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>resizeable</span>)                                 ; <span class='self'>self</span>}
+	<span class="doccomment">/// Whether the terminal window should be resizeable.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `false`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resizeable</span>          (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resizeable</span>: <span class="ident">bool</span>)   <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">resizeable</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resizeable</span>)                                 ; <span class="self">self</span>}
 
-	<span class='doccomment'>/// Whether to enforce fullscreen mode.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `false`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fullscreen</span>          (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>fullscreen</span>: <span class='ident'>bool</span>)   <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>fullscreen</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>fullscreen</span>)                                 ; <span class='self'>self</span>}
+	<span class="doccomment">/// Whether to enforce fullscreen mode.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `false`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fullscreen</span>          (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">fullscreen</span>: <span class="ident">bool</span>)   <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">fullscreen</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">fullscreen</span>)                                 ; <span class="self">self</span>}
 }
 
-<span class='kw'>impl</span> <span class='ident'>Input</span> {
-	<span class='doccomment'>/// Construct an `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment</span>
-	<span class='doccomment'>/// with all elements equal to `None`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>empty</span>() <span class='op'>-&gt;</span> <span class='ident'>Input</span> {
-		<span class='ident'>Input</span>{
-			<span class='ident'>precise_mouse</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>mouse_cursor</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>cursor_symbol</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>cursor_blink_rate</span>: <span class='prelude-val'>None</span>,
+<span class="kw">impl</span> <span class="ident">Input</span> {
+	<span class="doccomment">/// Construct an `input` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment</span>
+	<span class="doccomment">/// with all elements equal to `None`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-&gt;</span> <span class="ident">Input</span> {
+		<span class="ident">Input</span>{
+			<span class="ident">precise_mouse</span>: <span class="prelude-val">None</span>,
+			<span class="ident">mouse_cursor</span>: <span class="prelude-val">None</span>,
+			<span class="ident">cursor_symbol</span>: <span class="prelude-val">None</span>,
+			<span class="ident">cursor_blink_rate</span>: <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class='doccomment'>/// Whether to generate a mouse-move event when a mouse moves from one pixel to another as opposed to from one cell to another.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `false`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>precise_mouse</span>    (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>precise_mouse</span>: <span class='ident'>bool</span>)    <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>precise_mouse</span>     <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>precise_mouse</span>)    ; <span class='self'>self</span>}
+	<span class="doccomment">/// Whether to generate a mouse-move event when a mouse moves from one pixel to another as opposed to from one cell to another.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `false`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">precise_mouse</span>    (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">precise_mouse</span>: <span class="ident">bool</span>)    <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">precise_mouse</span>     <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">precise_mouse</span>)    ; <span class="self">self</span>}
 
-	<span class='doccomment'>/// Whether to show the cursor.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `true`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mouse_cursor</span>     (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mouse_cursor</span>: <span class='ident'>bool</span>)     <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>mouse_cursor</span>      <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mouse_cursor</span>)     ; <span class='self'>self</span>}
+	<span class="doccomment">/// Whether to show the cursor.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `true`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse_cursor</span>     (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mouse_cursor</span>: <span class="ident">bool</span>)     <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">mouse_cursor</span>      <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">mouse_cursor</span>)     ; <span class="self">self</span>}
 
-	<span class='doccomment'>/// The cursor symbol to blink in the read string function.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&#39;_&#39;` a.k.a. `0x5F`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_symbol</span>    (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_symbol</span>: <span class='ident'>char</span>)    <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>cursor_symbol</span>     <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_symbol</span>)    ; <span class='self'>self</span>}
+	<span class="doccomment">/// The cursor symbol to blink in the read string function.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `&#39;_&#39;` a.k.a. `0x5F`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cursor_symbol</span>    (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cursor_symbol</span>: <span class="ident">char</span>)    <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">cursor_symbol</span>     <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cursor_symbol</span>)    ; <span class="self">self</span>}
 
-	<span class='doccomment'>/// Amount of time in milliseconds to blink the cursor symbol for.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `500`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cursor_blink_rate</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor_blink_rate</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>cursor_blink_rate</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_blink_rate</span>); <span class='self'>self</span>}
+	<span class="doccomment">/// Amount of time in milliseconds to blink the cursor symbol for.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `500`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cursor_blink_rate</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cursor_blink_rate</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">cursor_blink_rate</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cursor_blink_rate</span>); <span class="self">self</span>}
 }
 
-<span class='kw'>impl</span> <span class='ident'>Output</span> {
-	<span class='doccomment'>/// Construct an `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment</span>
-	<span class='doccomment'>/// with all values equalling `None`</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clean</span>() <span class='op'>-&gt;</span> <span class='ident'>Output</span> {
-		<span class='ident'>Output</span>{
-			<span class='ident'>postformatting</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>vsync</span>: <span class='prelude-val'>None</span>,
+<span class="kw">impl</span> <span class="ident">Output</span> {
+	<span class="doccomment">/// Construct an `output` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment</span>
+	<span class="doccomment">/// with all values equalling `None`</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clean</span>() <span class="op">-&gt;</span> <span class="ident">Output</span> {
+		<span class="ident">Output</span>{
+			<span class="ident">postformatting</span>: <span class="prelude-val">None</span>,
+			<span class="ident">vsync</span>: <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class='doccomment'>/// Whether to process special tags in the [`print()`](../fn.print.html) function.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `true`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>postformatting</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>postformatting</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>postformatting</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>postformatting</span>); <span class='self'>self</span>}
+	<span class="doccomment">/// Whether to process special tags in the [`print()`](../fn.print.html) function.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `true`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">postformatting</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">postformatting</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">postformatting</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">postformatting</span>); <span class="self">self</span>}
 
-	<span class='doccomment'>/// Toggle OpenGL VSync.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `true`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vsync</span>         (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>vsync</span>: <span class='ident'>bool</span>)          <span class='op'>-&gt;</span> <span class='self'>Self</span> {<span class='self'>self</span>.<span class='ident'>vsync</span>          <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>vsync</span>);          <span class='self'>self</span>}
+	<span class="doccomment">/// Toggle OpenGL VSync.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `true`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vsync</span>         (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">vsync</span>: <span class="ident">bool</span>)          <span class="op">-&gt;</span> <span class="self">Self</span> {<span class="self">self</span>.<span class="ident">vsync</span>          <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">vsync</span>);          <span class="self">self</span>}
 }
 
-<span class='kw'>impl</span> <span class='ident'>Log</span> {
-	<span class='doccomment'>/// Construct an `log` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment</span>
-	<span class='doccomment'>/// with everything set to `None`</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>empty</span>() <span class='op'>-&gt;</span> <span class='ident'>Log</span> {
-		<span class='ident'>Log</span>{
-			<span class='ident'>file</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>level</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>mode</span>: <span class='prelude-val'>None</span>,
+<span class="kw">impl</span> <span class="ident">Log</span> {
+	<span class="doccomment">/// Construct an `log` [configuration](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#library_configuration) section override segment</span>
+	<span class="doccomment">/// with everything set to `None`</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-&gt;</span> <span class="ident">Log</span> {
+		<span class="ident">Log</span>{
+			<span class="ident">file</span>: <span class="prelude-val">None</span>,
+			<span class="ident">level</span>: <span class="prelude-val">None</span>,
+			<span class="ident">mode</span>: <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class='doccomment'>/// The file to write the log to. Note, that, IME, it didn&#39;t work.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: `&quot;bearlibterminal.log&quot;`</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>file</span> (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>file</span>: <span class='ident'>String</span>)    <span class='op'>-&gt;</span> <span class='ident'>Log</span> {<span class='self'>self</span>.<span class='ident'>file</span>  <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>file</span>) ; <span class='self'>self</span>}
+	<span class="doccomment">/// The file to write the log to. Note, that, IME, it didn&#39;t work.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: `&quot;bearlibterminal.log&quot;`</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">file</span> (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">file</span>: <span class="ident">String</span>)    <span class="op">-&gt;</span> <span class="ident">Log</span> {<span class="self">self</span>.<span class="ident">file</span>  <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">file</span>) ; <span class="self">self</span>}
 
-	<span class='doccomment'>/// The minimal log level to print at.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: [`LogLevel::Error`](enum.LogLevel.html#variant.Error)</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>level</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>level</span>: <span class='ident'>LogLevel</span>) <span class='op'>-&gt;</span> <span class='ident'>Log</span> {<span class='self'>self</span>.<span class='ident'>level</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>level</span>); <span class='self'>self</span>}
+	<span class="doccomment">/// The minimal log level to print at.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: [`LogLevel::Error`](enum.LogLevel.html#variant.Error)</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">level</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">level</span>: <span class="ident">LogLevel</span>) <span class="op">-&gt;</span> <span class="ident">Log</span> {<span class="self">self</span>.<span class="ident">level</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">level</span>); <span class="self">self</span>}
 
-	<span class='doccomment'>/// How to write to the log file if one laready exists.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Default: [`LogMode::Truncate`](enum.LogMode.html#variant.Truncate)</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mode</span> (<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mode</span>: <span class='ident'>LogMode</span>)   <span class='op'>-&gt;</span> <span class='ident'>Log</span> {<span class='self'>self</span>.<span class='ident'>mode</span>  <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mode</span>) ; <span class='self'>self</span>}
+	<span class="doccomment">/// How to write to the log file if one laready exists.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Default: [`LogMode::Truncate`](enum.LogMode.html#variant.Truncate)</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mode</span> (<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">LogMode</span>)   <span class="op">-&gt;</span> <span class="ident">Log</span> {<span class="self">self</span>.<span class="ident">mode</span>  <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">mode</span>) ; <span class="self">self</span>}
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>Terminal</span> {
-	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-		<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>encoding</span> {
-			<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>encoding</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;terminal.encoding={};&quot;</span>, <span class='ident'>escape_config_string</span>(<span class='kw-2'>&amp;</span><span class='ident'>encoding</span>)),
-			<span class='prelude-val'>None</span>               <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+<span class="kw">impl</span> <span class="ident">ConfigPart</span> <span class="kw">for</span> <span class="ident">Terminal</span> {
+	<span class="kw">fn</span> <span class="ident">to_config_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+		<span class="kw">match</span> <span class="self">self</span>.<span class="ident">encoding</span> {
+			<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">encoding</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;terminal.encoding={};&quot;</span>, <span class="ident">escape_config_string</span>(<span class="kw-2">&amp;</span><span class="ident">encoding</span>)),
+			<span class="prelude-val">None</span>               <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>Window</span> {
-	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-		<span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>cellsize</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>title</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>icon</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>resizeable</span>.<span class='ident'>is_some</span>() <span class='op'>||</span>
-		   <span class='self'>self</span>.<span class='ident'>fullscreen</span>.<span class='ident'>is_some</span>() {
-			<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;window: {}, {}, {}, {}, {}, {};&quot;</span>,
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>size</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>size</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;size={}&quot;</span>, <span class='ident'>size</span>),
-					<span class='prelude-val'>None</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+<span class="kw">impl</span> <span class="ident">ConfigPart</span> <span class="kw">for</span> <span class="ident">Window</span> {
+	<span class="kw">fn</span> <span class="ident">to_config_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">cellsize</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">title</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">icon</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">resizeable</span>.<span class="ident">is_some</span>() <span class="op">||</span>
+		   <span class="self">self</span>.<span class="ident">fullscreen</span>.<span class="ident">is_some</span>() {
+			<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;window: {}, {}, {}, {}, {}, {};&quot;</span>,
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">size</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">size</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;size={}&quot;</span>, <span class="ident">size</span>),
+					<span class="prelude-val">None</span>           <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>cellsize</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>cellsize</span>) <span class='op'>=&gt;</span>
-						<span class='kw'>match</span> <span class='ident'>cellsize</span> {
-							<span class='kw-2'>&amp;</span><span class='ident'>Cellsize</span>::<span class='ident'>Sized</span>(<span class='ident'>size</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;cellsize={}&quot;</span>, <span class='ident'>size</span>),
-							<span class='kw-2'>&amp;</span><span class='ident'>Cellsize</span>::<span class='ident'>Auto</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;cellsize=auto&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">cellsize</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">cellsize</span>) <span class="op">=&gt;</span>
+						<span class="kw">match</span> <span class="ident">cellsize</span> {
+							<span class="kw-2">&amp;</span><span class="ident">Cellsize</span>::<span class="ident">Sized</span>(<span class="ident">size</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;cellsize={}&quot;</span>, <span class="ident">size</span>),
+							<span class="kw-2">&amp;</span><span class="ident">Cellsize</span>::<span class="ident">Auto</span>        <span class="op">=&gt;</span> <span class="string">&quot;cellsize=auto&quot;</span>.<span class="ident">to_string</span>(),
 						},
-					<span class='prelude-val'>None</span>               <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+					<span class="prelude-val">None</span>               <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>title</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>title</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;title={}&quot;</span>, <span class='ident'>escape_config_string</span>(<span class='kw-2'>&amp;</span><span class='ident'>title</span>)),
-					<span class='prelude-val'>None</span>            <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">title</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">title</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;title={}&quot;</span>, <span class="ident">escape_config_string</span>(<span class="kw-2">&amp;</span><span class="ident">title</span>)),
+					<span class="prelude-val">None</span>            <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>icon</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>icon</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;icon={}&quot;</span>, <span class='ident'>escape_config_string</span>(<span class='kw-2'>&amp;</span><span class='ident'>icon</span>)),
-					<span class='prelude-val'>None</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">icon</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">icon</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;icon={}&quot;</span>, <span class="ident">escape_config_string</span>(<span class="kw-2">&amp;</span><span class="ident">icon</span>)),
+					<span class="prelude-val">None</span>           <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>resizeable</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>resizeable</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;resizeable={}&quot;</span>, <span class='ident'>resizeable</span>),
-					<span class='prelude-val'>None</span>                 <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">resizeable</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">resizeable</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;resizeable={}&quot;</span>, <span class="ident">resizeable</span>),
+					<span class="prelude-val">None</span>                 <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>fullscreen</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>fullscreen</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;fullscreen={}&quot;</span>, <span class='ident'>fullscreen</span>),
-					<span class='prelude-val'>None</span>                 <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">fullscreen</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">fullscreen</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;fullscreen={}&quot;</span>, <span class="ident">fullscreen</span>),
+					<span class="prelude-val">None</span>                 <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
 			)
-		} <span class='kw'>else</span> {
-			<span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>()
+		} <span class="kw">else</span> {
+			<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>Input</span> {
-	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-		<span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>precise_mouse</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>mouse_cursor</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>cursor_symbol</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>cursor_blink_rate</span>.<span class='ident'>is_some</span>() {
-			<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;input: {}, {}, {}, {};&quot;</span>,
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>precise_mouse</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>precise_mouse</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;precise-mouse={}&quot;</span>, <span class='ident'>precise_mouse</span>),
-					<span class='prelude-val'>None</span>                    <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+<span class="kw">impl</span> <span class="ident">ConfigPart</span> <span class="kw">for</span> <span class="ident">Input</span> {
+	<span class="kw">fn</span> <span class="ident">to_config_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">precise_mouse</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">mouse_cursor</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">cursor_symbol</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">cursor_blink_rate</span>.<span class="ident">is_some</span>() {
+			<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;input: {}, {}, {}, {};&quot;</span>,
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">precise_mouse</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">precise_mouse</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;precise-mouse={}&quot;</span>, <span class="ident">precise_mouse</span>),
+					<span class="prelude-val">None</span>                    <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>mouse_cursor</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>mouse_cursor</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;mouse-cursor={}&quot;</span>, <span class='ident'>mouse_cursor</span>),
-					<span class='prelude-val'>None</span>                   <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">mouse_cursor</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">mouse_cursor</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;mouse-cursor={}&quot;</span>, <span class="ident">mouse_cursor</span>),
+					<span class="prelude-val">None</span>                   <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>cursor_symbol</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>cursor_symbol</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;cursor-symbol=0x{:x}&quot;</span>, <span class='kw-2'>*</span><span class='ident'>cursor_symbol</span> <span class='kw'>as</span> <span class='ident'>i8</span>),
-					<span class='prelude-val'>None</span>                    <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">cursor_symbol</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">cursor_symbol</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;cursor-symbol=0x{:x}&quot;</span>, <span class="kw-2">*</span><span class="ident">cursor_symbol</span> <span class="kw">as</span> <span class="ident">i8</span>),
+					<span class="prelude-val">None</span>                    <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>cursor_blink_rate</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>cursor_blink_rate</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;cursor-blink-rate={}&quot;</span>, <span class='ident'>cursor_blink_rate</span>),
-					<span class='prelude-val'>None</span>                        <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">cursor_blink_rate</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">cursor_blink_rate</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;cursor-blink-rate={}&quot;</span>, <span class="ident">cursor_blink_rate</span>),
+					<span class="prelude-val">None</span>                        <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
 			)
-		} <span class='kw'>else</span> {
-			<span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>()
+		} <span class="kw">else</span> {
+			<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>Output</span> {
-	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-		<span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>postformatting</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>vsync</span>.<span class='ident'>is_some</span>() {
-			<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;output: {}, {};&quot;</span>,
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>postformatting</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>postformatting</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;postformatting={}&quot;</span>, <span class='ident'>postformatting</span>),
-					<span class='prelude-val'>None</span>                     <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+<span class="kw">impl</span> <span class="ident">ConfigPart</span> <span class="kw">for</span> <span class="ident">Output</span> {
+	<span class="kw">fn</span> <span class="ident">to_config_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">postformatting</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">vsync</span>.<span class="ident">is_some</span>() {
+			<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;output: {}, {};&quot;</span>,
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">postformatting</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">postformatting</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;postformatting={}&quot;</span>, <span class="ident">postformatting</span>),
+					<span class="prelude-val">None</span>                     <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>vsync</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>vsync</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;vsync={}&quot;</span>, <span class='ident'>vsync</span>),
-					<span class='prelude-val'>None</span>            <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">vsync</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">vsync</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;vsync={}&quot;</span>, <span class="ident">vsync</span>),
+					<span class="prelude-val">None</span>            <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
 			)
-		} <span class='kw'>else</span> {
-			<span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>()
+		} <span class="kw">else</span> {
+			<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>Log</span> {
-	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-		<span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>file</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>level</span>.<span class='ident'>is_some</span>() <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>mode</span>.<span class='ident'>is_some</span>() {
-			<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;log: {}, {}, {};&quot;</span>,
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>file</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>file</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;file={}&quot;</span>, <span class='ident'>escape_config_string</span>(<span class='kw-2'>&amp;</span><span class='ident'>file</span>)),
-					<span class='prelude-val'>None</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+<span class="kw">impl</span> <span class="ident">ConfigPart</span> <span class="kw">for</span> <span class="ident">Log</span> {
+	<span class="kw">fn</span> <span class="ident">to_config_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">file</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">level</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">mode</span>.<span class="ident">is_some</span>() {
+			<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;log: {}, {}, {};&quot;</span>,
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">file</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">file</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;file={}&quot;</span>, <span class="ident">escape_config_string</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>)),
+					<span class="prelude-val">None</span>           <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>level</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>level</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;level={}&quot;</span>, <span class='ident'>level</span>),
-					<span class='prelude-val'>None</span>            <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">level</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">level</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;level={}&quot;</span>, <span class="ident">level</span>),
+					<span class="prelude-val">None</span>            <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
-				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>mode</span> {
-					<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>mode</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;mode={}&quot;</span>, <span class='ident'>mode</span>),
-					<span class='prelude-val'>None</span>            <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(),
+				<span class="kw">match</span> <span class="self">self</span>.<span class="ident">mode</span> {
+					<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">mode</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;mode={}&quot;</span>, <span class="ident">mode</span>),
+					<span class="prelude-val">None</span>            <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
 				},
 			)
-		} <span class='kw'>else</span> {
-			<span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>()
+		} <span class="kw">else</span> {
+			<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()
 		}
 	}
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>LogLevel</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>LogLevel</span>::<span class='prelude-val'>None</span>    <span class='op'>=&gt;</span> <span class='string'>&quot;none&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>LogLevel</span>::<span class='ident'>Fatal</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;fatal&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>LogLevel</span>::<span class='ident'>Error</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;error&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>LogLevel</span>::<span class='ident'>Warning</span> <span class='op'>=&gt;</span> <span class='string'>&quot;warning&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>LogLevel</span>::<span class='ident'>Info</span>    <span class='op'>=&gt;</span> <span class='string'>&quot;info&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>LogLevel</span>::<span class='ident'>Debug</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;debug&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>LogLevel</span>::<span class='ident'>Trace</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;trace&quot;</span>,
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">LogLevel</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="kw">match</span> <span class="self">self</span> {
+			<span class="kw-2">&amp;</span><span class="ident">LogLevel</span>::<span class="prelude-val">None</span>    <span class="op">=&gt;</span> <span class="string">&quot;none&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">LogLevel</span>::<span class="ident">Fatal</span>   <span class="op">=&gt;</span> <span class="string">&quot;fatal&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">LogLevel</span>::<span class="ident">Error</span>   <span class="op">=&gt;</span> <span class="string">&quot;error&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">LogLevel</span>::<span class="ident">Warning</span> <span class="op">=&gt;</span> <span class="string">&quot;warning&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">LogLevel</span>::<span class="ident">Info</span>    <span class="op">=&gt;</span> <span class="string">&quot;info&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">LogLevel</span>::<span class="ident">Debug</span>   <span class="op">=&gt;</span> <span class="string">&quot;debug&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">LogLevel</span>::<span class="ident">Trace</span>   <span class="op">=&gt;</span> <span class="string">&quot;trace&quot;</span>,
 		})
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>LogMode</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>LogMode</span>::<span class='ident'>Truncate</span> <span class='op'>=&gt;</span> <span class='string'>&quot;truncate&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>LogMode</span>::<span class='ident'>Append</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;append&quot;</span>,
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">LogMode</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="kw">match</span> <span class="self">self</span> {
+			<span class="kw-2">&amp;</span><span class="ident">LogMode</span>::<span class="ident">Truncate</span> <span class="op">=&gt;</span> <span class="string">&quot;truncate&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">LogMode</span>::<span class="ident">Append</span>   <span class="op">=&gt;</span> <span class="string">&quot;append&quot;</span>,
 		})
 	}
 }
@@ -810,18 +821,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -854,7 +869,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "bear_lib_terminal";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

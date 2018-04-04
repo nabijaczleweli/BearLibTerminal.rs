@@ -10,14 +10,17 @@
     <title>mouse.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <script src="../../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -74,37 +85,37 @@
 <span id="29">29</span>
 <span id="30">30</span>
 <span id="31">31</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Checking the state of mouse-related properties, namely the mouse cursor&#39;s position, `n`-clicks and scrolling.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Checking the state of mouse-related properties, namely the mouse cursor&#39;s position, `n`-clicks and scrolling.</span>
 
 
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>Point</span>;
-<span class='kw'>use</span> <span class='ident'>bear_lib_terminal_sys</span> <span class='kw'>as</span> <span class='ident'>ffi</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">Point</span>;
+<span class="kw">use</span> <span class="ident">bear_lib_terminal_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
 
 
-<span class='doccomment'>/// Amount of steps the mouse wheel scrolled in the last [`Event::MouseScroll`](../../enum.Event.html#variant.MouseScroll).</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Negative values indicate an &quot;up&quot; scroll.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Positive values indicate a &quot;down&quot; scroll.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scroll</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span> {
-	<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_WHEEL</span>)
+<span class="doccomment">/// Amount of steps the mouse wheel scrolled in the last [`Event::MouseScroll`](../../enum.Event.html#variant.MouseScroll).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Negative values indicate an &quot;up&quot; scroll.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Positive values indicate a &quot;down&quot; scroll.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scroll</span>() <span class="op">-&gt;</span> <span class="ident">i32</span> {
+	<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_WHEEL</span>)
 }
 
-<span class='doccomment'>/// Get the mouse cursor&#39;s position in cells.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>position</span>() <span class='op'>-&gt;</span> <span class='ident'>Point</span> {
-	<span class='ident'>Point</span>::<span class='ident'>new</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_X</span>), <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_Y</span>))
+<span class="doccomment">/// Get the mouse cursor&#39;s position in cells.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>() <span class="op">-&gt;</span> <span class="ident">Point</span> {
+	<span class="ident">Point</span>::<span class="ident">new</span>(<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_X</span>), <span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_Y</span>))
 }
 
-<span class='doccomment'>/// Get the mouse cursor&#39;s position in pixels.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pixel_position</span>() <span class='op'>-&gt;</span> <span class='ident'>Point</span> {
-	<span class='ident'>Point</span>::<span class='ident'>new</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_PIXEL_X</span>), <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_PIXEL_Y</span>))
+<span class="doccomment">/// Get the mouse cursor&#39;s position in pixels.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixel_position</span>() <span class="op">-&gt;</span> <span class="ident">Point</span> {
+	<span class="ident">Point</span>::<span class="ident">new</span>(<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_PIXEL_X</span>), <span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_PIXEL_Y</span>))
 }
 
-<span class='doccomment'>/// Amount of fast consecutive clicks for the [`Event::KeyPressed`](../../enum.Event.html#variant.KeyPressed)</span>
-<span class='doccomment'>/// with [`key: Mouse*`](../../enum.Event.html#variant.KeyPressed).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clicks</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span> {
-	<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_CLICKS</span>)
+<span class="doccomment">/// Amount of fast consecutive clicks for the [`Event::KeyPressed`](../../enum.Event.html#variant.KeyPressed)</span>
+<span class="doccomment">/// with [`key: Mouse*`](../../enum.Event.html#variant.KeyPressed).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clicks</span>() <span class="op">-&gt;</span> <span class="ident">i32</span> {
+	<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_MOUSE_CLICKS</span>)
 }
 </pre>
 </section>
@@ -120,18 +131,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -164,7 +179,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "bear_lib_terminal";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

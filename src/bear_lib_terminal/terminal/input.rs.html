@@ -10,14 +10,17 @@
     <title>input.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -249,212 +260,212 @@
 <span id="204">204</span>
 <span id="205">205</span>
 <span id="206">206</span>
-</pre><pre class='rust '>
-<span class='doccomment'>/// All pressable keys.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>KeyCode</span> {
-	<span class='ident'>A</span>,
-	<span class='ident'>B</span>,
-	<span class='ident'>C</span>,
-	<span class='ident'>D</span>,
-	<span class='ident'>E</span>,
-	<span class='ident'>F</span>,
-	<span class='ident'>G</span>,
-	<span class='ident'>H</span>,
-	<span class='ident'>I</span>,
-	<span class='ident'>J</span>,
-	<span class='ident'>K</span>,
-	<span class='ident'>L</span>,
-	<span class='ident'>M</span>,
-	<span class='ident'>N</span>,
-	<span class='ident'>O</span>,
-	<span class='ident'>P</span>,
-	<span class='ident'>Q</span>,
-	<span class='ident'>R</span>,
-	<span class='ident'>S</span>,
-	<span class='ident'>T</span>,
-	<span class='ident'>U</span>,
-	<span class='ident'>V</span>,
-	<span class='ident'>W</span>,
-	<span class='ident'>X</span>,
-	<span class='ident'>Y</span>,
-	<span class='ident'>Z</span>,
-	<span class='doccomment'>/// Top-row `1/!` key.</span>
-	<span class='ident'>Row1</span>,
-	<span class='doccomment'>/// Top-row `2/@` key.</span>
-	<span class='ident'>Row2</span>,
-	<span class='doccomment'>/// Top-row `3/#` key.</span>
-	<span class='ident'>Row3</span>,
-	<span class='doccomment'>/// Top-row `4/$` key.</span>
-	<span class='ident'>Row4</span>,
-	<span class='doccomment'>/// Top-row `5/%` key.</span>
-	<span class='ident'>Row5</span>,
-	<span class='doccomment'>/// Top-row `6/^` key.</span>
-	<span class='ident'>Row6</span>,
-	<span class='doccomment'>/// Top-row `7/&amp;` key.</span>
-	<span class='ident'>Row7</span>,
-	<span class='doccomment'>/// Top-row `8/*` key.</span>
-	<span class='ident'>Row8</span>,
-	<span class='doccomment'>/// Top-row `9/(` key.</span>
-	<span class='ident'>Row9</span>,
-	<span class='doccomment'>/// Top-row `0/)` key.</span>
-	<span class='ident'>Row0</span>,
-	<span class='doccomment'>/// Top-row &amp;#96;/~ key.</span>
-	<span class='ident'>Grave</span>,
-	<span class='doccomment'>/// Top-row `-/_` key.</span>
-	<span class='ident'>Minus</span>,
-	<span class='doccomment'>/// Top-row `=/+` key.</span>
-	<span class='ident'>Equals</span>,
-	<span class='doccomment'>/// Second-row `[/{` key.</span>
-	<span class='ident'>LeftBracket</span>,
-	<span class='doccomment'>/// Second-row `]/}` key.</span>
-	<span class='ident'>RightBracket</span>,
-	<span class='doccomment'>/// Second-row `\/|` key.</span>
-	<span class='ident'>Backslash</span>,
-	<span class='doccomment'>/// Third-row `;/:` key.</span>
-	<span class='ident'>Semicolon</span>,
-	<span class='doccomment'>/// Third-row `&#39;/&quot;` key.</span>
-	<span class='ident'>Apostrophe</span>,
-	<span class='doccomment'>/// Fourth-row `,/&lt;` key.</span>
-	<span class='ident'>Comma</span>,
-	<span class='doccomment'>/// Fourth-row `./&gt;` key.</span>
-	<span class='ident'>Period</span>,
-	<span class='doccomment'>/// Fourth-row `//?` key.</span>
-	<span class='ident'>Slash</span>,
-	<span class='ident'>F1</span>,
-	<span class='ident'>F2</span>,
-	<span class='ident'>F3</span>,
-	<span class='ident'>F4</span>,
-	<span class='ident'>F5</span>,
-	<span class='ident'>F6</span>,
-	<span class='ident'>F7</span>,
-	<span class='ident'>F8</span>,
-	<span class='ident'>F9</span>,
-	<span class='ident'>F10</span>,
-	<span class='ident'>F11</span>,
-	<span class='ident'>F12</span>,
-	<span class='ident'>Enter</span>,
-	<span class='ident'>Escape</span>,
-	<span class='ident'>Backspace</span>,
-	<span class='ident'>Tab</span>,
-	<span class='ident'>Space</span>,
-	<span class='ident'>Pause</span>,
-	<span class='ident'>Insert</span>,
-	<span class='ident'>Home</span>,
-	<span class='ident'>PageUp</span>,
-	<span class='ident'>Delete</span>,
-	<span class='ident'>End</span>,
-	<span class='ident'>PageDown</span>,
-	<span class='doccomment'>/// Right arrow key.</span>
-	<span class='ident'>Right</span>,
-	<span class='doccomment'>/// Left arrow key.</span>
-	<span class='ident'>Left</span>,
-	<span class='doccomment'>/// Down arrow key.</span>
-	<span class='ident'>Down</span>,
-	<span class='doccomment'>/// Up arrow key.</span>
-	<span class='ident'>Up</span>,
-	<span class='doccomment'>/// Numpad `/` key.</span>
-	<span class='ident'>NumDivide</span>,
-	<span class='doccomment'>/// Numpad `*` key.</span>
-	<span class='ident'>NumMultiply</span>,
-	<span class='doccomment'>/// Numpad `-` key.</span>
-	<span class='ident'>NumMinus</span>,
-	<span class='doccomment'>/// Numpad `+` key.</span>
-	<span class='ident'>NumPlus</span>,
-	<span class='doccomment'>/// Numpad &amp;#9166; key.</span>
-	<span class='ident'>NumEnter</span>,
-	<span class='doccomment'>/// Numpad `Del/.` key (output locale-dependent).</span>
-	<span class='ident'>NumPeriod</span>,
-	<span class='doccomment'>/// Numpad `1/End` key.</span>
-	<span class='ident'>Num1</span>,
-	<span class='doccomment'>/// Numpad 2/&amp;#8595; key.</span>
-	<span class='ident'>Num2</span>,
-	<span class='doccomment'>/// Numpad `3/PageDown` key.</span>
-	<span class='ident'>Num3</span>,
-	<span class='doccomment'>/// Numpad 4/&amp;#8592; key.</span>
-	<span class='ident'>Num4</span>,
-	<span class='doccomment'>/// Numpad `5` key.</span>
-	<span class='ident'>Num5</span>,
-	<span class='doccomment'>/// Numpad 6/&amp;#8594; key.</span>
-	<span class='ident'>Num6</span>,
-	<span class='doccomment'>/// Numpad `7/Home` key.</span>
-	<span class='ident'>Num7</span>,
-	<span class='doccomment'>/// Numpad 8/&amp;#8593; key.</span>
-	<span class='ident'>Num8</span>,
-	<span class='doccomment'>/// Numpad `9/PageUp` key.</span>
-	<span class='ident'>Num9</span>,
-	<span class='doccomment'>/// Numpad `0/Insert` key.</span>
-	<span class='ident'>Num0</span>,
-	<span class='doccomment'>/// Left mouse button.</span>
-	<span class='ident'>MouseLeft</span>,
-	<span class='doccomment'>/// Right mouse button.</span>
-	<span class='ident'>MouseRight</span>,
-	<span class='doccomment'>/// Middle mouse button a.k.a. pressed scroll wheel.</span>
-	<span class='ident'>MouseMiddle</span>,
-	<span class='ident'>MouseFourth</span>,
-	<span class='ident'>MouseFifth</span>,
+</pre><pre class="rust ">
+<span class="doccomment">/// All pressable keys.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">KeyCode</span> {
+	<span class="ident">A</span>,
+	<span class="ident">B</span>,
+	<span class="ident">C</span>,
+	<span class="ident">D</span>,
+	<span class="ident">E</span>,
+	<span class="ident">F</span>,
+	<span class="ident">G</span>,
+	<span class="ident">H</span>,
+	<span class="ident">I</span>,
+	<span class="ident">J</span>,
+	<span class="ident">K</span>,
+	<span class="ident">L</span>,
+	<span class="ident">M</span>,
+	<span class="ident">N</span>,
+	<span class="ident">O</span>,
+	<span class="ident">P</span>,
+	<span class="ident">Q</span>,
+	<span class="ident">R</span>,
+	<span class="ident">S</span>,
+	<span class="ident">T</span>,
+	<span class="ident">U</span>,
+	<span class="ident">V</span>,
+	<span class="ident">W</span>,
+	<span class="ident">X</span>,
+	<span class="ident">Y</span>,
+	<span class="ident">Z</span>,
+	<span class="doccomment">/// Top-row `1/!` key.</span>
+	<span class="ident">Row1</span>,
+	<span class="doccomment">/// Top-row `2/@` key.</span>
+	<span class="ident">Row2</span>,
+	<span class="doccomment">/// Top-row `3/#` key.</span>
+	<span class="ident">Row3</span>,
+	<span class="doccomment">/// Top-row `4/$` key.</span>
+	<span class="ident">Row4</span>,
+	<span class="doccomment">/// Top-row `5/%` key.</span>
+	<span class="ident">Row5</span>,
+	<span class="doccomment">/// Top-row `6/^` key.</span>
+	<span class="ident">Row6</span>,
+	<span class="doccomment">/// Top-row `7/&amp;` key.</span>
+	<span class="ident">Row7</span>,
+	<span class="doccomment">/// Top-row `8/*` key.</span>
+	<span class="ident">Row8</span>,
+	<span class="doccomment">/// Top-row `9/(` key.</span>
+	<span class="ident">Row9</span>,
+	<span class="doccomment">/// Top-row `0/)` key.</span>
+	<span class="ident">Row0</span>,
+	<span class="doccomment">/// Top-row &amp;#96;/~ key.</span>
+	<span class="ident">Grave</span>,
+	<span class="doccomment">/// Top-row `-/_` key.</span>
+	<span class="ident">Minus</span>,
+	<span class="doccomment">/// Top-row `=/+` key.</span>
+	<span class="ident">Equals</span>,
+	<span class="doccomment">/// Second-row `[/{` key.</span>
+	<span class="ident">LeftBracket</span>,
+	<span class="doccomment">/// Second-row `]/}` key.</span>
+	<span class="ident">RightBracket</span>,
+	<span class="doccomment">/// Second-row `\/|` key.</span>
+	<span class="ident">Backslash</span>,
+	<span class="doccomment">/// Third-row `;/:` key.</span>
+	<span class="ident">Semicolon</span>,
+	<span class="doccomment">/// Third-row `&#39;/&quot;` key.</span>
+	<span class="ident">Apostrophe</span>,
+	<span class="doccomment">/// Fourth-row `,/&lt;` key.</span>
+	<span class="ident">Comma</span>,
+	<span class="doccomment">/// Fourth-row `./&gt;` key.</span>
+	<span class="ident">Period</span>,
+	<span class="doccomment">/// Fourth-row `//?` key.</span>
+	<span class="ident">Slash</span>,
+	<span class="ident">F1</span>,
+	<span class="ident">F2</span>,
+	<span class="ident">F3</span>,
+	<span class="ident">F4</span>,
+	<span class="ident">F5</span>,
+	<span class="ident">F6</span>,
+	<span class="ident">F7</span>,
+	<span class="ident">F8</span>,
+	<span class="ident">F9</span>,
+	<span class="ident">F10</span>,
+	<span class="ident">F11</span>,
+	<span class="ident">F12</span>,
+	<span class="ident">Enter</span>,
+	<span class="ident">Escape</span>,
+	<span class="ident">Backspace</span>,
+	<span class="ident">Tab</span>,
+	<span class="ident">Space</span>,
+	<span class="ident">Pause</span>,
+	<span class="ident">Insert</span>,
+	<span class="ident">Home</span>,
+	<span class="ident">PageUp</span>,
+	<span class="ident">Delete</span>,
+	<span class="ident">End</span>,
+	<span class="ident">PageDown</span>,
+	<span class="doccomment">/// Right arrow key.</span>
+	<span class="ident">Right</span>,
+	<span class="doccomment">/// Left arrow key.</span>
+	<span class="ident">Left</span>,
+	<span class="doccomment">/// Down arrow key.</span>
+	<span class="ident">Down</span>,
+	<span class="doccomment">/// Up arrow key.</span>
+	<span class="ident">Up</span>,
+	<span class="doccomment">/// Numpad `/` key.</span>
+	<span class="ident">NumDivide</span>,
+	<span class="doccomment">/// Numpad `*` key.</span>
+	<span class="ident">NumMultiply</span>,
+	<span class="doccomment">/// Numpad `-` key.</span>
+	<span class="ident">NumMinus</span>,
+	<span class="doccomment">/// Numpad `+` key.</span>
+	<span class="ident">NumPlus</span>,
+	<span class="doccomment">/// Numpad &amp;#9166; key.</span>
+	<span class="ident">NumEnter</span>,
+	<span class="doccomment">/// Numpad `Del/.` key (output locale-dependent).</span>
+	<span class="ident">NumPeriod</span>,
+	<span class="doccomment">/// Numpad `1/End` key.</span>
+	<span class="ident">Num1</span>,
+	<span class="doccomment">/// Numpad 2/&amp;#8595; key.</span>
+	<span class="ident">Num2</span>,
+	<span class="doccomment">/// Numpad `3/PageDown` key.</span>
+	<span class="ident">Num3</span>,
+	<span class="doccomment">/// Numpad 4/&amp;#8592; key.</span>
+	<span class="ident">Num4</span>,
+	<span class="doccomment">/// Numpad `5` key.</span>
+	<span class="ident">Num5</span>,
+	<span class="doccomment">/// Numpad 6/&amp;#8594; key.</span>
+	<span class="ident">Num6</span>,
+	<span class="doccomment">/// Numpad `7/Home` key.</span>
+	<span class="ident">Num7</span>,
+	<span class="doccomment">/// Numpad 8/&amp;#8593; key.</span>
+	<span class="ident">Num8</span>,
+	<span class="doccomment">/// Numpad `9/PageUp` key.</span>
+	<span class="ident">Num9</span>,
+	<span class="doccomment">/// Numpad `0/Insert` key.</span>
+	<span class="ident">Num0</span>,
+	<span class="doccomment">/// Left mouse button.</span>
+	<span class="ident">MouseLeft</span>,
+	<span class="doccomment">/// Right mouse button.</span>
+	<span class="ident">MouseRight</span>,
+	<span class="doccomment">/// Middle mouse button a.k.a. pressed scroll wheel.</span>
+	<span class="ident">MouseMiddle</span>,
+	<span class="ident">MouseFourth</span>,
+	<span class="ident">MouseFifth</span>,
 }
 
-<span class='doccomment'>/// A single input event.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Event</span> {
-	<span class='doccomment'>/// Terminal window closed.</span>
-	<span class='ident'>Close</span>,
-	<span class='doccomment'>/// Terminal window resized. Needs to have `window.resizeable = true` to occur.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// Note, that, as of [`40e6253`](https://bitbucket.org/cfyzium/bearlibterminal/commits/40e625311f0cccc43b94633add4dec0d6b77c2b7),</span>
-	<span class='doccomment'>/// the terminal window is cleared when resized.</span>
-	<span class='ident'>Resize</span>{
-		<span class='doccomment'>/// Width the terminal was resized to.</span>
-		<span class='ident'>width</span>: <span class='ident'>i32</span>,
-		<span class='doccomment'>/// Heigth the terminal was resized to.</span>
-		<span class='ident'>height</span>: <span class='ident'>i32</span>,
+<span class="doccomment">/// A single input event.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span> {
+	<span class="doccomment">/// Terminal window closed.</span>
+	<span class="ident">Close</span>,
+	<span class="doccomment">/// Terminal window resized. Needs to have `window.resizeable = true` to occur.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Note, that, as of [`40e6253`](https://bitbucket.org/cfyzium/bearlibterminal/commits/40e625311f0cccc43b94633add4dec0d6b77c2b7),</span>
+	<span class="doccomment">/// the terminal window is cleared when resized.</span>
+	<span class="ident">Resize</span>{
+		<span class="doccomment">/// Width the terminal was resized to.</span>
+		<span class="ident">width</span>: <span class="ident">i32</span>,
+		<span class="doccomment">/// Heigth the terminal was resized to.</span>
+		<span class="ident">height</span>: <span class="ident">i32</span>,
 	},
-	<span class='doccomment'>/// Mouse moved.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// If [`precise-mouse`](config/struct.Input.html#structfield.precise_mouse) is off, generated each time mouse moves from cell to cell, otherwise,</span>
-	<span class='doccomment'>/// when it moves from pixel to pixel.</span>
-	<span class='ident'>MouseMove</span>{
-		<span class='doccomment'>/// `0`-based cell index from the left to which the mouse cursor moved.</span>
-		<span class='ident'>x</span>: <span class='ident'>i32</span>,
-		<span class='doccomment'>/// `0`-based cell index from the top to which the mouse cursor moved.</span>
-		<span class='ident'>y</span>: <span class='ident'>i32</span>
+	<span class="doccomment">/// Mouse moved.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// If [`precise-mouse`](config/struct.Input.html#structfield.precise_mouse) is off, generated each time mouse moves from cell to cell, otherwise,</span>
+	<span class="doccomment">/// when it moves from pixel to pixel.</span>
+	<span class="ident">MouseMove</span>{
+		<span class="doccomment">/// `0`-based cell index from the left to which the mouse cursor moved.</span>
+		<span class="ident">x</span>: <span class="ident">i32</span>,
+		<span class="doccomment">/// `0`-based cell index from the top to which the mouse cursor moved.</span>
+		<span class="ident">y</span>: <span class="ident">i32</span>
 	},
-	<span class='doccomment'>/// Mouse wheel moved.</span>
-	<span class='ident'>MouseScroll</span>{
-		<span class='doccomment'>/// Amount of steps the wheel rotated.</span>
-		<span class='doccomment'>///</span>
-		<span class='doccomment'>/// Positive when scrolled &quot;down&quot;/&quot;backwards&quot;.</span>
-		<span class='doccomment'>///</span>
-		<span class='doccomment'>/// Negative when scrolled &quot;up&quot;/&quot;forwards&quot;/&quot;away&quot;.</span>
-		<span class='ident'>delta</span>: <span class='ident'>i32</span>
+	<span class="doccomment">/// Mouse wheel moved.</span>
+	<span class="ident">MouseScroll</span>{
+		<span class="doccomment">/// Amount of steps the wheel rotated.</span>
+		<span class="doccomment">///</span>
+		<span class="doccomment">/// Positive when scrolled &quot;down&quot;/&quot;backwards&quot;.</span>
+		<span class="doccomment">///</span>
+		<span class="doccomment">/// Negative when scrolled &quot;up&quot;/&quot;forwards&quot;/&quot;away&quot;.</span>
+		<span class="ident">delta</span>: <span class="ident">i32</span>
 	},
-	<span class='doccomment'>/// A keyboard or mouse button pressed (might repeat, if set in OS).</span>
-	<span class='ident'>KeyPressed</span>{
-		<span class='doccomment'>/// The key pressed.</span>
-		<span class='ident'>key</span>: <span class='ident'>KeyCode</span>,
-		<span class='doccomment'>/// Whether the Control key is pressed.</span>
-		<span class='ident'>ctrl</span>: <span class='ident'>bool</span>,
-		<span class='doccomment'>/// Whether the Shift key is pressed.</span>
-		<span class='ident'>shift</span>: <span class='ident'>bool</span>
+	<span class="doccomment">/// A keyboard or mouse button pressed (might repeat, if set in OS).</span>
+	<span class="ident">KeyPressed</span>{
+		<span class="doccomment">/// The key pressed.</span>
+		<span class="ident">key</span>: <span class="ident">KeyCode</span>,
+		<span class="doccomment">/// Whether the Control key is pressed.</span>
+		<span class="ident">ctrl</span>: <span class="ident">bool</span>,
+		<span class="doccomment">/// Whether the Shift key is pressed.</span>
+		<span class="ident">shift</span>: <span class="ident">bool</span>
 	},
-	<span class='doccomment'>/// A keyboard or mouse button released.</span>
-	<span class='ident'>KeyReleased</span>{
-		<span class='doccomment'>/// The key released.</span>
-		<span class='ident'>key</span>: <span class='ident'>KeyCode</span>,
-		<span class='doccomment'>/// Whether the Control key is pressed.</span>
-		<span class='ident'>ctrl</span>: <span class='ident'>bool</span>,
-		<span class='doccomment'>/// Whether the Shift key is pressed.</span>
-		<span class='ident'>shift</span>: <span class='ident'>bool</span>
+	<span class="doccomment">/// A keyboard or mouse button released.</span>
+	<span class="ident">KeyReleased</span>{
+		<span class="doccomment">/// The key released.</span>
+		<span class="ident">key</span>: <span class="ident">KeyCode</span>,
+		<span class="doccomment">/// Whether the Control key is pressed.</span>
+		<span class="ident">ctrl</span>: <span class="ident">bool</span>,
+		<span class="doccomment">/// Whether the Shift key is pressed.</span>
+		<span class="ident">shift</span>: <span class="ident">bool</span>
 	},
-	<span class='doccomment'>/// The Shift key pressed (might repeat, if set in OS).</span>
-	<span class='ident'>ShiftPressed</span>,
-	<span class='doccomment'>/// The Shift key released.</span>
-	<span class='ident'>ShiftReleased</span>,
-	<span class='doccomment'>/// The Shift key pressed (might repeat, if set in OS).</span>
-	<span class='ident'>ControlPressed</span>,
-	<span class='doccomment'>/// The Control key released.</span>
-	<span class='ident'>ControlReleased</span>,
+	<span class="doccomment">/// The Shift key pressed (might repeat, if set in OS).</span>
+	<span class="ident">ShiftPressed</span>,
+	<span class="doccomment">/// The Shift key released.</span>
+	<span class="ident">ShiftReleased</span>,
+	<span class="doccomment">/// The Shift key pressed (might repeat, if set in OS).</span>
+	<span class="ident">ControlPressed</span>,
+	<span class="doccomment">/// The Control key released.</span>
+	<span class="ident">ControlReleased</span>,
 }
 </pre>
 </section>
@@ -470,18 +481,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -514,7 +529,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "bear_lib_terminal";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

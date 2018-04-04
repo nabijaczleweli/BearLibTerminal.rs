@@ -10,14 +10,17 @@
     <title>bear_lib_terminal::terminal::config::font - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <script src="../../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../../index.html'>bear_lib_terminal</a>::<wbr><a href='../../index.html'>terminal</a>::<wbr><a href='../index.html'>config</a></p><script>window.sidebarCurrent = {name: 'font', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module font</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../../index.html'>bear_lib_terminal</a>::<wbr><a href='../../index.html'>terminal</a>::<wbr><a href='../index.html'>config</a></p><script>window.sidebarCurrent = {name: 'font', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,96 +54,102 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../../index.html'>bear_lib_terminal</a>::<wbr><a href='../../index.html'>terminal</a>::<wbr><a href='../index.html'>config</a>::<wbr><a class='mod' href=''>font</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../../index.html'>bear_lib_terminal</a>::<wbr><a href='../../index.html'>terminal</a>::<wbr><a href='../index.html'>config</a>::<wbr><a class="mod" href=''>font</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../../src/bear_lib_terminal/terminal/config/font.rs.html#1-339' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Module containing font changing tools.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>The following from <a href="http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management">the official documentation</a>:</p>
-
 <pre><code class="language-text">font: UbuntuMono-R.ttf, size=12;
 0x5E: curcumflex.png;
 0xE000: tileset.png, size=16x16, spacing=2x1;
 </code></pre>
-
 <p>Is equivalent to</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>bear_lib_terminal</span>::<span class='ident'>terminal</span>;
-<span class='kw'>use</span> <span class='ident'>bear_lib_terminal</span>::<span class='ident'>terminal</span>::<span class='ident'>config</span>::<span class='ident'>font</span>;
-<span class='kw'>use</span> <span class='ident'>bear_lib_terminal</span>::<span class='ident'>geometry</span>::<span class='ident'>Size</span>;
-<span class='ident'>terminal</span>::<span class='ident'>set</span>(<span class='ident'>font</span>::<span class='ident'>true_type</span>(<span class='ident'>font</span>::<span class='ident'>Origin</span>::<span class='ident'>Root</span>, <span class='string'>&quot;UbuntuMono-R.ttf&quot;</span>, <span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>12</span>)));
-<span class='ident'>terminal</span>::<span class='ident'>set</span>(<span class='ident'>font</span>::<span class='ident'>bitmap</span>(<span class='ident'>font</span>::<span class='ident'>Origin</span>::<span class='ident'>Offset</span>(<span class='string'>&#39;^&#39;</span>), <span class='string'>&quot;circumflex.png&quot;</span>));
-<span class='ident'>terminal</span>::<span class='ident'>set</span>(<span class='ident'>font</span>::<span class='ident'>bitmap</span>(<span class='ident'>font</span>::<span class='ident'>Origin</span>::<span class='ident'>Offset</span>(<span class='string'>&#39;\u{E000}&#39;</span>), <span class='string'>&quot;tileset.png&quot;</span>).<span class='ident'>size</span>(<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='number'>16</span>, <span class='number'>16</span>)).<span class='ident'>spacing</span>(<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>1</span>)));</pre>
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">bear_lib_terminal</span>::<span class="ident">terminal</span>;
+<span class="kw">use</span> <span class="ident">bear_lib_terminal</span>::<span class="ident">terminal</span>::<span class="ident">config</span>::<span class="ident">font</span>;
+<span class="kw">use</span> <span class="ident">bear_lib_terminal</span>::<span class="ident">geometry</span>::<span class="ident">Size</span>;
+<span class="ident">terminal</span>::<span class="ident">set</span>(<span class="ident">font</span>::<span class="ident">true_type</span>(<span class="ident">font</span>::<span class="ident">Origin</span>::<span class="ident">Root</span>, <span class="string">&quot;UbuntuMono-R.ttf&quot;</span>, <span class="ident">Size</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">12</span>)));
+<span class="ident">terminal</span>::<span class="ident">set</span>(<span class="ident">font</span>::<span class="ident">bitmap</span>(<span class="ident">font</span>::<span class="ident">Origin</span>::<span class="ident">Offset</span>(<span class="string">&#39;^&#39;</span>), <span class="string">&quot;circumflex.png&quot;</span>));
+<span class="ident">terminal</span>::<span class="ident">set</span>(<span class="ident">font</span>::<span class="ident">bitmap</span>(<span class="ident">font</span>::<span class="ident">Origin</span>::<span class="ident">Offset</span>(<span class="string">&#39;\u{E000}&#39;</span>), <span class="string">&quot;tileset.png&quot;</span>).<span class="ident">size</span>(<span class="ident">Size</span>::<span class="ident">new</span>(<span class="number">16</span>, <span class="number">16</span>)).<span class="ident">spacing</span>(<span class="ident">Size</span>::<span class="ident">new</span>(<span class="number">2</span>, <span class="number">1</span>)));</pre>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Bitmap.html'
-                                  title='bear_lib_terminal::terminal::config::font::Bitmap'>Bitmap</a></td>
+                           <td><a class="struct" href="struct.Bitmap.html"
+                                  title='struct bear_lib_terminal::terminal::config::font::Bitmap'>Bitmap</a></td>
                            <td class='docblock-short'>
                                 <p>A bitmap font override segment repr, constructed with <a href="fn.true_type.html"><code>true_type()</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.TrueType.html'
-                                  title='bear_lib_terminal::terminal::config::font::TrueType'>TrueType</a></td>
+                           <td><a class="struct" href="struct.TrueType.html"
+                                  title='struct bear_lib_terminal::terminal::config::font::TrueType'>TrueType</a></td>
                            <td class='docblock-short'>
                                 <p>A TrueType font override segment repr, constructed with <a href="fn.true_type.html"><code>true_type()</code></a>.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Align.html'
-                                  title='bear_lib_terminal::terminal::config::font::Align'>Align</a></td>
+                           <td><a class="enum" href="enum.Align.html"
+                                  title='enum bear_lib_terminal::terminal::config::font::Align'>Align</a></td>
                            <td class='docblock-short'>
                                 <p>Per-tileset tile alignment.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Origin.html'
-                                  title='bear_lib_terminal::terminal::config::font::Origin'>Origin</a></td>
+                           <td><a class="enum" href="enum.Origin.html"
+                                  title='enum bear_lib_terminal::terminal::config::font::Origin'>Origin</a></td>
                            <td class='docblock-short'>
                                 <p>The origin for the font (the part before <code>:</code> in the config string).</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.RasterizationMode.html'
-                                  title='bear_lib_terminal::terminal::config::font::RasterizationMode'>RasterizationMode</a></td>
+                           <td><a class="enum" href="enum.RasterizationMode.html"
+                                  title='enum bear_lib_terminal::terminal::config::font::RasterizationMode'>RasterizationMode</a></td>
                            <td class='docblock-short'>
                                 <p>Rasterization mode for TrueType fonts.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.ResizeFilter.html'
-                                  title='bear_lib_terminal::terminal::config::font::ResizeFilter'>ResizeFilter</a></td>
+                           <td><a class="enum" href="enum.ResizeFilter.html"
+                                  title='enum bear_lib_terminal::terminal::config::font::ResizeFilter'>ResizeFilter</a></td>
                            <td class='docblock-short'>
                                 <p>Resizing filter for bitmaps.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.ResizeMode.html'
-                                  title='bear_lib_terminal::terminal::config::font::ResizeMode'>ResizeMode</a></td>
+                           <td><a class="enum" href="enum.ResizeMode.html"
+                                  title='enum bear_lib_terminal::terminal::config::font::ResizeMode'>ResizeMode</a></td>
                            <td class='docblock-short'>
                                 <p>How to aspect-change when resizing a bitmap.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.bitmap.html'
-                                  title='bear_lib_terminal::terminal::config::font::bitmap'>bitmap</a></td>
+                           <td><a class="fn" href="fn.bitmap.html"
+                                  title='fn bear_lib_terminal::terminal::config::font::bitmap'>bitmap</a></td>
                            <td class='docblock-short'>
                                 <p>Construct a bitmap font override segment repr.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.true_type.html'
-                                  title='bear_lib_terminal::terminal::config::font::true_type'>true_type</a></td>
+                           <td><a class="fn" href="fn.true_type.html"
+                                  title='fn bear_lib_terminal::terminal::config::font::true_type'>true_type</a></td>
                            <td class='docblock-short'>
                                 <p>Construct a TrueType font override segment repr.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -147,18 +164,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -191,7 +212,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "bear_lib_terminal";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

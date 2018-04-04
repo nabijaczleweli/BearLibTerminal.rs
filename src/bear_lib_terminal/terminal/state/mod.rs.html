@@ -10,14 +10,17 @@
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <script src="../../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -216,178 +227,178 @@
 <span id="171">171</span>
 <span id="172">172</span>
 <span id="173">173</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Wherein are contained functions for checking the terminal&#39;s properties: its size, whether cetrain keys are pressed, mouse position, etc.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Examples</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```ignore</span>
-<span class='doccomment'>//! # // Ignore here, because on CI all `open()` calls will fail, as there&#39;s no graphical env. there</span>
-<span class='doccomment'>//! use bear_lib_terminal::terminal;</span>
-<span class='doccomment'>//! use bear_lib_terminal::geometry::Size;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! terminal::open(&quot;terminal::state example&quot;, 60, 25);</span>
-<span class='doccomment'>//! assert!(terminal::state::size() == Size::new(60, 25));</span>
-<span class='doccomment'>//! terminal::close();</span>
-<span class='doccomment'>//! ```</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Wherein are contained functions for checking the terminal&#39;s properties: its size, whether cetrain keys are pressed, mouse position, etc.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```ignore</span>
+<span class="doccomment">//! # // Ignore here, because on CI all `open()` calls will fail, as there&#39;s no graphical env. there</span>
+<span class="doccomment">//! use bear_lib_terminal::terminal;</span>
+<span class="doccomment">//! use bear_lib_terminal::geometry::Size;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! terminal::open(&quot;terminal::state example&quot;, 60, 25);</span>
+<span class="doccomment">//! assert!(terminal::state::size() == Size::new(60, 25));</span>
+<span class="doccomment">//! terminal::close();</span>
+<span class="doccomment">//! ```</span>
 
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>mouse</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">mouse</span>;
 
-<span class='kw'>use</span> <span class='ident'>Color</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>char</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>Size</span>;
-<span class='kw'>use</span> <span class='ident'>terminal</span>::{<span class='self'>self</span>, <span class='ident'>Event</span>, <span class='ident'>KeyCode</span>};
-<span class='kw'>use</span> <span class='ident'>bear_lib_terminal_sys</span> <span class='kw'>as</span> <span class='ident'>ffi</span>;
+<span class="kw">use</span> <span class="ident">Color</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">char</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">Size</span>;
+<span class="kw">use</span> <span class="ident">terminal</span>::{<span class="self">self</span>, <span class="ident">Event</span>, <span class="ident">KeyCode</span>};
+<span class="kw">use</span> <span class="ident">bear_lib_terminal_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
 
 
-<span class='doccomment'>/// Get the terminal size in cells.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>() <span class='op'>-&gt;</span> <span class='ident'>Size</span> {
-	<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_WIDTH</span>), <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_HEIGHT</span>))
+<span class="doccomment">/// Get the terminal size in cells.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>() <span class="op">-&gt;</span> <span class="ident">Size</span> {
+	<span class="ident">Size</span>::<span class="ident">new</span>(<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_WIDTH</span>), <span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_HEIGHT</span>))
 }
 
-<span class='doccomment'>/// Get cell size in pixels.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cell_size</span>() <span class='op'>-&gt;</span> <span class='ident'>Size</span> {
-	<span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_CELL_WIDTH</span>), <span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_CELL_HEIGHT</span>))
+<span class="doccomment">/// Get cell size in pixels.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cell_size</span>() <span class="op">-&gt;</span> <span class="ident">Size</span> {
+	<span class="ident">Size</span>::<span class="ident">new</span>(<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_CELL_WIDTH</span>), <span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_CELL_HEIGHT</span>))
 }
 
-<span class='doccomment'>/// Get the currently selected foreground colour.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Foreground colours are changed by using the [`terminal::*_foreground()`](../index.html) function family.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>foreground</span>() <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-	<span class='ident'>terminal</span>::<span class='ident'>from_color_t</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_COLOR</span>) <span class='kw'>as</span> <span class='ident'>ffi</span>::<span class='ident'>ColorT</span>)
+<span class="doccomment">/// Get the currently selected foreground colour.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Foreground colours are changed by using the [`terminal::*_foreground()`](../index.html) function family.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground</span>() <span class="op">-&gt;</span> <span class="ident">Color</span> {
+	<span class="ident">terminal</span>::<span class="ident">from_color_t</span>(<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_COLOR</span>) <span class="kw">as</span> <span class="ident">ffi</span>::<span class="ident">ColorT</span>)
 }
 
-<span class='doccomment'>/// Get the currently selected background colour.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Background colours are changed by using the [`terminal::*_background()`](../index.html) function family.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>background</span>() <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-	<span class='ident'>terminal</span>::<span class='ident'>from_color_t</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_BKCOLOR</span>) <span class='kw'>as</span> <span class='ident'>ffi</span>::<span class='ident'>ColorT</span>)
+<span class="doccomment">/// Get the currently selected background colour.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Background colours are changed by using the [`terminal::*_background()`](../index.html) function family.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background</span>() <span class="op">-&gt;</span> <span class="ident">Color</span> {
+	<span class="ident">terminal</span>::<span class="ident">from_color_t</span>(<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_BKCOLOR</span>) <span class="kw">as</span> <span class="ident">ffi</span>::<span class="ident">ColorT</span>)
 }
 
-<span class='doccomment'>/// Get the currently selected layer.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Layer is selected by using the [`terminal::layer()`](../fn.layer.html) function.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>layer</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span> {
-	<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_LAYER</span>)
+<span class="doccomment">/// Get the currently selected layer.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Layer is selected by using the [`terminal::layer()`](../fn.layer.html) function.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">layer</span>() <span class="op">-&gt;</span> <span class="ident">i32</span> {
+	<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_LAYER</span>)
 }
 
-<span class='doccomment'>/// Most-recent-event-produced unicode character.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>char</span>() <span class='op'>-&gt;</span> <span class='ident'>char</span> {
-	<span class='ident'>char</span>::<span class='ident'>from_u32</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_WCHAR</span>) <span class='kw'>as</span> <span class='ident'>u32</span>).<span class='ident'>unwrap</span>()
+<span class="doccomment">/// Most-recent-event-produced unicode character.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">char</span>() <span class="op">-&gt;</span> <span class="ident">char</span> {
+	<span class="ident">char</span>::<span class="ident">from_u32</span>(<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_WCHAR</span>) <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">unwrap</span>()
 }
 
-<span class='doccomment'>/// Get last dequeued event.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Returns `None` iff no events have been dequeued yet.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>event</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;</span> {
-	<span class='ident'>terminal</span>::<span class='ident'>to_event</span>(<span class='ident'>ffi</span>::<span class='ident'>state</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_EVENT</span>))
+<span class="doccomment">/// Get last dequeued event.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Returns `None` iff no events have been dequeued yet.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">event</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
+	<span class="ident">terminal</span>::<span class="ident">to_event</span>(<span class="ident">ffi</span>::<span class="ident">state</span>(<span class="ident">ffi</span>::<span class="ident">TK_EVENT</span>))
 }
 
-<span class='doccomment'>/// Check, whether the terminal is currently full-screen.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fullscreen</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-	<span class='ident'>ffi</span>::<span class='ident'>check</span>(<span class='ident'>ffi</span>::<span class='ident'>TK_FULLSCREEN</span>)
+<span class="doccomment">/// Check, whether the terminal is currently full-screen.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fullscreen</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+	<span class="ident">ffi</span>::<span class="ident">check</span>(<span class="ident">ffi</span>::<span class="ident">TK_FULLSCREEN</span>)
 }
 
-<span class='doccomment'>/// Check, whether a [`KeyCode`](../enum.KeyCode.html)-specified key is currently pressed.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>key_pressed</span>(<span class='ident'>key</span>: <span class='ident'>KeyCode</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-	<span class='ident'>ffi</span>::<span class='ident'>check</span>(<span class='kw'>match</span> <span class='ident'>key</span> {
-		<span class='ident'>KeyCode</span>::<span class='ident'>A</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_A</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>B</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_B</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>C</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_C</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>D</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_D</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>E</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_E</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>G</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_G</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>H</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_H</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>I</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_I</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>J</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_J</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>K</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_K</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>L</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_L</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>M</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_M</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>N</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_N</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>O</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_O</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>P</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_P</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Q</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_Q</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>R</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_R</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>S</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_S</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>T</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_T</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>U</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_U</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>V</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_V</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>W</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_W</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>X</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_X</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Y</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_Y</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Z</span>            <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_Z</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row1</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_1</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row2</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_2</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row3</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_3</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row4</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_4</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row5</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_5</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row6</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_6</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row7</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_7</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row8</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_8</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row9</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_9</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Row0</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_0</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Enter</span>        <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_ENTER</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Escape</span>       <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_ESCAPE</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Backspace</span>    <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_BACKSPACE</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Tab</span>          <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_TAB</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Space</span>        <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_SPACE</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Minus</span>        <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_MINUS</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Equals</span>       <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_EQUALS</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>LeftBracket</span>  <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_LBRACKET</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>RightBracket</span> <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_RBRACKET</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Backslash</span>    <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_BACKSLASH</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Semicolon</span>    <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_SEMICOLON</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Apostrophe</span>   <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_APOSTROPHE</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Grave</span>        <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_GRAVE</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Comma</span>        <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_COMMA</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Period</span>       <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_PERIOD</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Slash</span>        <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_SLASH</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F1</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F1</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F2</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F2</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F3</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F3</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F4</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F4</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F5</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F5</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F6</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F6</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F7</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F7</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F8</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F8</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F9</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F9</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F10</span>          <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F10</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F11</span>          <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F11</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>F12</span>          <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_F12</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Pause</span>        <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_PAUSE</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Insert</span>       <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_INSERT</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Home</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_HOME</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>PageUp</span>       <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_PAGEUP</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Delete</span>       <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_DELETE</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>End</span>          <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_END</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>PageDown</span>     <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_PAGEDOWN</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Right</span>        <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_RIGHT</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Left</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_LEFT</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Down</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_DOWN</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Up</span>           <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_UP</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>NumDivide</span>    <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_DIVIDE</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>NumMultiply</span>  <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_MULTIPLY</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>NumMinus</span>     <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_MINUS</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>NumPlus</span>      <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_PLUS</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>NumEnter</span>     <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_ENTER</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num1</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_1</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num2</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_2</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num3</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_3</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num4</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_4</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num5</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_5</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num6</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_6</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num7</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_7</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num8</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_8</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num9</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_9</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>Num0</span>         <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_0</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>NumPeriod</span>    <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_KP_PERIOD</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>MouseLeft</span>    <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_LEFT</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>MouseRight</span>   <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_RIGHT</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>MouseMiddle</span>  <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_MIDDLE</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>MouseFourth</span>  <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_X1</span>,
-		<span class='ident'>KeyCode</span>::<span class='ident'>MouseFifth</span>   <span class='op'>=&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>TK_MOUSE_X2</span>,
+<span class="doccomment">/// Check, whether a [`KeyCode`](../enum.KeyCode.html)-specified key is currently pressed.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">key_pressed</span>(<span class="ident">key</span>: <span class="ident">KeyCode</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+	<span class="ident">ffi</span>::<span class="ident">check</span>(<span class="kw">match</span> <span class="ident">key</span> {
+		<span class="ident">KeyCode</span>::<span class="ident">A</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_A</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">B</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_B</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">C</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_C</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">D</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_D</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">E</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_E</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">G</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_G</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">H</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_H</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">I</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_I</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">J</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_J</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">K</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_K</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">L</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_L</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">M</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_M</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">N</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_N</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">O</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_O</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">P</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_P</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Q</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_Q</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">R</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_R</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">S</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_S</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">T</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_T</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">U</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_U</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">V</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_V</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">W</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_W</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">X</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_X</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Y</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_Y</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Z</span>            <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_Z</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row1</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_1</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row2</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_2</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row3</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_3</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row4</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_4</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row5</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_5</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row6</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_6</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row7</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_7</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row8</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_8</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row9</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_9</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Row0</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_0</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Enter</span>        <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_ENTER</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Escape</span>       <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_ESCAPE</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Backspace</span>    <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_BACKSPACE</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Tab</span>          <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_TAB</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Space</span>        <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_SPACE</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Minus</span>        <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_MINUS</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Equals</span>       <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_EQUALS</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">LeftBracket</span>  <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_LBRACKET</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">RightBracket</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_RBRACKET</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Backslash</span>    <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_BACKSLASH</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Semicolon</span>    <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_SEMICOLON</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Apostrophe</span>   <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_APOSTROPHE</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Grave</span>        <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_GRAVE</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Comma</span>        <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_COMMA</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Period</span>       <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_PERIOD</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Slash</span>        <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_SLASH</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F1</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F1</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F2</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F2</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F3</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F3</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F4</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F4</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F5</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F5</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F6</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F6</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F7</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F7</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F8</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F8</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F9</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F9</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F10</span>          <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F10</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F11</span>          <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F11</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">F12</span>          <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_F12</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Pause</span>        <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_PAUSE</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Insert</span>       <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_INSERT</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Home</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_HOME</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">PageUp</span>       <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_PAGEUP</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Delete</span>       <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_DELETE</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">End</span>          <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_END</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">PageDown</span>     <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_PAGEDOWN</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Right</span>        <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_RIGHT</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Left</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_LEFT</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Down</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_DOWN</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Up</span>           <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_UP</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">NumDivide</span>    <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_DIVIDE</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">NumMultiply</span>  <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_MULTIPLY</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">NumMinus</span>     <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_MINUS</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">NumPlus</span>      <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_PLUS</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">NumEnter</span>     <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_ENTER</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num1</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_1</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num2</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_2</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num3</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_3</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num4</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_4</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num5</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_5</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num6</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_6</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num7</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_7</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num8</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_8</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num9</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_9</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">Num0</span>         <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_0</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">NumPeriod</span>    <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_KP_PERIOD</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">MouseLeft</span>    <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_MOUSE_LEFT</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">MouseRight</span>   <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_MOUSE_RIGHT</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">MouseMiddle</span>  <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_MOUSE_MIDDLE</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">MouseFourth</span>  <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_MOUSE_X1</span>,
+		<span class="ident">KeyCode</span>::<span class="ident">MouseFifth</span>   <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">TK_MOUSE_X2</span>,
 	})
 }
 </pre>
@@ -404,18 +415,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -448,7 +463,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "bear_lib_terminal";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

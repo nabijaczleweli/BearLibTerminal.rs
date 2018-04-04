@@ -10,14 +10,17 @@
     <title>input_filter.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <script src="../../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -351,312 +362,312 @@
 <span id="306">306</span>
 <span id="307">307</span>
 <span id="308">308</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>terminal</span>::<span class='ident'>config</span>::{<span class='ident'>ConfigPart</span>, <span class='ident'>escape_config_string</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">terminal</span>::<span class="ident">config</span>::{<span class="ident">ConfigPart</span>, <span class="ident">escape_config_string</span>};
 
 
-<span class='doccomment'>/// One input filter element.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// `both`s are equivalent in effect to `+`s -- let through both keypresses and keyreleases.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>InputFilter</span> {
-	<span class='ident'>Event</span>{<span class='ident'>name</span>: <span class='ident'>InputFilterEvent</span>, <span class='ident'>both</span>: <span class='ident'>bool</span>},
-	<span class='ident'>Group</span>{<span class='ident'>group</span>: <span class='ident'>InputFilterGroup</span>, <span class='ident'>both</span>: <span class='ident'>bool</span>},
-	<span class='ident'>Alnum</span>{<span class='ident'>keys</span>: <span class='ident'>String</span>, <span class='ident'>both</span>: <span class='ident'>bool</span>},
+<span class="doccomment">/// One input filter element.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `both`s are equivalent in effect to `+`s -- let through both keypresses and keyreleases.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">InputFilter</span> {
+	<span class="ident">Event</span>{<span class="ident">name</span>: <span class="ident">InputFilterEvent</span>, <span class="ident">both</span>: <span class="ident">bool</span>},
+	<span class="ident">Group</span>{<span class="ident">group</span>: <span class="ident">InputFilterGroup</span>, <span class="ident">both</span>: <span class="ident">bool</span>},
+	<span class="ident">Alnum</span>{<span class="ident">keys</span>: <span class="ident">String</span>, <span class="ident">both</span>: <span class="ident">bool</span>},
 }
 
-<span class='doccomment'>/// Filter event group, from [here](http://foo.wyrd.name/en:bearlibterminal:reference:input#inputfilter).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>InputFilterGroup</span> {
-	<span class='ident'>Arrow</span>,
-	<span class='ident'>Keypad</span>,
-	<span class='ident'>Keyboard</span>,
-	<span class='ident'>Mouse</span>,
-	<span class='doccomment'>/// Close + Resized</span>
-	<span class='ident'>System</span>,
+<span class="doccomment">/// Filter event group, from [here](http://foo.wyrd.name/en:bearlibterminal:reference:input#inputfilter).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">InputFilterGroup</span> {
+	<span class="ident">Arrow</span>,
+	<span class="ident">Keypad</span>,
+	<span class="ident">Keyboard</span>,
+	<span class="ident">Mouse</span>,
+	<span class="doccomment">/// Close + Resized</span>
+	<span class="ident">System</span>,
 }
 
-<span class='doccomment'>/// As enumerated [here](foo.wyrd.name/en:bearlibterminal:reference:input#event_and_state_constants)</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>InputFilterEvent</span> {
-	<span class='ident'>A</span>,
-	<span class='ident'>B</span>,
-	<span class='ident'>C</span>,
-	<span class='ident'>D</span>,
-	<span class='ident'>E</span>,
-	<span class='ident'>F</span>,
-	<span class='ident'>G</span>,
-	<span class='ident'>H</span>,
-	<span class='ident'>I</span>,
-	<span class='ident'>J</span>,
-	<span class='ident'>K</span>,
-	<span class='ident'>L</span>,
-	<span class='ident'>M</span>,
-	<span class='ident'>N</span>,
-	<span class='ident'>O</span>,
-	<span class='ident'>P</span>,
-	<span class='ident'>Q</span>,
-	<span class='ident'>R</span>,
-	<span class='ident'>S</span>,
-	<span class='ident'>T</span>,
-	<span class='ident'>U</span>,
-	<span class='ident'>V</span>,
-	<span class='ident'>W</span>,
-	<span class='ident'>X</span>,
-	<span class='ident'>Y</span>,
-	<span class='ident'>Z</span>,
-	<span class='ident'>Row0</span>,
-	<span class='ident'>Row1</span>,
-	<span class='ident'>Row2</span>,
-	<span class='ident'>Row3</span>,
-	<span class='ident'>Row4</span>,
-	<span class='ident'>Row5</span>,
-	<span class='ident'>Row6</span>,
-	<span class='ident'>Row7</span>,
-	<span class='ident'>Row8</span>,
-	<span class='ident'>Row9</span>,
-	<span class='ident'>Space</span>,
-	<span class='ident'>Minus</span>,
-	<span class='ident'>Equals</span>,
-	<span class='ident'>LBracket</span>,
-	<span class='ident'>RBracket</span>,
-	<span class='ident'>Backslash</span>,
-	<span class='ident'>Semicolon</span>,
-	<span class='ident'>Apostrophe</span>,
-	<span class='ident'>Grave</span>,
-	<span class='ident'>Comma</span>,
-	<span class='ident'>Period</span>,
-	<span class='ident'>Slash</span>,
-	<span class='ident'>F1</span>,
-	<span class='ident'>F2</span>,
-	<span class='ident'>F3</span>,
-	<span class='ident'>F4</span>,
-	<span class='ident'>F5</span>,
-	<span class='ident'>F6</span>,
-	<span class='ident'>F7</span>,
-	<span class='ident'>F8</span>,
-	<span class='ident'>F9</span>,
-	<span class='ident'>F10</span>,
-	<span class='ident'>F11</span>,
-	<span class='ident'>F12</span>,
-	<span class='ident'>Return</span>,
-	<span class='ident'>Escape</span>,
-	<span class='ident'>Backspace</span>,
-	<span class='ident'>Tab</span>,
-	<span class='ident'>Pause</span>,
-	<span class='ident'>Insert</span>,
-	<span class='ident'>Home</span>,
-	<span class='ident'>Pageup</span>,
-	<span class='ident'>Delete</span>,
-	<span class='ident'>End</span>,
-	<span class='ident'>Pagedown</span>,
-	<span class='ident'>Right</span>,
-	<span class='ident'>Left</span>,
-	<span class='ident'>Down</span>,
-	<span class='ident'>Up</span>,
-	<span class='ident'>Shift</span>,
-	<span class='ident'>Control</span>,
-	<span class='ident'>Pad0</span>,
-	<span class='ident'>Pad1</span>,
-	<span class='ident'>Pad2</span>,
-	<span class='ident'>Pad3</span>,
-	<span class='ident'>Pad4</span>,
-	<span class='ident'>Pad5</span>,
-	<span class='ident'>Pad6</span>,
-	<span class='ident'>Pad7</span>,
-	<span class='ident'>Pad8</span>,
-	<span class='ident'>Pad9</span>,
-	<span class='ident'>PadDivide</span>,
-	<span class='ident'>PadMultiply</span>,
-	<span class='ident'>PadMinus</span>,
-	<span class='ident'>PadPlus</span>,
-	<span class='ident'>PadPeriod</span>,
-	<span class='ident'>PadEnter</span>,
-	<span class='ident'>MouseLeft</span>,
-	<span class='ident'>MouseRight</span>,
-	<span class='ident'>MouseMiddle</span>,
-	<span class='ident'>MouseX1</span>,
-	<span class='ident'>MouseX2</span>,
-	<span class='ident'>MouseMove</span>,
-	<span class='ident'>MouseScroll</span>,
-	<span class='ident'>MouseWheel</span>,
-	<span class='ident'>MouseX</span>,
-	<span class='ident'>MouseY</span>,
-	<span class='ident'>MousePixelX</span>,
-	<span class='ident'>MousePixelY</span>,
-	<span class='ident'>MouseClicks</span>,
-	<span class='ident'>Width</span>,
-	<span class='ident'>Height</span>,
-	<span class='ident'>CellWidth</span>,
-	<span class='ident'>CellHeight</span>,
-	<span class='ident'>Color</span>,
-	<span class='ident'>Bkcolor</span>,
-	<span class='ident'>Layer</span>,
-	<span class='ident'>Composition</span>,
-	<span class='ident'>Char</span>,
-	<span class='ident'>Wchar</span>,
-	<span class='ident'>Event</span>,
-	<span class='ident'>Fullscreen</span>,
-	<span class='ident'>Close</span>,
-	<span class='ident'>Resized</span>,
+<span class="doccomment">/// As enumerated [here](foo.wyrd.name/en:bearlibterminal:reference:input#event_and_state_constants)</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">InputFilterEvent</span> {
+	<span class="ident">A</span>,
+	<span class="ident">B</span>,
+	<span class="ident">C</span>,
+	<span class="ident">D</span>,
+	<span class="ident">E</span>,
+	<span class="ident">F</span>,
+	<span class="ident">G</span>,
+	<span class="ident">H</span>,
+	<span class="ident">I</span>,
+	<span class="ident">J</span>,
+	<span class="ident">K</span>,
+	<span class="ident">L</span>,
+	<span class="ident">M</span>,
+	<span class="ident">N</span>,
+	<span class="ident">O</span>,
+	<span class="ident">P</span>,
+	<span class="ident">Q</span>,
+	<span class="ident">R</span>,
+	<span class="ident">S</span>,
+	<span class="ident">T</span>,
+	<span class="ident">U</span>,
+	<span class="ident">V</span>,
+	<span class="ident">W</span>,
+	<span class="ident">X</span>,
+	<span class="ident">Y</span>,
+	<span class="ident">Z</span>,
+	<span class="ident">Row0</span>,
+	<span class="ident">Row1</span>,
+	<span class="ident">Row2</span>,
+	<span class="ident">Row3</span>,
+	<span class="ident">Row4</span>,
+	<span class="ident">Row5</span>,
+	<span class="ident">Row6</span>,
+	<span class="ident">Row7</span>,
+	<span class="ident">Row8</span>,
+	<span class="ident">Row9</span>,
+	<span class="ident">Space</span>,
+	<span class="ident">Minus</span>,
+	<span class="ident">Equals</span>,
+	<span class="ident">LBracket</span>,
+	<span class="ident">RBracket</span>,
+	<span class="ident">Backslash</span>,
+	<span class="ident">Semicolon</span>,
+	<span class="ident">Apostrophe</span>,
+	<span class="ident">Grave</span>,
+	<span class="ident">Comma</span>,
+	<span class="ident">Period</span>,
+	<span class="ident">Slash</span>,
+	<span class="ident">F1</span>,
+	<span class="ident">F2</span>,
+	<span class="ident">F3</span>,
+	<span class="ident">F4</span>,
+	<span class="ident">F5</span>,
+	<span class="ident">F6</span>,
+	<span class="ident">F7</span>,
+	<span class="ident">F8</span>,
+	<span class="ident">F9</span>,
+	<span class="ident">F10</span>,
+	<span class="ident">F11</span>,
+	<span class="ident">F12</span>,
+	<span class="ident">Return</span>,
+	<span class="ident">Escape</span>,
+	<span class="ident">Backspace</span>,
+	<span class="ident">Tab</span>,
+	<span class="ident">Pause</span>,
+	<span class="ident">Insert</span>,
+	<span class="ident">Home</span>,
+	<span class="ident">Pageup</span>,
+	<span class="ident">Delete</span>,
+	<span class="ident">End</span>,
+	<span class="ident">Pagedown</span>,
+	<span class="ident">Right</span>,
+	<span class="ident">Left</span>,
+	<span class="ident">Down</span>,
+	<span class="ident">Up</span>,
+	<span class="ident">Shift</span>,
+	<span class="ident">Control</span>,
+	<span class="ident">Pad0</span>,
+	<span class="ident">Pad1</span>,
+	<span class="ident">Pad2</span>,
+	<span class="ident">Pad3</span>,
+	<span class="ident">Pad4</span>,
+	<span class="ident">Pad5</span>,
+	<span class="ident">Pad6</span>,
+	<span class="ident">Pad7</span>,
+	<span class="ident">Pad8</span>,
+	<span class="ident">Pad9</span>,
+	<span class="ident">PadDivide</span>,
+	<span class="ident">PadMultiply</span>,
+	<span class="ident">PadMinus</span>,
+	<span class="ident">PadPlus</span>,
+	<span class="ident">PadPeriod</span>,
+	<span class="ident">PadEnter</span>,
+	<span class="ident">MouseLeft</span>,
+	<span class="ident">MouseRight</span>,
+	<span class="ident">MouseMiddle</span>,
+	<span class="ident">MouseX1</span>,
+	<span class="ident">MouseX2</span>,
+	<span class="ident">MouseMove</span>,
+	<span class="ident">MouseScroll</span>,
+	<span class="ident">MouseWheel</span>,
+	<span class="ident">MouseX</span>,
+	<span class="ident">MouseY</span>,
+	<span class="ident">MousePixelX</span>,
+	<span class="ident">MousePixelY</span>,
+	<span class="ident">MouseClicks</span>,
+	<span class="ident">Width</span>,
+	<span class="ident">Height</span>,
+	<span class="ident">CellWidth</span>,
+	<span class="ident">CellHeight</span>,
+	<span class="ident">Color</span>,
+	<span class="ident">Bkcolor</span>,
+	<span class="ident">Layer</span>,
+	<span class="ident">Composition</span>,
+	<span class="ident">Char</span>,
+	<span class="ident">Wchar</span>,
+	<span class="ident">Event</span>,
+	<span class="ident">Fullscreen</span>,
+	<span class="ident">Close</span>,
+	<span class="ident">Resized</span>,
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>ConfigPart</span> <span class='kw'>for</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>InputFilter</span><span class='op'>&gt;</span> {
-	<span class='kw'>fn</span> <span class='ident'>to_config_str</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-		<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;input.filter = [{}];&quot;</span>, {
-			<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>elems</span> <span class='op'>=</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>();
-			<span class='kw'>for</span> <span class='ident'>filter</span> <span class='kw'>in</span> <span class='self'>self</span> {
-				<span class='ident'>elems</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}{}, &quot;</span>, <span class='ident'>elems</span>, <span class='ident'>escape_config_string</span>(<span class='kw-2'>&amp;</span><span class='kw'>match</span> <span class='ident'>filter</span> {
-					<span class='kw-2'>&amp;</span><span class='ident'>InputFilter</span>::<span class='ident'>Event</span>{<span class='kw-2'>ref</span> <span class='ident'>name</span>,  <span class='ident'>both</span>} <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}{}&quot;</span>, <span class='ident'>name</span>,  <span class='kw'>if</span> <span class='ident'>both</span> {<span class='string'>&quot;+&quot;</span>} <span class='kw'>else</span> {<span class='string'>&quot;&quot;</span>}),
-					<span class='kw-2'>&amp;</span><span class='ident'>InputFilter</span>::<span class='ident'>Group</span>{<span class='kw-2'>ref</span> <span class='ident'>group</span>, <span class='ident'>both</span>} <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}{}&quot;</span>, <span class='ident'>group</span>, <span class='kw'>if</span> <span class='ident'>both</span> {<span class='string'>&quot;+&quot;</span>} <span class='kw'>else</span> {<span class='string'>&quot;&quot;</span>}),
-					<span class='kw-2'>&amp;</span><span class='ident'>InputFilter</span>::<span class='ident'>Alnum</span>{<span class='kw-2'>ref</span> <span class='ident'>keys</span>,  <span class='ident'>both</span>} <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}{}&quot;</span>, <span class='ident'>keys</span>,  <span class='kw'>if</span> <span class='ident'>both</span> {<span class='string'>&quot;+&quot;</span>} <span class='kw'>else</span> {<span class='string'>&quot;&quot;</span>}),
+<span class="kw">impl</span> <span class="ident">ConfigPart</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">InputFilter</span><span class="op">&gt;</span> {
+	<span class="kw">fn</span> <span class="ident">to_config_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+		<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;input.filter = [{}];&quot;</span>, {
+			<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">elems</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>();
+			<span class="kw">for</span> <span class="ident">filter</span> <span class="kw">in</span> <span class="self">self</span> {
+				<span class="ident">elems</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}{}, &quot;</span>, <span class="ident">elems</span>, <span class="ident">escape_config_string</span>(<span class="kw-2">&amp;</span><span class="kw">match</span> <span class="ident">filter</span> {
+					<span class="kw-2">&amp;</span><span class="ident">InputFilter</span>::<span class="ident">Event</span>{<span class="kw-2">ref</span> <span class="ident">name</span>,  <span class="ident">both</span>} <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}{}&quot;</span>, <span class="ident">name</span>,  <span class="kw">if</span> <span class="ident">both</span> {<span class="string">&quot;+&quot;</span>} <span class="kw">else</span> {<span class="string">&quot;&quot;</span>}),
+					<span class="kw-2">&amp;</span><span class="ident">InputFilter</span>::<span class="ident">Group</span>{<span class="kw-2">ref</span> <span class="ident">group</span>, <span class="ident">both</span>} <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}{}&quot;</span>, <span class="ident">group</span>, <span class="kw">if</span> <span class="ident">both</span> {<span class="string">&quot;+&quot;</span>} <span class="kw">else</span> {<span class="string">&quot;&quot;</span>}),
+					<span class="kw-2">&amp;</span><span class="ident">InputFilter</span>::<span class="ident">Alnum</span>{<span class="kw-2">ref</span> <span class="ident">keys</span>,  <span class="ident">both</span>} <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}{}&quot;</span>, <span class="ident">keys</span>,  <span class="kw">if</span> <span class="ident">both</span> {<span class="string">&quot;+&quot;</span>} <span class="kw">else</span> {<span class="string">&quot;&quot;</span>}),
 				}));
 			}
-			<span class='ident'>elems</span>.<span class='ident'>pop</span>();
-			<span class='ident'>elems</span>.<span class='ident'>pop</span>();
-			<span class='ident'>elems</span>
+			<span class="ident">elems</span>.<span class="ident">pop</span>();
+			<span class="ident">elems</span>.<span class="ident">pop</span>();
+			<span class="ident">elems</span>
 		})
 	}
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>InputFilterGroup</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterGroup</span>::<span class='ident'>Arrow</span>    <span class='op'>=&gt;</span> <span class='string'>&quot;arrow&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterGroup</span>::<span class='ident'>Keypad</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;keypad&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterGroup</span>::<span class='ident'>Keyboard</span> <span class='op'>=&gt;</span> <span class='string'>&quot;keyboard&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterGroup</span>::<span class='ident'>Mouse</span>    <span class='op'>=&gt;</span> <span class='string'>&quot;mouse&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterGroup</span>::<span class='ident'>System</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;system&quot;</span>,
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">InputFilterGroup</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="kw">match</span> <span class="self">self</span> {
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterGroup</span>::<span class="ident">Arrow</span>    <span class="op">=&gt;</span> <span class="string">&quot;arrow&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterGroup</span>::<span class="ident">Keypad</span>   <span class="op">=&gt;</span> <span class="string">&quot;keypad&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterGroup</span>::<span class="ident">Keyboard</span> <span class="op">=&gt;</span> <span class="string">&quot;keyboard&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterGroup</span>::<span class="ident">Mouse</span>    <span class="op">=&gt;</span> <span class="string">&quot;mouse&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterGroup</span>::<span class="ident">System</span>   <span class="op">=&gt;</span> <span class="string">&quot;system&quot;</span>,
 		})
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>InputFilterEvent</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>formatter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='ident'>formatter</span>.<span class='ident'>write_str</span>(<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>A</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;A&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>B</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;B&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>C</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;C&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>D</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;D&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>E</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;E&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;F&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>G</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;G&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>H</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;H&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>I</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;I&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>J</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;J&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>K</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;K&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>L</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;L&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>M</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;M&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>N</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;N&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>O</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;O&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>P</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;P&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Q</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;Q&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>R</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;R&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>S</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;S&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>T</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;T&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>U</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;U&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>V</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;V&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>W</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;W&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>X</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;X&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Y</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;Y&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Z</span>           <span class='op'>=&gt;</span> <span class='string'>&quot;Z&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row0</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;0&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row1</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;1&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row2</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;2&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row3</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;3&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row4</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;4&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row5</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;5&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row6</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;6&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row7</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;7&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row8</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;8&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Row9</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;9&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Space</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;space&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Minus</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;minus&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Equals</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;equals&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>LBracket</span>    <span class='op'>=&gt;</span> <span class='string'>&quot;lbracket&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>RBracket</span>    <span class='op'>=&gt;</span> <span class='string'>&quot;rbracket&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Backslash</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;backslash&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Semicolon</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;semicolon&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Apostrophe</span>  <span class='op'>=&gt;</span> <span class='string'>&quot;apostrophe&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Grave</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;grave&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Comma</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;comma&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Period</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;period&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Slash</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;slash&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F1</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;F1&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F2</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;F2&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F3</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;F3&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F4</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;F4&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F5</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;F5&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F6</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;F6&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F7</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;F7&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F8</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;F8&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F9</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;F9&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F10</span>         <span class='op'>=&gt;</span> <span class='string'>&quot;F10&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F11</span>         <span class='op'>=&gt;</span> <span class='string'>&quot;F11&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>F12</span>         <span class='op'>=&gt;</span> <span class='string'>&quot;F12&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Return</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;return&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Escape</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;escape&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Backspace</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;backspace&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Tab</span>         <span class='op'>=&gt;</span> <span class='string'>&quot;tab&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pause</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;pause&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Insert</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;insert&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Home</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;home&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pageup</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;pageup&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Delete</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;delete&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>End</span>         <span class='op'>=&gt;</span> <span class='string'>&quot;end&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pagedown</span>    <span class='op'>=&gt;</span> <span class='string'>&quot;pagedown&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Right</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;right&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Left</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;left&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Down</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;down&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Up</span>          <span class='op'>=&gt;</span> <span class='string'>&quot;up&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Shift</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;shift&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Control</span>     <span class='op'>=&gt;</span> <span class='string'>&quot;control&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad0</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_0&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad1</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_1&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad2</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_2&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad3</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_3&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad4</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_4&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad5</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_5&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad6</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_6&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad7</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_7&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad8</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_8&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Pad9</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;KP_9&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>PadDivide</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;KP_divide&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>PadMultiply</span> <span class='op'>=&gt;</span> <span class='string'>&quot;KP_multiply&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>PadMinus</span>    <span class='op'>=&gt;</span> <span class='string'>&quot;KP_minus&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>PadPlus</span>     <span class='op'>=&gt;</span> <span class='string'>&quot;KP_plus&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>PadPeriod</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;KP_period&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>PadEnter</span>    <span class='op'>=&gt;</span> <span class='string'>&quot;KP_enter&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseLeft</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_left&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseRight</span>  <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_right&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseMiddle</span> <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_middle&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseX1</span>     <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_x1&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseX2</span>     <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_x2&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseMove</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_move&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseScroll</span> <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_scroll&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseWheel</span>  <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_wheel&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseX</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_x&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseY</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_y&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MousePixelX</span> <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_pixelx&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MousePixelY</span> <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_pixely&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>MouseClicks</span> <span class='op'>=&gt;</span> <span class='string'>&quot;mouse_clicks&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Width</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;width&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Height</span>      <span class='op'>=&gt;</span> <span class='string'>&quot;height&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>CellWidth</span>   <span class='op'>=&gt;</span> <span class='string'>&quot;cell_width&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>CellHeight</span>  <span class='op'>=&gt;</span> <span class='string'>&quot;cell_height&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Color</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;color&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Bkcolor</span>     <span class='op'>=&gt;</span> <span class='string'>&quot;bkcolor&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Layer</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;layer&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Composition</span> <span class='op'>=&gt;</span> <span class='string'>&quot;composition&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Char</span>        <span class='op'>=&gt;</span> <span class='string'>&quot;char&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Wchar</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;wchar&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Event</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;event&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Fullscreen</span>  <span class='op'>=&gt;</span> <span class='string'>&quot;fullscreen&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Close</span>       <span class='op'>=&gt;</span> <span class='string'>&quot;close&quot;</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>InputFilterEvent</span>::<span class='ident'>Resized</span>     <span class='op'>=&gt;</span> <span class='string'>&quot;resized&quot;</span>,
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">InputFilterEvent</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="kw">match</span> <span class="self">self</span> {
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">A</span>           <span class="op">=&gt;</span> <span class="string">&quot;A&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">B</span>           <span class="op">=&gt;</span> <span class="string">&quot;B&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">C</span>           <span class="op">=&gt;</span> <span class="string">&quot;C&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">D</span>           <span class="op">=&gt;</span> <span class="string">&quot;D&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">E</span>           <span class="op">=&gt;</span> <span class="string">&quot;E&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F</span>           <span class="op">=&gt;</span> <span class="string">&quot;F&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">G</span>           <span class="op">=&gt;</span> <span class="string">&quot;G&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">H</span>           <span class="op">=&gt;</span> <span class="string">&quot;H&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">I</span>           <span class="op">=&gt;</span> <span class="string">&quot;I&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">J</span>           <span class="op">=&gt;</span> <span class="string">&quot;J&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">K</span>           <span class="op">=&gt;</span> <span class="string">&quot;K&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">L</span>           <span class="op">=&gt;</span> <span class="string">&quot;L&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">M</span>           <span class="op">=&gt;</span> <span class="string">&quot;M&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">N</span>           <span class="op">=&gt;</span> <span class="string">&quot;N&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">O</span>           <span class="op">=&gt;</span> <span class="string">&quot;O&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">P</span>           <span class="op">=&gt;</span> <span class="string">&quot;P&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Q</span>           <span class="op">=&gt;</span> <span class="string">&quot;Q&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">R</span>           <span class="op">=&gt;</span> <span class="string">&quot;R&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">S</span>           <span class="op">=&gt;</span> <span class="string">&quot;S&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">T</span>           <span class="op">=&gt;</span> <span class="string">&quot;T&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">U</span>           <span class="op">=&gt;</span> <span class="string">&quot;U&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">V</span>           <span class="op">=&gt;</span> <span class="string">&quot;V&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">W</span>           <span class="op">=&gt;</span> <span class="string">&quot;W&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">X</span>           <span class="op">=&gt;</span> <span class="string">&quot;X&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Y</span>           <span class="op">=&gt;</span> <span class="string">&quot;Y&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Z</span>           <span class="op">=&gt;</span> <span class="string">&quot;Z&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row0</span>        <span class="op">=&gt;</span> <span class="string">&quot;0&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row1</span>        <span class="op">=&gt;</span> <span class="string">&quot;1&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row2</span>        <span class="op">=&gt;</span> <span class="string">&quot;2&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row3</span>        <span class="op">=&gt;</span> <span class="string">&quot;3&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row4</span>        <span class="op">=&gt;</span> <span class="string">&quot;4&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row5</span>        <span class="op">=&gt;</span> <span class="string">&quot;5&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row6</span>        <span class="op">=&gt;</span> <span class="string">&quot;6&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row7</span>        <span class="op">=&gt;</span> <span class="string">&quot;7&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row8</span>        <span class="op">=&gt;</span> <span class="string">&quot;8&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Row9</span>        <span class="op">=&gt;</span> <span class="string">&quot;9&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Space</span>       <span class="op">=&gt;</span> <span class="string">&quot;space&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Minus</span>       <span class="op">=&gt;</span> <span class="string">&quot;minus&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Equals</span>      <span class="op">=&gt;</span> <span class="string">&quot;equals&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">LBracket</span>    <span class="op">=&gt;</span> <span class="string">&quot;lbracket&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">RBracket</span>    <span class="op">=&gt;</span> <span class="string">&quot;rbracket&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Backslash</span>   <span class="op">=&gt;</span> <span class="string">&quot;backslash&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Semicolon</span>   <span class="op">=&gt;</span> <span class="string">&quot;semicolon&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Apostrophe</span>  <span class="op">=&gt;</span> <span class="string">&quot;apostrophe&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Grave</span>       <span class="op">=&gt;</span> <span class="string">&quot;grave&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Comma</span>       <span class="op">=&gt;</span> <span class="string">&quot;comma&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Period</span>      <span class="op">=&gt;</span> <span class="string">&quot;period&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Slash</span>       <span class="op">=&gt;</span> <span class="string">&quot;slash&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F1</span>          <span class="op">=&gt;</span> <span class="string">&quot;F1&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F2</span>          <span class="op">=&gt;</span> <span class="string">&quot;F2&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F3</span>          <span class="op">=&gt;</span> <span class="string">&quot;F3&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F4</span>          <span class="op">=&gt;</span> <span class="string">&quot;F4&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F5</span>          <span class="op">=&gt;</span> <span class="string">&quot;F5&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F6</span>          <span class="op">=&gt;</span> <span class="string">&quot;F6&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F7</span>          <span class="op">=&gt;</span> <span class="string">&quot;F7&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F8</span>          <span class="op">=&gt;</span> <span class="string">&quot;F8&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F9</span>          <span class="op">=&gt;</span> <span class="string">&quot;F9&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F10</span>         <span class="op">=&gt;</span> <span class="string">&quot;F10&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F11</span>         <span class="op">=&gt;</span> <span class="string">&quot;F11&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">F12</span>         <span class="op">=&gt;</span> <span class="string">&quot;F12&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Return</span>      <span class="op">=&gt;</span> <span class="string">&quot;return&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Escape</span>      <span class="op">=&gt;</span> <span class="string">&quot;escape&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Backspace</span>   <span class="op">=&gt;</span> <span class="string">&quot;backspace&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Tab</span>         <span class="op">=&gt;</span> <span class="string">&quot;tab&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pause</span>       <span class="op">=&gt;</span> <span class="string">&quot;pause&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Insert</span>      <span class="op">=&gt;</span> <span class="string">&quot;insert&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Home</span>        <span class="op">=&gt;</span> <span class="string">&quot;home&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pageup</span>      <span class="op">=&gt;</span> <span class="string">&quot;pageup&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Delete</span>      <span class="op">=&gt;</span> <span class="string">&quot;delete&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">End</span>         <span class="op">=&gt;</span> <span class="string">&quot;end&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pagedown</span>    <span class="op">=&gt;</span> <span class="string">&quot;pagedown&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Right</span>       <span class="op">=&gt;</span> <span class="string">&quot;right&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Left</span>        <span class="op">=&gt;</span> <span class="string">&quot;left&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Down</span>        <span class="op">=&gt;</span> <span class="string">&quot;down&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Up</span>          <span class="op">=&gt;</span> <span class="string">&quot;up&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Shift</span>       <span class="op">=&gt;</span> <span class="string">&quot;shift&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Control</span>     <span class="op">=&gt;</span> <span class="string">&quot;control&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad0</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_0&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad1</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_1&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad2</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_2&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad3</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_3&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad4</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_4&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad5</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_5&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad6</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_6&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad7</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_7&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad8</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_8&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Pad9</span>        <span class="op">=&gt;</span> <span class="string">&quot;KP_9&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">PadDivide</span>   <span class="op">=&gt;</span> <span class="string">&quot;KP_divide&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">PadMultiply</span> <span class="op">=&gt;</span> <span class="string">&quot;KP_multiply&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">PadMinus</span>    <span class="op">=&gt;</span> <span class="string">&quot;KP_minus&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">PadPlus</span>     <span class="op">=&gt;</span> <span class="string">&quot;KP_plus&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">PadPeriod</span>   <span class="op">=&gt;</span> <span class="string">&quot;KP_period&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">PadEnter</span>    <span class="op">=&gt;</span> <span class="string">&quot;KP_enter&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseLeft</span>   <span class="op">=&gt;</span> <span class="string">&quot;mouse_left&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseRight</span>  <span class="op">=&gt;</span> <span class="string">&quot;mouse_right&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseMiddle</span> <span class="op">=&gt;</span> <span class="string">&quot;mouse_middle&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseX1</span>     <span class="op">=&gt;</span> <span class="string">&quot;mouse_x1&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseX2</span>     <span class="op">=&gt;</span> <span class="string">&quot;mouse_x2&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseMove</span>   <span class="op">=&gt;</span> <span class="string">&quot;mouse_move&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseScroll</span> <span class="op">=&gt;</span> <span class="string">&quot;mouse_scroll&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseWheel</span>  <span class="op">=&gt;</span> <span class="string">&quot;mouse_wheel&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseX</span>      <span class="op">=&gt;</span> <span class="string">&quot;mouse_x&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseY</span>      <span class="op">=&gt;</span> <span class="string">&quot;mouse_y&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MousePixelX</span> <span class="op">=&gt;</span> <span class="string">&quot;mouse_pixelx&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MousePixelY</span> <span class="op">=&gt;</span> <span class="string">&quot;mouse_pixely&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">MouseClicks</span> <span class="op">=&gt;</span> <span class="string">&quot;mouse_clicks&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Width</span>       <span class="op">=&gt;</span> <span class="string">&quot;width&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Height</span>      <span class="op">=&gt;</span> <span class="string">&quot;height&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">CellWidth</span>   <span class="op">=&gt;</span> <span class="string">&quot;cell_width&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">CellHeight</span>  <span class="op">=&gt;</span> <span class="string">&quot;cell_height&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Color</span>       <span class="op">=&gt;</span> <span class="string">&quot;color&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Bkcolor</span>     <span class="op">=&gt;</span> <span class="string">&quot;bkcolor&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Layer</span>       <span class="op">=&gt;</span> <span class="string">&quot;layer&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Composition</span> <span class="op">=&gt;</span> <span class="string">&quot;composition&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Char</span>        <span class="op">=&gt;</span> <span class="string">&quot;char&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Wchar</span>       <span class="op">=&gt;</span> <span class="string">&quot;wchar&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Event</span>       <span class="op">=&gt;</span> <span class="string">&quot;event&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Fullscreen</span>  <span class="op">=&gt;</span> <span class="string">&quot;fullscreen&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Close</span>       <span class="op">=&gt;</span> <span class="string">&quot;close&quot;</span>,
+			<span class="kw-2">&amp;</span><span class="ident">InputFilterEvent</span>::<span class="ident">Resized</span>     <span class="op">=&gt;</span> <span class="string">&quot;resized&quot;</span>,
 		})
 	}
 }
@@ -674,18 +685,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -718,7 +733,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "bear_lib_terminal";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>
