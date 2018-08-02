@@ -15,4 +15,4 @@ authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
 exclude = ["*.enc"]
 
 [dependencies]
-bear-lib-terminal-sys = "1.2"
+bear-lib-terminal-sys = "1.3"
