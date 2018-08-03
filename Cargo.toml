@@ -8,10 +8,11 @@ keywords = ["BearLibTerminal", "FFI", "TUI", "UI"]
 categories = ["external-ffi-bindings", "gui", "multimedia"]
 license = "MIT"
 # Remember to also update in appveyor.yml
-version = "1.3.3"
+version = "1.4.0"
 authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
            "Cat Plus Plus <piotrlegnica@piotrl.pl>",
-           "Ryan1729 <Ryan1729@gmail.com>"]
+           "Ryan1729 <Ryan1729@gmail.com>",
+           "Matt Bilker <me@mbilker.us>"]
 exclude = ["*.enc"]
 
 [dependencies]
