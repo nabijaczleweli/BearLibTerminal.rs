@@ -7,4 +7,4 @@ You need to compile/get a precompiled version of [BearLibTerminal](https://bitbu
 They can also be found in the [releases](https://github.com/nabijaczleweli/BearLibTerminal.rs/releases).
 
 # Docs
-Autoupdated docs can be found [here](https://cdn.rawgit.com/nabijaczleweli/BearLibTerminal.rs/doc/bear_lib_terminal/index.html).
+Autoupdated docs can be found [here](https://rawcdn.githack.com/nabijaczleweli/BearLibTerminal.rs/doc/bear_lib_terminal/index.html).
