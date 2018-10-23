@@ -203,4 +203,8 @@ pub enum Event {
 	ControlPressed,
 	/// The Control key released.
 	ControlReleased,
+	/// The Alt key pressed (might repeat, if set in OS).
+	AltPressed,
+	/// The Alt key released.
+	AltReleased,
 }

@@ -439,6 +439,7 @@ fn to_key_event(code: i32) -> Option<Event> {
 	match key {
 		ffi::TK_SHIFT   => Some(if released {Event::ShiftReleased}   else {Event::ShiftPressed}),
 		ffi::TK_CONTROL => Some(if released {Event::ControlReleased} else {Event::ControlPressed}),
+		ffi::TK_ALT     => Some(if released {Event::AltReleased}     else {Event::AltPressed}),
 		key             => {
 			let ctrl  = ffi::check(ffi::TK_CONTROL);
 			let shift = ffi::check(ffi::TK_SHIFT);
