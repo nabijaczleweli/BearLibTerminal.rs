@@ -70,7 +70,7 @@ pub fn true_type<T: AsRef<Path>>(origin: Origin, path: T, tile_size: Size) -> Tr
 pub enum Origin {
 	/// `font`
 	Root,
-	/// `named font`
+	/// `[name] font`
 	Named(Cow<'static, str>),
 	/// `0xNNNN`
 	Offset(char),
@@ -293,7 +293,7 @@ impl ConfigPart for TrueType {
 impl fmt::Display for Origin {
 	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 		match self {
-			&Origin::Root          => formatter.write_str("font"),
+			&Origin::Root          => formatter.write_str("[font]"),
 			&Origin::Named(ref n)  => formatter.write_str(&*&format!("{} font", &n)),
 			&Origin::Offset(o)     => formatter.write_str(&*&format!("0x{:X}", o as i32)),
 		}
