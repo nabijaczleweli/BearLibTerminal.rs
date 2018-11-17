@@ -45,7 +45,7 @@ deploy:
   provider: GitHub
   artifact: BearLibTerminal.dll
   auth_token:
-    secure: +xqyPTmE5gQCvtd/lyTfuNiCxR1v302T/k0vnbprwN8TraRQPaiOAWU1jUt43cdE
+    secure: hPYB/rvXWxVoVXCjw8GYOCfF/5VAfCcHm7q1sNz/dajIov0KeXjiB7QW8O3T2w1r
   on:
     appveyor_repo_tag: true
 
