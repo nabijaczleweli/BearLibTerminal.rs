@@ -116,7 +116,7 @@ pub enum Align {
 // }
 
 
-/// A bitmap font override segment repr, constructed with [`true_type()`](fn.true_type.html).
+/// A bitmap font override segment repr, constructed with [`bitmap()`](fn.bitmap.html).
 ///
 /// Refer to [the official documentation](http://foo.wyrd.name/en:bearlibterminal:reference:configuration#font_and_tileset_management).
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
