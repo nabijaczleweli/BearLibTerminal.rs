@@ -292,9 +292,9 @@ impl ConfigPart for TrueType {
 impl fmt::Display for Origin {
 	fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 		match self {
-			&Origin::Root      => formatter.write_str("font"),
-			&Origin::Named(n)  => formatter.write_str("{} font", &n),
-			&Origin::Offset(o) => formatter.write_str(&*&format!("0x{:X}", o as i32)),
+			&Origin::Root          => formatter.write_str("font"),
+			&Origin::Named(ref n)  => formatter.write_str(&*&format!("{} font", &n)),
+			&Origin::Offset(o)     => formatter.write_str(&*&format!("0x{:X}", o as i32)),
 		}
 	}
 }
