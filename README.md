@@ -1,2 +1,2 @@
 # BearLibTerminal.rs docs
-Viewable as rendered HTML [here](https://cdn.rawgit.com/nabijaczleweli/BearLibTerminal.rs/doc/bear_lib_terminal/index.html)
+Viewable as rendered HTML [here](https://rawcdn.githack.com/nabijaczleweli/BearLibTerminal.rs/doc/bear_lib_terminal/index.html)
