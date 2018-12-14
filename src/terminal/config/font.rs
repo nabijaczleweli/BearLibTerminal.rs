@@ -27,6 +27,7 @@
 
 use std::fmt;
 use std::path::Path;
+use std::borrow::Cow;
 use geometry::Size;
 use terminal::config::{ConfigPart, escape_config_string};
 
@@ -70,7 +71,7 @@ pub enum Origin {
 	/// `font`
 	Root,
 	/// `named font`
-	Named(String),
+	Named(Cow<'static, str>),
 	/// `0xNNNN`
 	Offset(char),
 }
