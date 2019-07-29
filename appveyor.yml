@@ -24,6 +24,7 @@ install:
   -
   - git clone https://github.com/nabijaczleweli/BearLibTerminal.git C:\BearLibTerminal
   - cd C:\BearLibTerminal\Build
+  - sed -i "s/localtime_r.*/localtime_s(\&tm, \&time);/" ..\Terminal\Source\Log.cpp
   - cmake -G"MSYS Makefiles" ..
   - make BearLibTerminal
   - copy ..\Output\Windows64\BearLibTerminal.dll C:\
@@ -45,7 +46,7 @@ deploy:
   provider: GitHub
   artifact: BearLibTerminal.dll
   auth_token:
-    secure: hPYB/rvXWxVoVXCjw8GYOCfF/5VAfCcHm7q1sNz/dajIov0KeXjiB7QW8O3T2w1r
+    secure: /46y+1G4T7Shd5mDj31xT5WSLgXnn3r0gR/2/dDgEoJheR6q/Eb02o64fUmRd7oo
   on:
     appveyor_repo_tag: true
 

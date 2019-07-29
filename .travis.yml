@@ -17,13 +17,14 @@ addons:
   apt:
     packages:
       - libxmu-dev
+      - libgl1-mesa-dev
     sources:
       - r-packages-precise
 
 deploy:
   provider: releases
   api_key:
-    secure: "PVdwNPxvf19XkkA9cZDQmkasr9O/Nxpbzt492EIstE3xFvCcnR6Zzadew209gWxhVAVphE327RpfD/Ky5fAqSqMpvlGVVD+k6kFCwOHwSZ+e3FR1EJt+ikdATgCXW+NqtQQw4XDO/fEl3veDts+0horaDLSNS/kkN7PKLoUVj95UxdgnYwUZIK5KeamABCFi4NNPjFbiA9Nzxv8JFI7Mv5KkFnsw9fqmMnd98bI0wRWIVfUdZPABFi+Qp9B5jUWPb8YB/VYQ/q6rhaQHd/CkkLOMSSvyBRkkkEtMCzPqblzTm2ZlW2cNFu5G74fc7RdsM2bs2LvplbfHNFGnto1EGyZQslC4ZtdTu5mN06PMNbPBh35EfwU0y/7bYP9O2edehQPt7UUiG7NagiC6uxNPsHLZHedTkXGqMDfd26n2q4ZeZ31Yx7s/D32rZasClbxnYx071+LaZ4eIZLVtjn9ut1BHug4hfz0oo4bk0FWqlPtJ7VPsZSuaMP9GKOp1QWbZ55kA977MsKA42+AxrMBuT2cPLqohFOsrVn50VcD7X+U3MmJd6Qpj8JrvBQS9HnDl6p66F5czpnAKA2L9u33rwJCz5cHF7tDeymt3YHxNc1skweDLOTwqzhukqd1WWXKYcC1GNTP2qRxMidzMMIueGv0skYX/q+HGTODKv1Fbuks="
+    secure: d8kv/8cjJIZ+fQ0Uih7q/FeAm869eExjUFW6vSwAHloT2CXYX5sb7X4ynU4usZXjWt/puFLrWzrA4t9Cl3vOnBxE7bLi7WFjS1JfZEmq9sFq62q68uOZbn1hkOORyXWqXjXftGkd66B+gULzkcmxruajQlwFDGeIu4xVmBpkzZ9SGpSyGlFJ1gnouKOVMRzmKI1+XwrdfGmyURc1KsOs2a6K1wP9bB+31qxg+shxA/vEmaKM02MNu+7KVOJWiWybPo0zburt9I6CFHexww3d1oG2aSbT1QH44KrXrms/bsBD7GIQriz5jQTPhe83VxCOzZiADQF/OiU5P0vGtpi+PYk3irdltOhaqyLYYAr4k9bkMFHlJw2TfWKUwfohYX5FmwwCIhkVO3SR3BQAD2UeBGim0PnadEhoiKoyYS9eEaWGT20C4EwF/cwr48ej6IaCu6l5xNoJOrYA/Mo9j/XnxBqpFWbGdI0CuAlENvMpfzzxDrBXnubLE9HMebbukmD+cTLA0zcuC8USO3BvN6Wz11lMTGVr/9S7jmutJHS+RrezqW3Ce07lZtkL92K2Kjhw3lGV23r7dPSFanMYxqoSr/8hayQKYxHbI6gpMVsB0cwh7eLiJIIjHtG7nw1EgyiEjMIQDtv6J7D74LzV3XjFOHNl2GXHFBksxp7syZNxqrQ=
   file: "$HOME/lib/libBearLibTerminal.so"
   skip_cleanup: true
   on:
@@ -49,8 +50,8 @@ install:
   - mkdir ~/lib/ && cp ../Output/Linux64/libBearLibTerminal.so ~/lib/ && cd $TRAVIS_BUILD_DIR
 
 script:
-  - LD_PRELOAD=~/lib/libBearLibTerminal.so LD_LIBRARY_PATH="~/lib:$LD_LIBRARY_PATH" LIBRARY_PATH=~/lib cargo build --verbose
-  - LD_PRELOAD=~/lib/libBearLibTerminal.so LD_LIBRARY_PATH="~/lib:$LD_LIBRARY_PATH" LIBRARY_PATH=~/lib cargo test --verbose
+  - LD_LIBRARY_PATH=~/lib LIBRARY_PATH=~/lib cargo build --verbose
+  - LD_LIBRARY_PATH=~/lib LIBRARY_PATH=~/lib cargo test --verbose
 
 after_success:
   - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] && [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then echo "Update docs for commits $TRAVIS_COMMIT_RANGE" > $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG; fi
